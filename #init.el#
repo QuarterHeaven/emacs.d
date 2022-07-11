@@ -148,10 +148,7 @@
 (require 'init-dart)
 (require 'init-elixir)
 (require 'init-web)
-(require 'init-meow)
 
-(require 'init-parrot)
-(require 'init-socks)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here

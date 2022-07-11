@@ -278,7 +278,7 @@ Nil to use font supports ligatures."
 
 ;;;;
 (require 'init-osx-keys)
-;;(require 'init-meow)
+(require 'init-meow)
 
 (provide 'init-custom)
 
