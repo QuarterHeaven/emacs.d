@@ -1,0 +1,3 @@
+[submodule "nano-emacs"]
+	path = borg/nano-emacs
+	url = https://github.com/rougier/nano-emacs.git
