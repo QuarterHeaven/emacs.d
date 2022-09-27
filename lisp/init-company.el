@@ -6,5 +6,7 @@
         company-idle-delay .2               ; 延时多少秒后弹出
         company-minimum-prefix-length 1     ; 至少几个字符后开始补全
         )
+
+(add-hook 'org-mode (lambda () (company-mode -1)))
         
 (provide 'init-company)

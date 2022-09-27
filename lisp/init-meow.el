@@ -84,7 +84,12 @@
    '("Y" . meow-sync-grab)
    '("z" . meow-pop-selection)
    '("'" . repeat)
-   '("<escape>" . ignore)))
+   '("<escape>" . ignore))
+  (meow-define-keys
+    'insert
+  '("C-," . meow-insert-exit)))
+
+; (define-key meow-insert-state-keymap (kbd "C-,") #'meow-insert-exit)
 
 (require 'meow)
 (meow-setup)

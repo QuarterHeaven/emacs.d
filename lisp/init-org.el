@@ -1,6 +1,8 @@
 (require-package 'org-superstar)
 (require-package 'org-modern)
 (require-package 'valign)
+(require-package 'org-roam)
+(require-package 'org-ref)
 
 ; (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
@@ -45,5 +47,8 @@
 
 (setq modus-themes-org-blocks 'gray-background)
 (add-hook 'org-mode-hook #'valign-mode)
+(add-hook 'org-mode-hook #'toggle-truncate-lines)
+
+(require 'org-tempo)
 
 (provide 'init-org)

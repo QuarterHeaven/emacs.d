@@ -32,3 +32,5 @@
 ;; (require 'init-lsp)
 (require 'init-treesitter)
 (require 'init-org)
+(require 'init-rime)
+(require 'init-magit)

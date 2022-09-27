@@ -5,6 +5,8 @@
 (require-package 'counsel-projectile)
 (require-package 'smex)
 (require-package 'all-the-icons-ivy-rich)
+(require-package 'which-key)
+(require-package 'which-key-posframe)
 
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
@@ -92,17 +94,21 @@
 (require-package 'ivy-posframe)
 ;; display at `ivy-posframe-style'
 ;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
-(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
 ;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-center)))
 ;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-bottom-left)))
 ;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-bottom-left)))
 ;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
-(ivy-posframe-mode 1)
+;; (ivy-posframe-mode 1)
 (setq ivy-height 15                 ; Use bigger minibuffer height for child frame
           ivy-posframe-border-width 3
           ivy-posframe-parameters '((left-fringe . 8)
                                     (right-fringe . 8)))
 
 (use-package smex)
+
+(which-key-mode)
+(setq which-key-posframe-poshandler 'posframe-poshandler-frame-center)
+(which-key-posframe-mode)
 
 (provide 'init-ivy)

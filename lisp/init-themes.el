@@ -11,6 +11,7 @@
 (require-package 'all-the-icons)
 (require-package 'mixed-pitch)
 (require-package 'page-break-lines)
+(require-package 'doom-modeline)
 
 (when (display-graphic-p)
   (require 'all-the-icons))
@@ -248,6 +249,11 @@
 ;; Don't use GTK+ tooltip
 (when (boundp 'x-gtk-use-system-tooltips)
   (setq x-gtk-use-system-tooltips nil))
+
+;; Mode line
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode))
 
 (provide 'init-themes)
 ;;;init-themes.elendshere
