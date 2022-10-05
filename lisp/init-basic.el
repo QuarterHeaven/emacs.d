@@ -16,4 +16,10 @@
 ; 默认窗口最大化
 (setq initial-frame-alist (quote ((fullscreen . maximized))))
 
+; 隐藏开始界面
+(setq inhibit-startup-message t)
+
+; 关闭提示音
+(setq ring-bell-function 'ignore)
+
 (provide 'init-basic)

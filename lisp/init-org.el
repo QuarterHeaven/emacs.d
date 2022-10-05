@@ -2,6 +2,7 @@
 (require-package 'org-modern)
 (require-package 'valign)
 (require-package 'org-roam)
+(require-package 'org-roam-ui)
 (require-package 'org-ref)
 
 ; (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
@@ -50,5 +51,12 @@
 (add-hook 'org-mode-hook #'toggle-truncate-lines)
 
 (require 'org-tempo)
+
+;; org roam settings
+(setq org-roam-directory "~/Documents/orgs/roam")  ;; roam 应用的文件夹
+;; (add-hook 'after-init-hook 'org-roam-mode)
+
+(setq org-roam-completion-system 'ivy) ;;使用ivy提示
+
 
 (provide 'init-org)
