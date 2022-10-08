@@ -5,12 +5,9 @@
 (require 'lsp-bridge)
 (global-lsp-bridge-mode)
 
-(require-package 'rustic)
-(use-package rustic)
-(setq rustic-lsp-client 'lsp-bridge)
-
 (setq lsp-bridge-org-babel-lang-list '("rust" "c" "cpp" "python" "latex"))
 (setq lsp-bridge-enable-auto-format-code t)
 (setq acm-enable-tabnine t)
+(setq lsp-bridge-enable-log t)
 
 (provide 'init-lspbridge)
