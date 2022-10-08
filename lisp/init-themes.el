@@ -12,6 +12,8 @@
 (require-package 'mixed-pitch)
 (require-package 'page-break-lines)
 (require-package 'doom-modeline)
+(require-package 'hide-mode-line)
+(require-package 'minions)
 
 (when (display-graphic-p)
   (require 'all-the-icons))
@@ -37,7 +39,6 @@
   (custom-set-variables `(custom-enabled-themes (quote ,custom-enabled-themes))))
 
 (add-hook 'after-init-hook 'reapply-themes)
-
 
 ;; Toggle between light and dark
 
@@ -253,7 +254,25 @@
 ;; Mode line
 (use-package doom-modeline
   :ensure t
-  :hook (after-init . doom-modeline-mode))
+  :hook (after-init . doom-modeline-mode)
+  :init
+  (setq doom-modeline-icon t
+	doom-modeline-height 1
+	doom-modeline-window-width-limit 110
+	doom-modeline-minor-modes t))
+
+(use-package hide-mode-line
+  :hook (((completion-list-mode
+           completion-in-region-mode
+           eshell-mode
+           shell-mode
+           term-mode
+           vterm-mode
+           pdf-annot-list-mode
+           flycheck-error-list-mode) . hide-mode-line-mode)))
+
+(use-package minions
+  :hook (doom-modeline-mode . minions-mode))
 
 (provide 'init-themes)
 ;;;init-themes.elendshere

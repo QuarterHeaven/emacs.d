@@ -6,7 +6,9 @@
 
 Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
   (and (fboundp 'meow-mode)
-       (or (meow-normal-mode-p))))
+       (or (meow-normal-mode-p)
+	   (meow-beacon-mode-p)
+	   (meow-keypad-mode-p))))
 
 (use-package rime
   :config
@@ -15,15 +17,19 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
   (setq rime-show-candidate 'posframe)
   ;; 默认值
   (setq rime-translate-keybindings
-	'("C-f" "C-b" "C-n" "C-p" "C-g" "<left>" "<right>" "<up>" "<down>" "<prior>" "<next>" "<delete>" "<shift>"))
+	'("C-f" "C-b" "C-n" "C-p" "C-g" "<left>" "<right>" "<up>" "<down>" "<prior>" "<next>" "<delete>"))
   (define-key rime-mode-map (kbd "C-`") 'rime-send-keybinding)
 ;;; 提示当前的临时英文状态。具体参考 mode-line-mule-info 默认值，其中可能有其它有用信息
   (setq mode-line-mule-info '((:eval (rime-lighter))))
- (setq rime-disable-predicates
+  (setq rime-disable-predicates
      '(rime-predicate-meow-normal-mode-p
-;        rime-predicate-after-alphabet-char-p
-;        rime-predicate-prog-in-code-p)
-     ))
+       rime-predicate-after-alphabet-char-p
+       rime-predicate-prog-in-code-p)
+     )
+  (setq rime-inline-ascii-trigger 'shift-l)
+  (setq rime-inline-predicates
+	'(rime-predicate-space-after-cc-p ; 中文接一个空格的后面
+          rime-predicate-current-uppercase-letter-p)) ; 当前输入是大写字母
   :custom
   (default-input-method "rime")
   )

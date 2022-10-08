@@ -4,6 +4,7 @@
 (require-package 'org-roam)
 (require-package 'org-roam-ui)
 (require-package 'org-ref)
+(require-package 'writeroom-mode)
 
 ; (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
@@ -53,10 +54,24 @@
 (require 'org-tempo)
 
 ;; org roam settings
-(setq org-roam-directory "~/Documents/orgs/roam")  ;; roam 应用的文件夹
+(setq org-roam-directory "~/Documents/orgs")  ;; roam 应用的文件夹
 ;; (add-hook 'after-init-hook 'org-roam-mode)
 
 (setq org-roam-completion-system 'ivy) ;;使用ivy提示
 
+;; 消灭中文强调的空格
+(font-lock-add-keywords 'org-mode
+                        '(("\\cc\\( \\)[/+*_=~][^a-zA-Z0-9/+*_=~\n]+?[/+*_=~]\\( \\)?\\cc?"
+                           (1 (prog1 () (compose-region (match-beginning 1) (match-end 1) ""))))
+                          ("\\cc?\\( \\)?[/+*_=~][^a-zA-Z0-9/+*_=~\n]+?[/+*_=~]\\( \\)\\cc"
+                           (2 (prog1 () (compose-region (match-beginning 2) (match-end 2) "")))))
+                        'append)
+
+(use-package writeroom
+  :hook
+  (org-mode . writeroom-mode)
+  :custom
+  (writeroom-mode-line t)
+  )
 
 (provide 'init-org)

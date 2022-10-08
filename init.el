@@ -14,6 +14,8 @@
 (require 'init-elpa)      ;; Machinery for installing required packages
 (require 'init-exec-path) ;; Set up $PATH
 (require 'init-straight)
+(require 'bind-key)
+(require 'init-autosave)
 
 (require 'init-osx-keys)
 (require 'init-gui-frames)
@@ -24,12 +26,11 @@
 (require 'init-ibuffer)
 
 (require 'init-ivy)
-(require 'init-company)
+;; (require 'init-company)
 (require 'init-awesomepair)
 (require 'init-eglot)
 (require 'init-dirvish)
 (require 'init-yasnippet)
-;; (require 'init-lsp)
 (require 'init-treesitter)
 (require 'init-org)
 (require 'init-rime)
@@ -40,3 +41,5 @@
 (require 'init-treemacs)
 (require 'init-dashboard)
 (require 'init-keyfreq)
+(require 'init-autocompile)
+(require 'init-lspbridge)
