@@ -38,7 +38,8 @@
       (load-theme theme)))
   (custom-set-variables `(custom-enabled-themes (quote ,custom-enabled-themes))))
 
-(add-hook 'after-init-hook 'reapply-themes)
+;; (add-hook 'after-init-hook 'reapply-themes)
+(add-hook 'window-setup-hook 'reapply-themes)
 
 ;; Toggle between light and dark
 

@@ -15,7 +15,7 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 ; 默认窗口最大化
-(setq initial-frame-alist (quote ((fullscreen . maximized))))
+(setq initial-frame-alist (quote ((fullscreen . fullboth))))
 (setq default-frame-alist (quote ((fullscreen . fullboth))))
 
 ; 隐藏开始界面
