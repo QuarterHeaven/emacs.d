@@ -74,4 +74,12 @@
   (writeroom-mode-line t)
   )
 
+(use-package org-padding
+  :quelpa (org-padding :repo "TonCherAmi/org-padding" :fetcher github))
+(add-hook 'org-mode-hook #'org-padding-mode)
+(setq org-padding-block-begin-line-padding '(2.0 . nil))
+(setq org-padding-block-end-line-padding '(nil . 1.0))
+(setq org-padding-heading-padding-alist
+  '((4.0 . 1.5) (3.0 . 0.5) (3.0 . 0.5) (3.0 . 0.5) (2.5 . 0.5) (2.0 . 0.5) (1.5 . 0.5) (0.5 . 0.5)))
+
 (provide 'init-org)

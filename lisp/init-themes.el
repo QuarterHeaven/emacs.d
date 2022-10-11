@@ -8,6 +8,8 @@
   '(nano-emacs :type git :host github :repo "rougier/nano-emacs"))
 (require-package 'solarized-theme)
 (require-package 'atom-one-dark-theme)
+(require 'lazycat-theme)
+
 (require-package 'all-the-icons)
 (require-package 'mixed-pitch)
 (require-package 'page-break-lines)

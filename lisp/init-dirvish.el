@@ -10,7 +10,7 @@
      ("m" "/mnt/"                       "Drives")
      ("t" "~/.local/share/Trash/files/" "TrashCan")))
   :config
-  (dirvish-peek-mode) ; Preview files in minibuffer
+  ;; (dirvish-peek-mode) ; Preview files in minibuffer
   (setq dirvish-mode-line-format
         '(:left (sort file-time " " file-size symlink) :right (omit yank index)))
   (setq dirvish-attributes
