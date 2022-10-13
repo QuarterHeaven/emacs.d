@@ -19,6 +19,7 @@
 
 (require 'init-osx-keys)
 (require 'init-gui-frames)
+(require 'init-fonts)
 (require 'init-themes)
 (when *is-a-mac*
   (require-package 'osx-location))

@@ -5,8 +5,12 @@
 (require-package 'org-roam-ui)
 (require-package 'org-ref)
 (require-package 'writeroom-mode)
+(require-package 'org-variable-pitch)
+(require-package 'color)
 
-; (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+					; (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+					; (add-hook 'org-mode-hook 'variable-pitch-mode)
+(add-hook 'org-mode-hook 'org-variable-pitch-minor-mode)
 
 (add-hook 'org-mode-hook (lambda() 
   (setq prettify-symbols-alist
@@ -16,15 +20,21 @@
                         (":END:" . ?)
                         ("#+TITLE:" . ?)
                         ("#+AUTHOR" . ?)
-                        ("#+BEGIN_QUOTE" . ?)
-                        ("#+END_QUOTE" . ?)
                         ("#+RESULTS:" . ?)
                         ("[ ]" . ?)
                         ("[-]" . ?)
                         ("[X]" . ?)
                         ("[#A]" . ?🅐)
                         ("[#B]" . ?🅑)
-                        ("[#C]" . ?🅒)))
+                        ("[#C]" . ?🅒)
+                        ("#+BEGIN_SRC" . "λ")  ; previously ✎
+                        ("#+END_SRC" . "□")
+                        ("#+begin_src" . "λ")
+                        ("#+end_src" . "□")
+                        ("#+begin_quote" . ?»)
+                        ("#+end_quote" . ?«)
+                        ("#+BEGIN_QUOTE" . ?»)
+                        ("#+END_QUOTE" . ?«)))
   (prettify-symbols-mode)))
 
 (setq org-hide-emphasis-markers t)
@@ -32,20 +42,23 @@
 (use-package org-modern
   :custom
   ;; Org modern settings
-  ;; (org-modern-star nil)
+  (org-modern-star nil)
   (org-modern-priority nil)
   (org-modern-list nil)
   (org-modern-checkbox nil)
   (org-modern-todo t)
   (org-modern-keyword nil)
+  (org-modern-block nil)
 
   ;; Editor settings
   (org-auto-align-tags nil)
-  (org-tags-column 0)
+  ; (org-tags-column 0)
   (org-catch-invisible-edits 'show-and-error)
   (org-special-ctrl-a/e t)
+ 
   :config
-  (global-org-modern-mode 1))
+  ;(global-org-modern-mode 1)
+  )
 
 (setq modus-themes-org-blocks 'gray-background)
 (add-hook 'org-mode-hook #'valign-mode)
@@ -74,12 +87,14 @@
   (writeroom-mode-line t)
   )
 
-(use-package org-padding
-  :quelpa (org-padding :repo "TonCherAmi/org-padding" :fetcher github))
-(add-hook 'org-mode-hook #'org-padding-mode)
-(setq org-padding-block-begin-line-padding '(2.0 . nil))
-(setq org-padding-block-end-line-padding '(nil . 1.0))
-(setq org-padding-heading-padding-alist
-  '((4.0 . 1.5) (3.0 . 0.5) (3.0 . 0.5) (3.0 . 0.5) (2.5 . 0.5) (2.0 . 0.5) (1.5 . 0.5) (0.5 . 0.5)))
+(require 'org-bars)
+(add-hook 'org-mode-hook #'org-bars-mode)
+
+(setq org-bars-stars '(:empty "◉"
+                       :invisible "▸"
+                       :visible "▾"))
+
+;; agenda settings
+(setq org-agenda-files '("~/Documents/orgs/tasks/"))
 
 (provide 'init-org)

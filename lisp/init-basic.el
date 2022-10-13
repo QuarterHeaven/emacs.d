@@ -24,4 +24,10 @@
 ; 关闭提示音
 (setq ring-bell-function 'ignore)
 
+; 关闭 native-comp warning
+(setq native-comp-async-report-warnings-errors nil)
+
+; 当前行高亮
+;; (global-hl-line-mode)
+
 (provide 'init-basic)

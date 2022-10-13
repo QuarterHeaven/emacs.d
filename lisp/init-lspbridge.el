@@ -1,5 +1,3 @@
-;;(add-to-list 'load-path "/Users/takaobsid/.emacs.d/lsp-bridge/")
-
 (require-package 'markdown-mode)
 
 (require 'lsp-bridge)
