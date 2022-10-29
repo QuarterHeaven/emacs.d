@@ -2,5 +2,8 @@
 	path = borg/nano-emacs
 	url = https://github.com/rougier/nano-emacs.git
 [submodule "lsp-bridge"]
-	path = lsp-bridge
-	url = git@github.com:manateelazycat/lsp-bridge.git
+	path = site-lisp/lsp-bridge
+	url = https://github.com/manateelazycat/lsp-bridge.git
+[submodule "benchmark-init-el"]
+	path = site-lisp/benchmark-init-el
+	url = https://github.com/dholm/benchmark-init-el.git

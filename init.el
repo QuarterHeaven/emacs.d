@@ -1,6 +1,20 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'init-benchmarking) ;; Measure startup time; from purcell
 
+(add-to-list 'load-path "/Users/takaobsid/.emacs.d/site-lisp/benchmark-init-el/")
+(let (
+      ;; 加载的时候临时增大`gc-cons-threshold'以加速启动速度。
+      (gc-cons-threshold most-positive-fixnum)
+      ;; 清空避免加载远程文件的时候分析文件。
+      (file-name-handler-alist nil))
+  (require 'benchmark-init-modes)
+  (require 'benchmark-init)
+  (benchmark-init/activate)
+
+    ;; 下面才写你的其它配置
+)
+
+
 (setq read-process-output-max (* 4 1024 1024))
 
 (defconst *is-a-mac* (eq system-type 'darwin))
@@ -19,6 +33,7 @@
 
 (require 'init-osx-keys)
 (require 'init-gui-frames)
+(require 'init-window)
 (require 'init-fonts)
 (require 'init-themes)
 (when *is-a-mac*
@@ -44,3 +59,4 @@
 (require 'init-keyfreq)
 (require 'init-autocompile)
 (require 'init-lspbridge)
+(require 'init-gpg)

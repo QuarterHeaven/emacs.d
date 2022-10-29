@@ -76,6 +76,46 @@
         (error "Cannot open tramp file")
       (browse-url (concat "file://" file-name)))))
 
+
+;; insert image from clipboard; from https://emacs-china.org/t/topic/6601/3
+
+(defun org-insert-image ()
+  "insert a image from clipboard"
+  (interactive)
+  (if *is-a-mac*
+      (progn
+       (let* ((path (concat default-directory "img/"))
+	      (image-file (concat
+			   path
+			   (buffer-name)
+			   (format-time-string "_%Y%m%d_%H%M%S.png"))))
+	 (if (not (file-exists-p path))
+	     (mkdir path))
+	 (do-applescript (concat
+			  "set the_path to \"" image-file "\" \n"
+			  "set png_data to the clipboard as «class PNGf» \n"
+			  "set the_file to open for access (POSIX file the_path as string) with write permission \n"
+			  "write png_data to the_file \n"
+			  "close access the_file"))
+	 ;; (shell-command (concat "pngpaste " image-file))
+	 (org-insert-link nil
+			  (concat "file:" image-file)
+			  "")
+	 (message image-file))
+       (org-display-inline-images)
+       )
+    (progn
+     (let* ((path (concat default-directory "img/"))
+	   (image-file (concat
+			path
+			(buffer-name)
+			(format-time-string "_%Y%m%d_%H%M%S.png"))))
+      (if (not (file-exists-p path))
+	  (mkdir path))
+      (shell-command (concat "pngpaste " image-file))
+      (org-insert-link nil (concat "file:" image-file) ""))
+    ;; (org-display-inline-images) ;; inline显示图片
+    )))
 
 (provide 'init-utils)
 ;;; init-utils.el ends here

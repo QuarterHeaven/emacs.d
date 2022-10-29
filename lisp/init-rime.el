@@ -26,10 +26,10 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
        rime-predicate-after-alphabet-char-p
        rime-predicate-prog-in-code-p)
      )
-  (setq rime-inline-ascii-trigger 'shift-l)
-  (setq rime-inline-predicates
-	'(rime-predicate-space-after-cc-p ; 中文接一个空格的后面
-          rime-predicate-current-uppercase-letter-p)) ; 当前输入是大写字母
+  ;; (setq rime-inline-ascii-trigger 'shift-l)
+  ;; (setq rime-inline-predicates
+  ;; 	'(rime-predicate-space-after-cc-p ; 中文接一个空格的后面
+  ;;         rime-predicate-current-uppercase-letter-p)) ; 当前输入是大写字母
   :custom
   (default-input-method "rime")
   )
@@ -38,8 +38,9 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
 (global-set-key (kbd "C-r") 'phi-search-backward)
 
 ;;; 光标自动变色
-(with-eval-after-load 'rime
-    (require 'im-cursor-chg)
-    (cursor-chg-mode 1))
+;; (with-eval-after-load 'rime
+(require 'im-cursor-chg)
+(cursor-chg-mode 1)
+;; )
 
 (provide 'init-rime)

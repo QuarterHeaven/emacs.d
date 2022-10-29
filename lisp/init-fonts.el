@@ -10,7 +10,9 @@
 ;; 				   ("LXGW WenKai" "LXGW WenKai Mono")
 ;; 				   ("Simsun-ExtB")
 ;; 				   ("Segoe UI Symbol")))
-(require 'org-faces)
+
+(require 'org)
+(require 'cl)
 (require-package 'color)
 
 ;; fonts set copy from centaur
@@ -78,20 +80,38 @@
     (set-face-attribute 'org-level-3 nil :family "Linux Biolinum O" :height 190)
     (set-face-attribute 'org-level-4 nil :family "Linux Biolinum O" :height 160)
     (set-face-attribute 'fixed-pitch nil :family "Fira Code")
-    (set-face-attribute 'org-block nil :background
-                        (color-darken-name
-                         (face-attribute 'default :background) 3) :inherit 'fixed-pitch :family "Fira Code")
-    (set-face-attribute 'org-code nil :background
-                        (color-darken-name
-                         (face-attribute 'default :background) 3) :inherit 'fixed-pitch :family "Fira Code")
-    (set-face-attribute 'org-quote nil :background
-                        (color-darken-name
-                         (face-attribute 'default :background) 3) :inherit 'fixed-pitch :family "Fira Code")
-    (set-face-attribute 'org-block-begin-line nil :background
-                        "#F1E6F8")
-    (set-face-attribute 'org-block-end-line nil :background
-                        (color-darken-name
-                         (face-attribute 'default :background) 4) :inherit 'fixed-pitch :family "Fira Code")
+    ;; (set-face-attribute 'org-block nil :background
+    ;;                     (color-darken-name
+    ;;                      (face-attribute 'default :background) 3) :inherit 'fixed-pitch :family "Fira Code")
+    ;; (set-face-attribute 'org-code nil :background
+    ;;                     (color-darken-name
+    ;;                      (face-attribute 'default :background) 3) :inherit 'fixed-pitch :family "Fira Code")
+    ;; (set-face-attribute 'org-quote nil :background
+    ;;                     (color-darken-name
+    ;;                      (face-attribute 'default :background) 3) :inherit 'fixed-pitch :family "Fira Code")
+    ;; (set-face-attribute 'org-block-begin-line nil :background
+    ;;                     "#F1E6F8")
+    ;; (set-face-attribute 'org-block-end-line nil :background
+    ;;                     (color-darken-name
+    ;;                      (face-attribute 'default :background) 4) :inherit 'fixed-pitch :family "Fira Code")
+)
+
+(defface my-org-emphasis-bold
+  '((default :inherit bold)
+    (((class color) (min-colors 88) (background light))
+     :foreground "#a60000")
+    (((class color) (min-colors 88) (background dark))
+     :foreground "#ff8059"))
+  "My bold emphasis for Org.")
+
+(setq org-emphasis-alist
+      '(("*" my-org-emphasis-bold)
+	("/" italic)
+	("_" underline)
+	("=" org-verbatim verbatim)
+	("~" org-code verbatim)
+	("+"
+	 (:strike-through t)))
 )
 
 (provide 'init-fonts)

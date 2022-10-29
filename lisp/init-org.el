@@ -7,10 +7,11 @@
 (require-package 'writeroom-mode)
 (require-package 'org-variable-pitch)
 (require-package 'color)
+(require-package 'visual-fill-column)
 
 					; (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 					; (add-hook 'org-mode-hook 'variable-pitch-mode)
-(add-hook 'org-mode-hook 'org-variable-pitch-minor-mode)
+;;(add-hook 'org-mode-hook 'org-variable-pitch-minor-mode)
 
 (add-hook 'org-mode-hook (lambda() 
   (setq prettify-symbols-alist
@@ -19,8 +20,14 @@
                         (":ID:" . ?)
                         (":END:" . ?)
                         ("#+TITLE:" . ?)
-                        ("#+AUTHOR" . ?)
+                        ("#+AUTHOR:" . ?)
                         ("#+RESULTS:" . ?)
+			(":properties:" . ?)
+                        (":id:" . ?)
+                        (":end:" . ?)
+                        ("#+title:" . ?)
+                        ("#+author:" . ?)
+                        ("#+results:" . ?)
                         ("[ ]" . ?)
                         ("[-]" . ?)
                         ("[X]" . ?)
@@ -62,7 +69,6 @@
 
 (setq modus-themes-org-blocks 'gray-background)
 (add-hook 'org-mode-hook #'valign-mode)
-(add-hook 'org-mode-hook #'toggle-truncate-lines)
 
 (require 'org-tempo)
 
@@ -83,6 +89,9 @@
 (use-package writeroom
   :hook
   (org-mode . writeroom-mode)
+  (writeroom-mode . variable-pitch-mode)
+  (writeroom-mode . visual-line-mode)
+  (visual-line-mode . visual-fill-column-mode)
   :custom
   (writeroom-mode-line t)
   )
@@ -95,6 +104,25 @@
                        :visible "▾"))
 
 ;; agenda settings
+(load "~/.emacs.d/site-lisp/next-spec-day.el")
 (setq org-agenda-files '("~/Documents/orgs/tasks/"))
+
+(require-package 'ob-rust)
+(org-babel-do-load-languages
+      'org-babel-load-languages
+      '((emacs-lisp . t)
+        (C . t)
+        (java . t)
+        (js . t)
+        (python . t)
+        (shell . t)
+        (latex . t)
+	(rust . t)))
+
+(setq word-wrap-by-category t)
+
+(define-key org-mode-map (kbd "C-C <C-backspace>") 'org-mark-ring-goto)
+
+(defvar org-babel-python-command "python3.10")
 
 (provide 'init-org)

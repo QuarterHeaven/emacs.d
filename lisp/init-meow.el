@@ -95,7 +95,7 @@
 (meow-setup)
 (meow-global-mode 1)
 
-;; Use jk to escape from insert state to normal state
+;; Use ,, to escape from insert state to normal state
 (defvar meow-two-char-escape-sequence ",,")
 (defvar meow-two-char-escape-delay 0.5)
 
