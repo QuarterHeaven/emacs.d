@@ -30,4 +30,7 @@
 ; 当前行高亮
 ;; (global-hl-line-mode)
 
+; gpg
+(setq epa-pinentry-mode 'loopback)
+
 (provide 'init-basic)
