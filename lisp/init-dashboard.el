@@ -1,4 +1,9 @@
 (require-package 'dashboard)
+(require-package 'page-break-lines)
+
+(use-package page-break-lines
+  :ensure t
+  :demand t)
 
 (dashboard-setup-startup-hook)
 (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
@@ -29,5 +34,8 @@
 
 (setq dashboard-set-heading-icons t)
 (setq dashboard-set-file-icons t)
+(setq dashboard-week-agenda t)
+(setq dashboard-set-navigator t)
+(setq dashboard-agenda-sort-strategy '(time-up))
 
 (provide 'init-dashboard)

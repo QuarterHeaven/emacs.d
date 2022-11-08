@@ -102,6 +102,7 @@
 (setq org-bars-stars '(:empty "◉"
                        :invisible "▸"
                        :visible "▾"))
+(setq org-ellipsis "⤵")
 
 ;; agenda settings
 (load "~/.emacs.d/site-lisp/next-spec-day.el")

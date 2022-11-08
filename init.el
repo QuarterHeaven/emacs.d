@@ -30,7 +30,7 @@
 (require 'init-straight)
 (require 'bind-key)
 (require 'init-autosave)
-
+
 (require 'init-osx-keys)
 (require 'init-gui-frames)
 (require 'init-window)
@@ -40,10 +40,11 @@
   (require-package 'osx-location))
 (require 'init-meow)
 (require 'init-ibuffer)
-
+
 (require 'init-ivy)
 ;; (require 'init-company)
-(require 'init-awesomepair)
+;; (require 'init-awesomepair)
+(require 'init-grammatical-edit)
 (require 'init-eglot)
 (require 'init-dirvish)
 (require 'init-yasnippet)
@@ -60,3 +61,5 @@
 (require 'init-autocompile)
 (require 'init-lspbridge)
 (require 'init-gpg)
+
+(require 'init-clojure)

@@ -12,4 +12,7 @@
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 ;; (add-hook 'prog-mode-hook #'tree-sitter-hl-mode)
 
+(tree-sitter-load 'elisp "elisp")
+(add-to-list 'tree-sitter-major-mode-language-alist '(emacs-lisp-mode . elisp))
+
 (provide 'init-treesitter)
