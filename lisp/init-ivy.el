@@ -8,29 +8,32 @@
 (require-package 'which-key)
 (require-package 'which-key-posframe)
 
-(ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
-(setq enable-recursive-minibuffers t)
-(with-eval-after-load 'counsel
-  (setq ivy-initial-inputs-alist nil))
-(counsel-mode 1)
+(use-package ivy
+  :defer t
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  (with-eval-after-load 'counsel
+    (setq ivy-initial-inputs-alist nil))
+  (counsel-mode 1)
 
-(setq counsel-find-file-at-point t
-      counsel-preselect-current-file t
-      counsel-yank-pop-separator "\n────────\n")
-(add-hook 'counsel-grep-post-action-hook #'recenter)
+  (setq counsel-find-file-at-point t
+	counsel-preselect-current-file t
+	counsel-yank-pop-separator "\n────────\n")
+  (add-hook 'counsel-grep-post-action-hook #'recenter)
 
-(setq ivy-height 12
-      ivy-use-selectable-prompt t
-      ivy-use-virtual-buffers t    ; Enable bookmarks and recentf
-      ivy-fixed-height-minibuffer t
-      ivy-count-format "(%d/%d) "
-      ivy-ignore-buffers '("\\` " "\\`\\*tramp/" "\\`\\*xref" "\\`\\*helpful "
-                           "\\`\\*.+-posframe-buffer\\*" "\\` ?\\*company-.+\\*")
-      ivy-on-del-error-function #'ignore
-      ivy-initial-inputs-alist nil)
+  (setq ivy-height 12
+	ivy-use-selectable-prompt t
+	ivy-use-virtual-buffers t    ; Enable bookmarks and recentf
+	ivy-fixed-height-minibuffer t
+	ivy-count-format "(%d/%d) "
+	ivy-ignore-buffers '("\\` " "\\`\\*tramp/" "\\`\\*xref" "\\`\\*helpful "
+                             "\\`\\*.+-posframe-buffer\\*" "\\` ?\\*company-.+\\*")
+	ivy-on-del-error-function #'ignore
+	ivy-initial-inputs-alist nil)
 
-(setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
+  (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order))))
 
 
 (require-package 'ivy-rich)
@@ -101,9 +104,9 @@
 ;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
 ;; (ivy-posframe-mode 1)
 (setq ivy-height 15                 ; Use bigger minibuffer height for child frame
-          ivy-posframe-border-width 3
-          ivy-posframe-parameters '((left-fringe . 8)
-                                    (right-fringe . 8)))
+      ivy-posframe-border-width 3
+      ivy-posframe-parameters '((left-fringe . 8)
+                                (right-fringe . 8)))
 
 (use-package smex)
 

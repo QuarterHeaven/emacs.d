@@ -1,10 +1,11 @@
 (require-package 'dashboard)
 (require-package 'page-break-lines)
 
-(use-package page-break-lines
-  :ensure t
-  :demand t)
+;(use-package page-break-lines
+;  :ensure t
+;  :demand t)
 
+(run-with-idle-timer 0.1 nil 'toggle-frame-maximized)
 (dashboard-setup-startup-hook)
 (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 

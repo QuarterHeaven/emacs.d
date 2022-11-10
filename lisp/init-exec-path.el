@@ -12,6 +12,8 @@
 (when (or (memq window-system '(mac ns x pgtk))
           (unless (memq system-type '(ms-dos windows-nt))
             (daemonp)))
+  (setq exec-path-from-shell-check-startup-files nil) ;
+  (setq exec-path-from-shell-arguments '("-l" )) ;remove -i read form .zshenv
   (exec-path-from-shell-initialize))
 
 (provide 'init-exec-path)

@@ -1,9 +1,11 @@
 (require-package 'yasnippet)
-(yas-global-mode 1)
-
 (require-package 'yasnippet-snippets)
-
 (require-package 'auto-yasnippet)
+
+(use-package yasnippet
+  :defer t
+  :config
+  (yas-global-mode 1))
 
 (use-package auto-yasnippet
   :bind
@@ -13,4 +15,3 @@
   (setq aya-persist-snippets-dir (concat user-emacs-directory "snippets")))
 
 (provide 'init-yasnippet)
-

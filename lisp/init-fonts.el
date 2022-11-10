@@ -24,7 +24,7 @@
   "Setup fonts."
   (when (display-graphic-p)
     ;; Set default font
-    (cl-loop for font in '("Fira Code" "Jetbrains Mono"
+    (cl-loop for font in '("FiraCode Nerd Font" "Jetbrains Mono"
                            "SF Mono" "Hack" "Source Code Pro" "Menlo"
                            "Monaco" "DejaVu Sans Mono" "Consolas")
              when (font-installed-p font)
@@ -42,7 +42,7 @@
                       (when (facep 'mode-line-active)
                         (set-face-attribute 'mode-line-active nil :family font :height 120))
                       (set-face-attribute 'mode-line-inactive nil :family font :height 120)))
-    
+
     ;; Specify font for all unicode characters
     (cl-loop for font in '("Segoe UI Symbol" "Symbola" "Symbol")
              when (font-installed-p font)
@@ -73,7 +73,7 @@
 (add-hook 'server-after-make-frame-hook #'centaur-setup-fonts)
 
 (require 'color)
-(with-eval-after-load 'org-faces 
+(with-eval-after-load 'org-faces
     (set-face-attribute 'variable-pitch nil :family "EB Garamond" :height 160)
     (set-face-attribute 'org-level-1 nil :weight 'semi-bold :family "EB Garamond" :height 240)
     (set-face-attribute 'org-level-2 nil :family "Linux Biolinum O" :height 210)

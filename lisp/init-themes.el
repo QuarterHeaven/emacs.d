@@ -4,8 +4,6 @@
 
 (require-package 'color-theme-sanityinc-solarized)
 (require-package 'color-theme-sanityinc-tomorrow)
-(straight-use-package
-  '(nano-emacs :type git :host github :repo "rougier/nano-emacs"))
 (require-package 'solarized-theme)
 (require-package 'atom-one-dark-theme)
 ;; (require 'lazycat-theme)

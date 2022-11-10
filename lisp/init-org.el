@@ -8,12 +8,13 @@
 (require-package 'org-variable-pitch)
 (require-package 'color)
 (require-package 'visual-fill-column)
+(require-package 'ob-rust)
 
 					; (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 					; (add-hook 'org-mode-hook 'variable-pitch-mode)
 ;;(add-hook 'org-mode-hook 'org-variable-pitch-minor-mode)
 
-(add-hook 'org-mode-hook (lambda() 
+(add-hook 'org-mode-hook (lambda()
   (setq prettify-symbols-alist
                       '(("lambda"  . ?λ)
                         (":PROPERTIES:" . ?)
@@ -47,6 +48,7 @@
 (setq org-hide-emphasis-markers t)
 
 (use-package org-modern
+  :defer t
   :custom
   ;; Org modern settings
   (org-modern-star nil)
@@ -62,7 +64,7 @@
   ; (org-tags-column 0)
   (org-catch-invisible-edits 'show-and-error)
   (org-special-ctrl-a/e t)
- 
+
   :config
   ;(global-org-modern-mode 1)
   )
@@ -73,10 +75,13 @@
 (require 'org-tempo)
 
 ;; org roam settings
-(setq org-roam-directory "~/Documents/orgs")  ;; roam 应用的文件夹
-;; (add-hook 'after-init-hook 'org-roam-mode)
+(use-package org-roam
+  :defer t
+  :config
+  (setq org-roam-directory "~/Documents/orgs")  ;; roam 应用的文件夹
+  ;; (add-hook 'after-init-hook 'org-roam-mode)
 
-(setq org-roam-completion-system 'ivy) ;;使用ivy提示
+  (setq org-roam-completion-system 'ivy)) ;;使用ivy提示
 
 ;; 消灭中文强调的空格
 (font-lock-add-keywords 'org-mode
@@ -87,17 +92,23 @@
                         'append)
 
 (use-package writeroom
+  :defer t
+
+  :init
+  (setq writeroom-fullscreen-effect 'maximized)
+
   :hook
   (org-mode . writeroom-mode)
   (writeroom-mode . variable-pitch-mode)
   (writeroom-mode . visual-line-mode)
   (visual-line-mode . visual-fill-column-mode)
-  :custom
-  (writeroom-mode-line t)
-  )
 
-(require 'org-bars)
-(add-hook 'org-mode-hook #'org-bars-mode)
+  :custom
+  (writeroom-mode-line t))
+
+(use-package org-bars
+  :config
+  (add-hook 'org-mode-hook #'org-bars-mode))
 
 (setq org-bars-stars '(:empty "◉"
                        :invisible "▸"
@@ -108,7 +119,6 @@
 (load "~/.emacs.d/site-lisp/next-spec-day.el")
 (setq org-agenda-files '("~/Documents/orgs/tasks/"))
 
-(require-package 'ob-rust)
 (org-babel-do-load-languages
       'org-babel-load-languages
       '((emacs-lisp . t)

@@ -89,3 +89,6 @@ url/
 var/
 workspace/
 *~
+/eaf/
+/elpa-28.2/
+/quelpa/
