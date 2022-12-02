@@ -15,8 +15,8 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 ; 默认窗口最大化
-(setq initial-frame-alist (quote ((fullscreen . maximize))))
-(setq default-frame-alist (quote ((fullscreen . maximize))))
+;; (setq initial-frame-alist (quote ((fullscreen . maximize))))
+;; (setq default-frame-alist (quote ((fullscreen . maximize))))
 ; (add-hook 'window-setup-hook #'toggle-frame-maximized)
 
 ; 隐藏开始界面
@@ -33,5 +33,10 @@
 
 ; gpg
 (setq epa-pinentry-mode 'loopback)
+
+(global-set-key (kbd "C-c v") 'split-window-vertically)
+(global-set-key (kbd "C-c h") 'split-window-horizontally)
+
+(setq tab-bar-show 1)
 
 (provide 'init-basic)

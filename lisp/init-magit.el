@@ -3,7 +3,7 @@
 
 (with-eval-after-load 'magit
   (use-package forge
-    :defer t
+    ;; :defer t
     :demand t
     :defines forge-topic-list-columns
     :custom-face

@@ -1,3 +1,4 @@
+(require 'websocket)
 (require 'deno-bridge)
 (require 'deno-bridge-jieba)
 

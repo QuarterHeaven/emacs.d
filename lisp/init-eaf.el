@@ -22,6 +22,7 @@
   (require 'eaf-org-previewer)
   (require 'eaf-airshare)
   (require 'eaf-system-monitor) ;; unbind, see more in the Wiki
+  (require 'eaf-git)
   (setq eaf-webengine-default-zoom (if (> (frame-pixel-width) 3000) 2 1))
   (setq eaf-browser-aria2-proxy-host "127.0.0.1")
   (setq eaf-browser-aria2-proxy-port "1081")

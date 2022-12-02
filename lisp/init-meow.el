@@ -5,7 +5,7 @@
   (meow-motion-overwrite-define-key
    '("j" . meow-next)
    '("k" . meow-prev)
-   '("<escape>" . ignore))
+   '("<escape>" . mode-line-other-buffer))
   (meow-leader-define-key
    ;; SPC j/k will run the original command in MOTION state.
    '("j" . "H-j")
@@ -84,7 +84,8 @@
    '("Y" . meow-sync-grab)
    '("z" . meow-pop-selection)
    '("'" . repeat)
-   '("<escape>" . ignore))
+   '("<escape>" . mode-line-other-buffer)
+   '("RET" . ivy-switch-buffer))
   (meow-define-keys
     'insert
   '("C-," . meow-insert-exit)))

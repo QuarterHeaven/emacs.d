@@ -1,6 +1,6 @@
 (require-package 'tree-sitter)
 (require-package 'tree-sitter-langs)
-(global-tree-sitter-mode)
+;; (global-tree-sitter-mode)
 
 ;; (add-hook 'rust-mode-hook #'tree-sitter-mode)
 ;; (add-hook 'c-mode-hook #'tree-sitter-mode)

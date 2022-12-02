@@ -2,11 +2,13 @@
 ;;;Commentary:
 ;;;Code:
 
-(require-package 'color-theme-sanityinc-solarized)
-(require-package 'color-theme-sanityinc-tomorrow)
-(require-package 'solarized-theme)
-(require-package 'atom-one-dark-theme)
+;; (require-package 'color-theme-sanityinc-solarized)
+;; (require-package 'color-theme-sanityinc-tomorrow)
+;; (require-package 'solarized-theme)
+;; (require-package 'atom-one-dark-theme)
 ;; (require 'lazycat-theme)
+;; (require 'init-modus)
+(require-package 'doom-themes)
 
 (require-package 'all-the-icons)
 (require-package 'mixed-pitch)
@@ -14,6 +16,8 @@
 (require-package 'doom-modeline)
 (require-package 'hide-mode-line)
 (require-package 'minions)
+(require-package 'general)
+(require 'awesome-tab)
 
 (when (display-graphic-p)
   (require 'all-the-icons))
@@ -24,10 +28,9 @@
 (setq custom-safe-themes t)
 
 ;;If you don't customize it, this is the theme you get.
-; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
-; (setq-default custom-enabled-themes '(atom-one-dark))
-(setq-default custom-enabled-themes '(solarized-light))
-(setq nano-font-family-monospaced "FiraCode Nerd Font")
+;; (setq-default custom-enabled-themes '(doom-ayu-light))
+(setq-default custom-enabled-themes '(ef-spring))
+(setq ef-themes-mixed-fonts 't)
 ;(require 'nano)
 
 ;;Ensure that themes will be applied even if they have not been customized
@@ -217,6 +220,25 @@
 
 (use-package minions
   :hook (doom-modeline-mode . minions-mode))
+
+(defun awesome-tab-hide-tab (x)
+  (let ((name (format "%s" x)))
+    (or
+     (string-prefix-p "*epc" name)
+     (string-prefix-p "*Compile-Log*" name)
+     (string-prefix-p "*lsp" name)
+     (string-prefix-p "*clojure" name)
+     (string-prefix-p "*clangd" name)
+     (string-prefix-p "*Flymake" name)
+     (string-prefix-p "*run" name)
+     (string-prefix-p "*Warnings" name)
+     (string-prefix-p " *company" name)
+     (string-prefix-p " *lsp" name)
+     (and (string-prefix-p "magit" name)
+               (not (file-name-extension name)))
+     )))
+(awesome-tab-mode t)
+(global-set-key (kbd "C-;") 'awesome-tab-ace-jump)
 
 (provide 'init-themes)
 ;;;init-themes.elendshere

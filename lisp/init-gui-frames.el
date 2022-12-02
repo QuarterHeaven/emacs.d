@@ -88,6 +88,8 @@
 
 (require-package 'disable-mouse)
 
+
+(require-package 'burly)
 
 (provide 'init-gui-frames)
 ;;; init-gui-frames.el ends here

@@ -14,7 +14,7 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
   :config
   (setq rime-librime-root "~/.emacs.d/librime/dist")
   (setq rime-cursor "˰")
-  (setq rime-show-candidate 'posframe)
+  (setq rime-show-candidate 'minibuffer)
   ;; 默认值
   (setq rime-translate-keybindings
 	'("C-f" "C-b" "C-n" "C-p" "C-g" "<left>" "<right>" "<up>" "<down>" "<prior>" "<next>" "<delete>"))
@@ -22,17 +22,17 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
 ;;; 提示当前的临时英文状态。具体参考 mode-line-mule-info 默认值，其中可能有其它有用信息
   (setq mode-line-mule-info '((:eval (rime-lighter))))
   (setq rime-disable-predicates
-     '(rime-predicate-meow-normal-mode-p
-       rime-predicate-after-alphabet-char-p
-       rime-predicate-prog-in-code-p)
-     )
+	'(rime-predicate-meow-normal-mode-p
+	  rime-predicate-after-alphabet-char-p
+	  rime-predicate-prog-in-code-p)
+	)
   ;; (setq rime-inline-ascii-trigger 'shift-l)
   ;; (setq rime-inline-predicates
   ;; 	'(rime-predicate-space-after-cc-p ; 中文接一个空格的后面
   ;;         rime-predicate-current-uppercase-letter-p)) ; 当前输入是大写字母
   :custom
   (default-input-method "rime")
-  )
+  (setq rime-cursor "˰"))
 
 (global-set-key (kbd "C-s") 'phi-search)
 (global-set-key (kbd "C-r") 'phi-search-backward)

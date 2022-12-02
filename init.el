@@ -11,8 +11,8 @@
   (require 'benchmark-init)
   (benchmark-init/activate)
 
-    ;; 下面才写你的其它配置
-)
+  ;; 下面才写你的其它配置
+  )
 
 (setq
  ;; 默认用最简单的模式
@@ -27,8 +27,10 @@
 
 (with-temp-message ""
   (setq custom-file (locate-user-emacs-file "custom.el"))
-  (require 'init-basic)
+  (load custom-file)
+
   (require 'init-utils)
+  (require 'init-basic)
   (require 'init-const)
   (require 'init-site-lisp) ;; Must come before elpa, as it may provide package.el
   ;; Calls (package-initialize)
@@ -41,36 +43,40 @@
   (require 'init-osx-keys)
   (require 'init-gui-frames)
   (require 'init-window)
-  (require 'init-fonts)
   (require 'init-themes)
+  (require 'init-fonts)
   (when *is-a-mac*
     (require-package 'osx-location))
   (require 'init-meow)
   (require 'init-ibuffer)
   (require 'init-dashboard)
+  (require 'init-yasnippet)
+  (require 'init-company)
+  (require 'init-lspmode)
+  ;; (require 'init-lspbridge)
 
-  (run-with-idle-timer
-   1 nil
-   #'(lambda ()
-       (require 'init-ivy)
-       ;; (require 'init-company)
-       (require 'init-grammatical-edit)
-       (require 'init-eglot)
-       (require 'init-dirvish)
-       (require 'init-yasnippet)
-       (require 'init-treesitter)
-       (require 'init-org)
-       (require 'init-rime)
-       (require 'init-magit)
-       (require 'init-aweshell)
-       (require 'init-rg)
-       (require 'init-projectile)
-       (require 'init-treemacs)
-       (require 'init-keyfreq)
-       (require 'init-autocompile)
-       (require 'init-lspbridge)
-       (require 'init-gpg)
-       (require 'init-eaf)
-       (require 'init-deno)
+  ;; (run-with-idle-timer
+  ;;  1 nil
+  ;;  #'(lambda ()
+  (require 'init-ivy)
+  (require 'init-grammatical-edit)
+  (require 'init-eglot)
+  (require 'init-dirvish)
+  (require 'init-treesitter)
+  (require 'init-org)
+  (require 'init-rime)
+  (require 'init-magit)
+  (require 'init-vterm)
+  (require 'init-rg)
+  (require 'init-projectile)
+  (require 'init-treemacs)
+  (require 'init-keyfreq)
+  (require 'init-autocompile)
+  (require 'init-gpg)
 
-       (require 'init-clojure))))
+  (require 'init-clojure)
+  (require 'init-web)
+  (require 'init-deno)
+  )
+
+   ;; ))

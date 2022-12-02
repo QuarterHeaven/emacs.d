@@ -3,7 +3,7 @@
 (require-package 'auto-yasnippet)
 
 (use-package yasnippet
-  :defer t
+  ;; :defer t
   :config
   (yas-global-mode 1))
 
