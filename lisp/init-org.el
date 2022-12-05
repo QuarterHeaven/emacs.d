@@ -160,6 +160,57 @@
                    begin-content))))
   (advice-add #'xenops-math-reveal :override #'xenops-math-reveal-alt)
 
+(setq org-latex-compiler "xelatex"
+      org-latex-packages-default-alist '(("" "mathspec" t)
+                                 ("fontset=macnew,UTF8" "ctex" t))
+      org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f")
+      org-preview-latex-default-process 'dvisvgm
+      org-preview-latex-process-alist
+      '((dvisvgm :programs ("xelatex" "dvisvgm")
+                 :description "xdv > svg" :use-xcolor t
+                 :message "you need to install the programs: xelatex and dvisvgm."
+                 :image-input-type "xdv" :image-output-type "svg" :image-size-adjust (1.7 . 1.5)
+                 :latex-compiler ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+                 :image-converter ("dvisvgm %f -n -b min -c %S -o %O"))
+        (imagemagick :programs ("xelatex" "convert")
+                     :description "pdf > png" :use-xcolor t
+                     :message "you need to install the programs: xelatex and imagemagick."
+                     :image-input-type "pdf" :image-output-type "png" :image-size-adjust (1.0 . 1.0)
+                     :latex-compiler ("xelatex -interaction nonstopmode -output-directory %o %f")
+                     :image-converter ("convert -density %D -trim -antialias %f -quality 100 %O")))
+      xenops-math-latex-process-alist
+      '((dvisvgm :programs ("xelatex" "dvisvgm")
+                 :description "xdv > svg" :use-xcolor t
+                 :message "you need to install the programs: xelatex and dvisvgm."
+                 :image-input-type "xdv" :image-output-type "svg" :image-size-adjust (1.7 . 1.5)
+                 :latex-compiler ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+                 :image-converter ("dvisvgm %f -n -b min -c %S -o %O"))
+	(imagemagick :programs ("latex" "convert")
+		     :description "pdf > png"
+		     :message "you need to install the programs: latex and imagemagick."
+		     :image-input-type "pdf" :image-output-type "png" :image-size-adjust (1.0 . 1.0)
+		     :latex-compiler ("pdflatex -interaction nonstopmode -shell-escape -output-directory %o %f")
+		     :image-converter ("convert -density %D -trim -antialias %f -quality 100 %O"))))
+
+;; (setq xenops-math-latex-process-alist
+;;       '((dvipng :programs ("xelatex" "dvipng")
+;; 		:description "dvi > png"
+;; 		:message "you need to install the programs: latex and dvipng."
+;; 		:image-input-type "dvi" :image-output-type "png" :image-size-adjust (1.0 . 1.0)
+;; 		:latex-compiler ("xelatex -no-pdf -interaction nonstopmode -shell-escape -output-directory %o %f")
+;; 		:image-converter ("dvipng -D %D -T tight -o %O %f"))
+;; 	(dvisvgm :programs ("xelatex" "dvisvgm")
+;; 		 :description "xdv > svg"
+;; 		 :message "you need to install the programs: latex and dvisvgm."
+;; 		 :image-input-type "dvi" :image-output-type "svg" :image-size-adjust (1.7 . 1.5)
+;; 		 :latex-compiler ("xelatex -no-pdf -interaction nonstopmode -shell-escape -output-directory %o %f")
+;; 		 :image-converter ("dvisvgm %f -n -b %b -c %S -o %O"))
+;; 	(imagemagick :programs ("latex" "convert")
+;; 		     :description "pdf > png"
+;; 		     :message "you need to install the programs: latex and imagemagick."
+;; 		     :image-input-type "pdf" :image-output-type "png" :image-size-adjust (1.0 . 1.0)
+;; 		     :latex-compiler ("pdflatex -interaction nonstopmode -shell-escape -output-directory %o %f")
+;; 		     :image-converter ("convert -density %D -trim -antialias %f -quality 100 %O"))))
 ;; 公式编号
 (defun eli/xenops-renumber-environment (orig-func element latex colors
                                                     cache-file display-image)
