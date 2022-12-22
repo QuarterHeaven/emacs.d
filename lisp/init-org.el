@@ -82,11 +82,13 @@
 (use-package org-roam
   ;; :defer t
   :config
-  (setq org-roam-directory "~/Documents/orgs")  ;; roam 应用的文件夹
   ;; (add-hook 'after-init-hook 'org-roam-mode)
-  (setq org-roam-completion-system 'ivy) ;;使用ivy提示
+  (org-roam-db-autosync-enable)
   :custom
-  (org-roam-database-connector 'sqlite-builtin))
+  (org-roam-database-connector 'sqlite-builtin)
+  (org-roam-completion-system 'ivy) ;;使用ivy提示
+  (org-roam-directory "~/Documents/orgs")  ;; roam 应用的文件夹
+)
 
 ;; whitespace mode 下显示零宽空格
 (with-eval-after-load 'whitespace
@@ -161,12 +163,11 @@
   (advice-add #'xenops-math-reveal :override #'xenops-math-reveal-alt)
 
 (setq org-latex-compiler "xelatex"
-      org-latex-packages-default-alist '(("" "mathspec" t)
-                                 ("fontset=macnew,UTF8" "ctex" t))
       org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f")
-      org-preview-latex-default-process 'dvisvgm
+      org-preview-latex-default-process 'xdvsvgm
+      xenops-math-latex-process 'xdvsvgm
       org-preview-latex-process-alist
-      '((dvisvgm :programs ("xelatex" "dvisvgm")
+      '((xdvsvgm :programs ("xelatex" "dvisvgm")
                  :description "xdv > svg" :use-xcolor t
                  :message "you need to install the programs: xelatex and dvisvgm."
                  :image-input-type "xdv" :image-output-type "svg" :image-size-adjust (1.7 . 1.5)
@@ -179,7 +180,7 @@
                      :latex-compiler ("xelatex -interaction nonstopmode -output-directory %o %f")
                      :image-converter ("convert -density %D -trim -antialias %f -quality 100 %O")))
       xenops-math-latex-process-alist
-      '((dvisvgm :programs ("xelatex" "dvisvgm")
+      '((xdvsvgm :programs ("xelatex" "dvisvgm")
                  :description "xdv > svg" :use-xcolor t
                  :message "you need to install the programs: xelatex and dvisvgm."
                  :image-input-type "xdv" :image-output-type "svg" :image-size-adjust (1.7 . 1.5)
@@ -192,25 +193,11 @@
 		     :latex-compiler ("pdflatex -interaction nonstopmode -shell-escape -output-directory %o %f")
 		     :image-converter ("convert -density %D -trim -antialias %f -quality 100 %O"))))
 
-;; (setq xenops-math-latex-process-alist
-;;       '((dvipng :programs ("xelatex" "dvipng")
-;; 		:description "dvi > png"
-;; 		:message "you need to install the programs: latex and dvipng."
-;; 		:image-input-type "dvi" :image-output-type "png" :image-size-adjust (1.0 . 1.0)
-;; 		:latex-compiler ("xelatex -no-pdf -interaction nonstopmode -shell-escape -output-directory %o %f")
-;; 		:image-converter ("dvipng -D %D -T tight -o %O %f"))
-;; 	(dvisvgm :programs ("xelatex" "dvisvgm")
-;; 		 :description "xdv > svg"
-;; 		 :message "you need to install the programs: latex and dvisvgm."
-;; 		 :image-input-type "dvi" :image-output-type "svg" :image-size-adjust (1.7 . 1.5)
-;; 		 :latex-compiler ("xelatex -no-pdf -interaction nonstopmode -shell-escape -output-directory %o %f")
-;; 		 :image-converter ("dvisvgm %f -n -b %b -c %S -o %O"))
-;; 	(imagemagick :programs ("latex" "convert")
-;; 		     :description "pdf > png"
-;; 		     :message "you need to install the programs: latex and imagemagick."
-;; 		     :image-input-type "pdf" :image-output-type "png" :image-size-adjust (1.0 . 1.0)
-;; 		     :latex-compiler ("pdflatex -interaction nonstopmode -shell-escape -output-directory %o %f")
-;; 		     :image-converter ("convert -density %D -trim -antialias %f -quality 100 %O"))))
+(with-eval-after-load 'org
+  (add-to-list 'org-latex-default-packages-alist '("" "mathspec" t ("xelatex")))
+  (add-to-list 'org-latex-default-packages-alist '("UTF8" "ctex" t ("xelatex"))))
+;; (add-to-list 'org-latex-default-packages-alist '("slantfont,boldfont" "xeCJK" t ("xelatex")))
+
 ;; 公式编号
 (defun eli/xenops-renumber-environment (orig-func element latex colors
                                                     cache-file display-image)

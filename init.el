@@ -36,7 +36,6 @@
   ;; Calls (package-initialize)
   (require 'init-elpa)      ;; Machinery for installing required packages
   (require 'init-exec-path) ;; Set up $PATH
-  ;; (require 'init-straight)
   (require 'bind-key)
   (require 'init-autosave)
 
@@ -53,11 +52,6 @@
   (require 'init-yasnippet)
   (require 'init-company)
   (require 'init-lspmode)
-  ;; (require 'init-lspbridge)
-
-  ;; (run-with-idle-timer
-  ;;  1 nil
-  ;;  #'(lambda ()
   (require 'init-ivy)
   (require 'init-grammatical-edit)
   (require 'init-eglot)
@@ -74,9 +68,7 @@
   (require 'init-autocompile)
   (require 'init-gpg)
 
+  (require 'init-languages)
   (require 'init-clojure)
   (require 'init-web)
-  (require 'init-deno)
-  )
-
-   ;; ))
+  (require 'init-deno))

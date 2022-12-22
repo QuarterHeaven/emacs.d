@@ -39,4 +39,6 @@
 
 (setq tab-bar-show 1)
 
+(setq use-short-answers t)
+
 (provide 'init-basic)
