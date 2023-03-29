@@ -25,3 +25,6 @@
 [submodule "site-lisp/grammatical-edit"]
 	path = site-lisp/grammatical-edit
 	url = git@github.com:manateelazycat/grammatical-edit.git
+[submodule "awesome-tab"]
+	path = awesome-tab
+	url = git@github.com:manateelazycat/awesome-tab.git

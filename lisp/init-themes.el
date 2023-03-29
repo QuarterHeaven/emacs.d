@@ -18,6 +18,7 @@
 (require-package 'minions)
 (require-package 'general)
 (require 'awesome-tab)
+(require-package 'beacon)
 
 (when (display-graphic-p)
   (require 'all-the-icons))
@@ -239,6 +240,8 @@
      )))
 (awesome-tab-mode t)
 (global-set-key (kbd "C-;") 'awesome-tab-ace-jump)
+
+(setq beacon-mode t)
 
 (provide 'init-themes)
 ;;;init-themes.elendshere

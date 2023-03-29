@@ -13,6 +13,7 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
 (use-package rime
   :config
   (setq rime-librime-root "~/.emacs.d/librime/dist")
+  (setq rime-user-data-dir "~/Library/Rime")
   (setq rime-cursor "˰")
   (setq rime-show-candidate 'minibuffer)
   ;; 默认值

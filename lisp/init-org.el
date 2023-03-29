@@ -2,7 +2,7 @@
 (require-package 'org-modern)
 (require-package 'valign)
 (require-package 'org-roam)
-(require-package 'emacsql-sqlite-builtin)
+(require-package 'emacsql-sqlite)
 (require-package 'org-roam-ui)
 (require-package 'org-ref)
 (require-package 'writeroom-mode)
