@@ -1,9 +1,12 @@
-(require-package 'treemacs)
-(require-package 'treemacs-projectile)
+(add-to-list 'load-path "~/.emacs.d/site-lisp/treemacs/src/elisp")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/treemacs/src/extra")
+(require 'treemacs)
+(require 'treemacs-projectile)
+(require 'treemacs-git-commit-diff-mode)
 
 (use-package treemacs
-  :ensure t
-;  :defer t
+;  :ensure t
+  :defer t
   :init
   (with-eval-after-load 'winum
     (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
@@ -91,24 +94,27 @@
 
 (use-package treemacs-projectile
   :after (treemacs projectile)
-  :ensure t)
+  ;:ensure t
+  )
 
 (use-package treemacs-icons-dired
   :hook (dired-mode . treemacs-icons-dired-enable-once)
-  :ensure t)
+  ;:ensure t
+  )
 
 (use-package treemacs-magit
   :after (treemacs magit)
-  :ensure t)
+  ;:ensure t
+  )
 
 (use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
   :after (treemacs persp-mode) ;;or perspective vs. persp-mode
-  :ensure t
+  ;:ensure t
   :config (treemacs-set-scope-type 'Perspectives))
 
 (use-package treemacs-tab-bar ;;treemacs-tab-bar if you use tab-bar-mode
   :after (treemacs)
-  :ensure t
+  ;:ensure t
   :config (treemacs-set-scope-type 'Tabs))
 
 (provide 'init-treemacs)

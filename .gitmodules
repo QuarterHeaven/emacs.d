@@ -28,3 +28,297 @@
 [submodule "awesome-tab"]
 	path = awesome-tab
 	url = git@github.com:manateelazycat/awesome-tab.git
+[submodule "site-lisp/fingertip"]
+	path = site-lisp/fingertip
+	url = https://github.com/manateelazycat/fingertip.git
+[submodule "site-lisp/cache-path-from-shell"]
+	path = site-lisp/cache-path-from-shell
+	url = https://github.com/manateelazycat/cache-path-from-shell.git
+[submodule "site-lisp/exec-path-from-shell"]
+	path = site-lisp/exec-path-from-shell
+	url = https://github.com/purcell/exec-path-from-shell.git
+[submodule "site-lisp/osx-location"]
+	path = site-lisp/osx-location
+	url = https://github.com/purcell/osx-location.git
+[submodule "site-lisp/ace-window"]
+	path = site-lisp/ace-window
+	url = https://github.com/abo-abo/ace-window.git
+[submodule "site-lisp/eyebrowse"]
+	path = site-lisp/eyebrowse
+	url = https://depp.brause.cc/eyebrowse.git
+[submodule "site-lisp/avy"]
+	path = site-lisp/avy
+	url = https://github.com/abo-abo/avy.git
+[submodule "site-lisp/dash"]
+	path = site-lisp/dash
+	url = https://github.com/magnars/dash.el.git
+[submodule "site-lisp/ef-themes"]
+	path = site-lisp/ef-themes
+	url = https://github.com/protesilaos/ef-themes.git
+[submodule "site-lisp/ibuffer-projectile"]
+	path = site-lisp/ibuffer-projectile
+	url = https://github.com/purcell/ibuffer-projectile.git
+[submodule "site-lisp/all-the-icons.el"]
+	path = site-lisp/all-the-icons.el
+	url = https://github.com/domtronn/all-the-icons.el.git
+[submodule "site-lisp/all-the-icons-ibuffer"]
+	path = site-lisp/all-the-icons-ibuffer
+	url = https://github.com/seagle0128/all-the-icons-ibuffer.git
+[submodule "site-lisp/projectile"]
+	path = site-lisp/projectile
+	url = https://github.com/bbatsov/projectile.git
+[submodule "site-lisp/emacs-dashboard"]
+	path = site-lisp/emacs-dashboard
+	url = https://github.com/emacs-dashboard/emacs-dashboard.git
+[submodule "site-lisp/page-break-lines"]
+	path = site-lisp/page-break-lines
+	url = https://github.com/purcell/page-break-lines.git
+[submodule "site-lisp/swiper"]
+	path = site-lisp/swiper
+	url = https://github.com/abo-abo/swiper.git
+[submodule "site-lisp/ivy-dired-history"]
+	path = site-lisp/ivy-dired-history
+	url = https://github.com/jixiuf/ivy-dired-history.git
+[submodule "site-lisp/counsel-projectile"]
+	path = site-lisp/counsel-projectile
+	url = https://github.com/ericdanan/counsel-projectile.git
+[submodule "site-lisp/smex"]
+	path = site-lisp/smex
+	url = https://github.com/nonsequitur/smex.git
+[submodule "site-lisp/all-the-icons-ivy-rich"]
+	path = site-lisp/all-the-icons-ivy-rich
+	url = https://github.com/seagle0128/all-the-icons-ivy-rich.git
+[submodule "site-lisp/emacs-which-key"]
+	path = site-lisp/emacs-which-key
+	url = https://github.com/justbur/emacs-which-key.git
+[submodule "site-lisp/which-key-posframe"]
+	path = site-lisp/which-key-posframe
+	url = https://github.com/yanghaoxie/which-key-posframe.git
+[submodule "site-lisp/ivy-rich"]
+	path = site-lisp/ivy-rich
+	url = https://github.com/Yevgnen/ivy-rich.git
+[submodule "site-lisp/dirvish"]
+	path = site-lisp/dirvish
+	url = https://github.com/alexluigit/dirvish.git
+[submodule "site-lisp/org-superstar-mode"]
+	path = site-lisp/org-superstar-mode
+	url = https://github.com/integral-dw/org-superstar-mode.git
+[submodule "site-lisp/org-modern"]
+	path = site-lisp/org-modern
+	url = https://github.com/minad/org-modern.git
+[submodule "site-lisp/valign"]
+	path = site-lisp/valign
+	url = https://github.com/casouri/valign.git
+[submodule "site-lisp/org-roam"]
+	path = site-lisp/org-roam
+	url = https://github.com/org-roam/org-roam.git
+[submodule "site-lisp/org-roam-ui"]
+	path = site-lisp/org-roam-ui
+	url = https://github.com/org-roam/org-roam-ui.git
+[submodule "site-lisp/org-ref"]
+	path = site-lisp/org-ref
+	url = https://github.com/jkitchin/org-ref.git
+[submodule "site-lisp/writeroom-mode"]
+	path = site-lisp/writeroom-mode
+	url = https://github.com/joostkremers/writeroom-mode.git
+[submodule "site-lisp/visual-fill-column"]
+	path = site-lisp/visual-fill-column
+	url = https://codeberg.org/joostkremers/visual-fill-column.git
+[submodule "site-lisp/ob-rust"]
+	path = site-lisp/ob-rust
+	url = https://github.com/micanzhang/ob-rust.git
+[submodule "site-lisp/xenops"]
+	path = site-lisp/xenops
+	url = https://github.com/dandavison/xenops.git
+[submodule "site-lisp/magit"]
+	path = site-lisp/magit
+	url = https://github.com/magit/magit.git
+[submodule "site-lisp/forge"]
+	path = site-lisp/forge
+	url = https://github.com/magit/forge.git
+[submodule "site-lisp/meow"]
+	path = site-lisp/meow
+	url = https://github.com/meow-edit/meow.git
+[submodule "site-lisp/yasnippet"]
+	path = site-lisp/yasnippet
+	url = https://github.com/joaotavora/yasnippet.git
+[submodule "site-lisp/markdown-mode"]
+	path = site-lisp/markdown-mode
+	url = https://github.com/jrblevin/markdown-mode.git
+[submodule "site-lisp/tempel"]
+	path = site-lisp/tempel
+	url = https://github.com/minad/tempel.git
+[submodule "site-lisp/compat"]
+	path = site-lisp/compat
+	url = https://github.com/emacs-compat/compat.git
+[submodule "site-lisp/posframe"]
+	path = site-lisp/posframe
+	url = https://github.com/tumashu/posframe.git
+[submodule "site-lisp/with-editor"]
+	path = site-lisp/with-editor
+	url = https://github.com/magit/with-editor.git
+[submodule "site-lisp/closql"]
+	path = site-lisp/closql
+	url = https://github.com/magit/closql.git
+[submodule "site-lisp/emacsql"]
+	path = site-lisp/emacsql
+	url = https://github.com/magit/emacsql.git
+[submodule "site-lisp/transient"]
+	path = site-lisp/transient
+	url = https://github.com/magit/transient.git
+[submodule "site-lisp/yaml"]
+	path = site-lisp/yaml
+	url = https://github.com/zkry/yaml.el.git
+[submodule "site-lisp/ghub"]
+	path = site-lisp/ghub
+	url = https://github.com/magit/ghub.git
+[submodule "site-lisp/treepy"]
+	path = site-lisp/treepy
+	url = https://github.com/volrath/treepy.el.git
+[submodule "site-lisp/emacs-web-server"]
+	path = site-lisp/emacs-web-server
+	url = https://github.com/skeeto/emacs-web-server.git
+[submodule "site-lisp/f.el"]
+	path = site-lisp/f.el
+	url = https://github.com/rejeep/f.el.git
+[submodule "site-lisp/s.el"]
+	path = site-lisp/s.el
+	url = https://github.com/magnars/s.el.git
+[submodule "site-lisp/parsebib"]
+	path = site-lisp/parsebib
+	url = https://github.com/joostkremers/parsebib.git
+[submodule "site-lisp/helm-bibtex"]
+	path = site-lisp/helm-bibtex
+	url = https://github.com/tmalsburg/helm-bibtex.git
+[submodule "site-lisp/biblio.el"]
+	path = site-lisp/biblio.el
+	url = https://github.com/cpitclaudel/biblio.el.git
+[submodule "site-lisp/hydra"]
+	path = site-lisp/hydra
+	url = https://github.com/abo-abo/hydra.git
+[submodule "site-lisp/ox-pandoc"]
+	path = site-lisp/ox-pandoc
+	url = https://github.com/kawabata/ox-pandoc.git
+[submodule "site-lisp/ht.el"]
+	path = site-lisp/ht.el
+	url = https://github.com/Wilfred/ht.el.git
+[submodule "site-lisp/citeproc-el"]
+	path = site-lisp/citeproc-el
+	url = https://github.com/andras-simonyi/citeproc-el.git
+[submodule "site-lisp/queue"]
+	path = site-lisp/queue
+	url = https://github.com/emacs-straight/queue.git
+[submodule "site-lisp/emacs-aio"]
+	path = site-lisp/emacs-aio
+	url = https://github.com/skeeto/emacs-aio.git
+[submodule "site-lisp/auctex"]
+	path = site-lisp/auctex
+	url = https://github.com/emacs-straight/auctex.git
+[submodule "site-lisp/emacs-rime"]
+	path = site-lisp/emacs-rime
+	url = https://github.com/DogLooksGood/emacs-rime.git
+[submodule "site-lisp/phi-search"]
+	path = site-lisp/phi-search
+	url = https://github.com/zk-phi/phi-search.git
+[submodule "site-lisp/emacs-libvterm"]
+	path = site-lisp/emacs-libvterm
+	url = https://github.com/akermu/emacs-libvterm.git
+[submodule "site-lisp/vterm-toggle"]
+	path = site-lisp/vterm-toggle
+	url = https://github.com/jixiuf/vterm-toggle.git
+[submodule "site-lisp/rg.el"]
+	path = site-lisp/rg.el
+	url = https://github.com/dajva/rg.el.git
+[submodule "site-lisp/Emacs-wgrep"]
+	path = site-lisp/Emacs-wgrep
+	url = https://github.com/mhayashi1120/Emacs-wgrep.git
+[submodule "site-lisp/treemacs"]
+	path = site-lisp/treemacs
+	url = https://github.com/Alexander-Miller/treemacs.git
+[submodule "site-lisp/pfuture"]
+	path = site-lisp/pfuture
+	url = https://github.com/Alexander-Miller/pfuture.git
+[submodule "site-lisp/keyfreq"]
+	path = site-lisp/keyfreq
+	url = https://github.com/dacap/keyfreq.git
+[submodule "site-lisp/auto-compile"]
+	path = site-lisp/auto-compile
+	url = https://github.com/emacscollective/auto-compile.git
+[submodule "site-lisp/quickrun"]
+	path = site-lisp/quickrun
+	url = https://github.com/emacsorphanage/quickrun.git
+[submodule "site-lisp/conda.el"]
+	path = site-lisp/conda.el
+	url = https://github.com/necaris/conda.el.git
+[submodule "site-lisp/pythonic"]
+	path = site-lisp/pythonic
+	url = https://github.com/pythonic-emacs/pythonic.git
+[submodule "site-lisp/clojure-mode"]
+	path = site-lisp/clojure-mode
+	url = https://github.com/clojure-emacs/clojure-mode.git
+[submodule "site-lisp/inf-clojure"]
+	path = site-lisp/inf-clojure
+	url = https://github.com/clojure-emacs/inf-clojure.git
+[submodule "site-lisp/cider"]
+	path = site-lisp/cider
+	url = https://github.com/clojure-emacs/cider.git
+[submodule "site-lisp/parseedn"]
+	path = site-lisp/parseedn
+	url = https://github.com/clojure-emacs/parseedn.git
+[submodule "site-lisp/parseclj"]
+	path = site-lisp/parseclj
+	url = https://github.com/clojure-emacs/parseclj.git
+[submodule "site-lisp/spinner.el"]
+	path = site-lisp/spinner.el
+	url = https://github.com/Malabarba/spinner.el.git
+[submodule "site-lisp/sesman"]
+	path = site-lisp/sesman
+	url = https://github.com/vspinu/sesman.git
+[submodule "site-lisp/logview"]
+	path = site-lisp/logview
+	url = https://github.com/doublep/logview.git
+[submodule "site-lisp/datetime"]
+	path = site-lisp/datetime
+	url = https://github.com/doublep/datetime.git
+[submodule "site-lisp/extmap"]
+	path = site-lisp/extmap
+	url = https://github.com/doublep/extmap.git
+[submodule "site-lisp/web-search.el"]
+	path = site-lisp/web-search.el
+	url = https://github.com/xuchunyang/web-search.el.git
+[submodule "site-lisp/doom-modeline"]
+	path = site-lisp/doom-modeline
+	url = https://github.com/seagle0128/doom-modeline.git
+[submodule "site-lisp/mixed-pitch"]
+	path = site-lisp/mixed-pitch
+	url = https://gitlab.com/jabranham/mixed-pitch.git
+[submodule "site-lisp/nerd-icons.el"]
+	path = site-lisp/nerd-icons.el
+	url = https://github.com/rainstormstudio/nerd-icons.el.git
+[submodule "site-lisp/shrink-path.el"]
+	path = site-lisp/shrink-path.el
+	url = https://gitlab.com/bennya/shrink-path.el.git
+[submodule "site-lisp/emacs-hide-mode-line"]
+	path = site-lisp/emacs-hide-mode-line
+	url = https://github.com/hlissner/emacs-hide-mode-line.git
+[submodule "site-lisp/minions"]
+	path = site-lisp/minions
+	url = https://github.com/tarsius/minions.git
+[submodule "site-lisp/general.el"]
+	path = site-lisp/general.el
+	url = https://github.com/noctuid/general.el.git
+[submodule "site-lisp/beacon"]
+	path = site-lisp/beacon
+	url = https://github.com/Malabarba/beacon.git
+[submodule "site-lisp/ns-auto-titlebar"]
+	path = site-lisp/ns-auto-titlebar
+	url = https://github.com/purcell/ns-auto-titlebar.git
+[submodule "site-lisp/default-text-scale"]
+	path = site-lisp/default-text-scale
+	url = https://github.com/purcell/default-text-scale.git
+[submodule "site-lisp/disable-mouse"]
+	path = site-lisp/disable-mouse
+	url = https://github.com/purcell/disable-mouse.git
+[submodule "site-lisp/burly.el"]
+	path = site-lisp/burly.el
+	url = https://github.com/alphapapa/burly.el.git

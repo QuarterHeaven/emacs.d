@@ -13,7 +13,7 @@
 
 (require 'org)
 (require 'cl)
-(require-package 'color)
+(require 'color)
 
 (centaur-setup-fonts)
 (add-hook 'window-setup-hook #'centaur-setup-fonts)

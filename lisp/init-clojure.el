@@ -1,5 +1,5 @@
-(require-package 'clojure-mode)
-(require-package 'inf-clojure)
-(require-package 'cider)
+(require 'clojure-mode)
+(require 'inf-clojure)
+(require 'cider)
 
 (provide 'init-clojure)

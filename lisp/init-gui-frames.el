@@ -63,8 +63,8 @@
 
 
 (when *is-a-mac*
-  (when (maybe-require-package 'ns-auto-titlebar)
-    (ns-auto-titlebar-mode)))
+  (when (require 'ns-auto-titlebar)
+  (ns-auto-titlebar-mode)))
 
 
 (setq frame-title-format
@@ -81,15 +81,15 @@
 
 ;; Change global font size easily
 
-(require-package 'default-text-scale)
+(require 'default-text-scale)
 (add-hook 'after-init-hook 'default-text-scale-mode)
 
 
 
-(require-package 'disable-mouse)
+(require 'disable-mouse)
 
 
-(require-package 'burly)
+(require 'burly)
 
 (provide 'init-gui-frames)
 ;;; init-gui-frames.el ends here

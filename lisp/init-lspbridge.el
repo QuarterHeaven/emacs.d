@@ -1,10 +1,15 @@
-(require-package 'markdown-mode)
+(require 'markdown-mode)
+(require 'tempel)
 (require 'lsp-bridge)
 
 (setq lsp-bridge-org-babel-lang-list '("rust" "c" "cpp" "python" "latex"))
 (setq lsp-bridge-enable-auto-format-code t)
 (setq acm-enable-tabnine nil)
+(setq acm-enable-yas nil)
+(setq acm-enable-preview t)
+(setq acm-enable-tempel nil)
 (setq lsp-bridge-enable-log nil)
-(global-lsp-bridge-mode)
 
+(setq lsp-bridge-python-lsp-server 'pyright)
+(global-lsp-bridge-mode)
 (provide 'init-lspbridge)

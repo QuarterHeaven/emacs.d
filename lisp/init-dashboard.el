@@ -1,5 +1,5 @@
-(require-package 'dashboard)
-(require-package 'page-break-lines)
+(require 'dashboard)
+(require 'page-break-lines)
 
 ;(use-package page-break-lines
 ;  :ensure t

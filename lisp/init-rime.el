@@ -1,5 +1,5 @@
-(require-package 'rime)
-(require-package 'phi-search)
+(require 'rime)
+(require 'phi-search)
 
 (defun rime-predicate-meow-normal-mode-p ()
   "Detect whether the current buffer is in `meow-normal-mode' state.

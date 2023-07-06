@@ -1,12 +1,12 @@
-(require-package 'ivy)
-(require-package 'counsel)
-(require-package 'swiper)
-(require-package 'ivy-dired-history)
-(require-package 'counsel-projectile)
-(require-package 'smex)
-(require-package 'all-the-icons-ivy-rich)
-(require-package 'which-key)
-(require-package 'which-key-posframe)
+(require 'ivy)
+(require 'counsel)
+(require 'swiper)
+(require 'ivy-dired-history)
+(require 'counsel-projectile)
+(require 'smex)
+(require 'all-the-icons-ivy-rich)
+(require 'which-key)
+(require 'which-key-posframe)
 
 (use-package ivy
   ;; :defer t
@@ -35,7 +35,6 @@
 
   (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order))))
 
-(require-package 'ivy-rich)
 (require 'ivy-rich)
 (all-the-icons-ivy-rich-mode 1)
 (ivy-rich-mode 1)

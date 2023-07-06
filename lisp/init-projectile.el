@@ -1,4 +1,4 @@
-(require-package 'projectile)
+(require 'projectile)
 
 (projectile-mode +1)
 ;; Recommended keymap prefix on macOS

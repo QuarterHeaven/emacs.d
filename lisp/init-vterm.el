@@ -1,5 +1,5 @@
-(require-package 'vterm)
-(require-package 'vterm-toggle)
+(require 'vterm)
+(require 'vterm-toggle)
 
 (defvar vterm-compile-buffer nil)
   (defun vterm-compile ()

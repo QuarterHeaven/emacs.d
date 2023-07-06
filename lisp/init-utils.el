@@ -184,4 +184,13 @@
                       (setq face-font-rescale-alist `((,font . 1.0)))
                       (set-fontset-font t '(#x4e00 . #x9fff) (font-spec :family font))))))
 
+
+(defun lsp-bridge-set-project-path ()
+	(interactive)
+	(setq lsp-bridge-get-project-path-by-filepath
+		  (lambda (filepath)
+			(save-match-data
+			  (and (string-match default-directory filepath)
+				   (match-string 0 filepath))))))
+
 (provide 'init-utils)

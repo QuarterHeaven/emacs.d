@@ -1,5 +1,16 @@
-(require-package 'magit)
-(require-package 'forge)
+(add-to-list 'load-path "~/.emacs.d/site-lisp/magit/lisp")
+
+(with-eval-after-load 'info
+  (info-initialize)
+  (add-to-list 'Info-directory-list
+               "~/.emacs.d/site-lisp/magit/Documentation/"))
+(add-to-list 'load-path "~/.emacs.d/site-lisp/dash")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/transient/lisp")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/with-editor/lisp")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/ghub/lisp")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/forge/lisp")
+(require 'magit)
+(require 'forge)
 
 (with-eval-after-load 'magit
   (use-package forge

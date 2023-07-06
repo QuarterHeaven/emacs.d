@@ -1,4 +1,4 @@
-(require-package 'meow)
+;(require-package 'meow)
 
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)

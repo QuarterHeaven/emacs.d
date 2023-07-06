@@ -1,7 +1,7 @@
 (global-set-key "\C-x\C-b" 'ibuffer)
 (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
-(require-package 'ibuffer-projectile)
-(require-package 'all-the-icons-ibuffer)
+(require 'ibuffer-projectile)
+(require 'all-the-icons-ibuffer)
 
 (use-package ibuffer
   :ensure nil

@@ -7,6 +7,7 @@
   (browse-url-browser-function 'eaf-open-browser)
   :config
   (defalias 'browse-web #'eaf-open-browser)
+  (require 'eaf-demo)
   (require 'eaf-file-sender)
   (require 'eaf-camera)
   (require 'eaf-rss-reader)
@@ -23,6 +24,8 @@
   (require 'eaf-airshare)
   (require 'eaf-system-monitor) ;; unbind, see more in the Wiki
   (require 'eaf-git)
+  (require 'eaf-jupyter)
+  (require 'eaf-netease-cloud-music)
   (setq eaf-webengine-default-zoom (if (> (frame-pixel-width) 3000) 2 1))
   (setq eaf-browser-aria2-proxy-host "127.0.0.1")
   (setq eaf-browser-aria2-proxy-port "1081")

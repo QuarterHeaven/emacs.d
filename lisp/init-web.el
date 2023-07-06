@@ -1,6 +1,6 @@
 (use-package search-web
    :defer t
-   :ensure t
+   ;:ensure t
    :init
    (setq search-web-engines
      '(("Google" "http://www.google.com/search?q=%s" nil)
@@ -19,12 +19,12 @@
         ("C-c w p" . search-web-at-point)
         ("C-c w r" . search-web-region)))
 
-(use-package leetcode
-  :config
-  (setq leetcode-prefer-language "cpp")
-  (setq leetcode-prefer-sql "mysql")
-  (setq leetcode-save-solutions t)
-  (setq leetcode-directory "~/Documents/cpp/leetcode")
-  )
+;; (use-package leetcode
+;;   :config
+;;   (setq leetcode-prefer-language "cpp")
+;;   (setq leetcode-prefer-sql "mysql")
+;;   (setq leetcode-save-solutions t)
+;;   (setq leetcode-directory "~/Documents/cpp/leetcode")
+;;   )
 
 (provide 'init-web)

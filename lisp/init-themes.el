@@ -8,17 +8,18 @@
 ;; (require-package 'atom-one-dark-theme)
 ;; (require 'lazycat-theme)
 ;; (require 'init-modus)
-(require-package 'doom-themes)
+;; (require-package 'doom-themes)
 
-(require-package 'all-the-icons)
-(require-package 'mixed-pitch)
-(require-package 'page-break-lines)
-(require-package 'doom-modeline)
-(require-package 'hide-mode-line)
-(require-package 'minions)
-(require-package 'general)
+(require 'all-the-icons)
+(require 'mixed-pitch)
+(require 'page-break-lines)
+(require 'doom-modeline)
+(require 'hide-mode-line)
+(require 'minions)
+(require 'general)
 (require 'awesome-tab)
-(require-package 'beacon)
+(require 'beacon)
+(require 'ef-themes)
 
 (when (display-graphic-p)
   (require 'all-the-icons))
@@ -60,21 +61,6 @@
 ;    (setq custom-enabled-themes '(sanityinc-tomorrow-bright))
   (setq custom-enabled-themes '(solarized-dark))
   (reapply-themes))
-
-
-(when (maybe-require-package 'dimmer)
-    (setq-default dimmer-fraction 0.15)
-    (add-hook 'after-init-hook 'dimmer-mode)
-    (with-eval-after-load 'dimmer
-    ;; TODO: file upstream as a PR
-    (advice-add 'frame-set-background-mode :after (lambda (&rest args) (dimmer-process-all))))
-  (with-eval-after-load 'dimmer
-    ;; Don't dim in terminal windows. Even with 256 colours it can
-    ;; lead to poor contrast.  Better would be to vary dimmer-fraction
-    ;; according to frame type.
-    (defun sanityinc/display-non-graphic-p ()
-      (not (display-graphic-p)))
-    (add-to-list 'dimmer-exclusion-predicates 'sanityinc/display-non-graphic-p)))
 
 (setq frame-title-format '("Taka Obsid - %b")
       icon-title-format frame-title-format)
@@ -161,7 +147,7 @@
 
 ;; Show line numbers
 (use-package display-line-numbers
-  :ensure nil
+ ; :ensure nil
   :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
   :init (setq display-line-numbers-width-start t))
 
@@ -201,7 +187,7 @@
 
 ;; Mode line
 (use-package doom-modeline
-  :ensure t
+  ; :ensure t
   :hook (after-init . doom-modeline-mode)
   :init
   (setq doom-modeline-icon t

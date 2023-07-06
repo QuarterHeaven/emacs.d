@@ -1,4 +1,4 @@
-(require-package 'dirvish)
+(require 'dirvish)
 
 (use-package dirvish
   :init
@@ -61,6 +61,7 @@
   (setq tramp-chunksize 2000)
   (setq tramp-use-ssh-controlmaster-options nil))
 
+(add-to-list 'load-path "~/.emacs.d/site-lisp/dirvish/extensions/")
 (require 'dirvish-fd)
 
 (provide 'init-dirvish)
