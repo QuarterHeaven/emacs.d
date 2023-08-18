@@ -12,7 +12,7 @@
 ;; 				   ("Segoe UI Symbol")))
 
 (require 'org)
-(require 'cl)
+(require 'cl-lib)
 (require 'color)
 
 (centaur-setup-fonts)

@@ -1,4 +1,5 @@
-((magit-commit nil
+((dirvish-quick-access nil)
+ (magit-commit nil
 	       ("--all" "--allow-empty")
 	       ("--all"))
  (magit-gitignore nil)

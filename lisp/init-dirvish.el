@@ -1,4 +1,20 @@
+(add-to-list 'load-path "~/.emacs.d/site-lisp/dirvish/extensions/")
 (require 'dirvish)
+(require 'dirvish-extras)
+(require 'dirvish-widgets)
+(require 'dirvish-collapse)
+(require 'dirvish-emerge)
+(require 'dirvish-fd)
+(require 'dirvish-history)
+(require 'dirvish-icons)
+(require 'dirvish-ls)
+(require 'dirvish-narrow)
+(require 'dirvish-peek)
+(require 'dirvish-quick-access)
+(require 'dirvish-side)
+(require 'dirvish-subtree)
+(require 'dirvish-vc)
+(require 'dirvish-yank)
 
 (use-package dirvish
   :init
@@ -19,26 +35,26 @@
   (setq insert-directory-program "gls")
   (setq dired-listing-switches
         "-l --almost-all --human-readable --time-style=long-iso --group-directories-first --no-group")
-  :bind ; Bind `dirvish|dirvish-side|dirvish-dwim' as you see fit
-  (("C-c f" . dirvish-fd)
-   :map dirvish-mode-map ; Dirvish inherits `dired-mode-map'
-   ("a"   . dirvish-quick-access)
-   ("f"   . dirvish-file-info-menu)
-   ("y"   . dirvish-yank-menu)
-   ("N"   . dirvish-narrow)
-   ("^"   . dirvish-history-last)
-   ("h"   . dirvish-history-jump) ; remapped `describe-mode'
-   ("s"   . dirvish-quicksort)    ; remapped `dired-sort-toggle-or-edit'
-   ("v"   . dirvish-vc-menu)      ; remapped `dired-view-file'
-   ("TAB" . dirvish-subtree-toggle)
-   ("M-f" . dirvish-history-go-forward)
-   ("M-b" . dirvish-history-go-backward)
-   ("M-l" . dirvish-ls-switches-menu)
-   ("M-m" . dirvish-mark-menu)
-   ("M-t" . dirvish-layout-toggle)
-   ("M-s" . dirvish-setup-menu)
-   ("M-e" . dirvish-emerge-menu)
-   ("M-j" . dirvish-fd-jump))
+ :bind ; Bind `dirvish|dirvish-side|dirvish-dwim' as you see fit
+ (("C-c f" . dirvish-fd)
+  :map dirvish-mode-map ; Dirvish inherits `dired-mode-map'
+  ("a"   . dirvish-quick-access)
+  ("f"   . dirvish-file-info-menu)
+  ("y"   . dirvish-yank-menu)
+  ("N"   . dirvish-narrow)
+  ("^"   . dirvish-history-last)
+  ("h"   . dirvish-history-jump) ; remapped `describe-mode'
+  ("s"   . dirvish-quicksort)    ; remapped `dired-sort-toggle-or-edit'
+  ("v"   . dirvish-vc-menu)      ; remapped `dired-view-file'
+  ("TAB" . dirvish-subtree-toggle)
+  ("M-f" . dirvish-history-go-forward)
+  ("M-b" . dirvish-history-go-backward)
+  ("M-l" . dirvish-ls-switches-menu)
+  ("M-m" . dirvish-mark-menu)
+  ("M-t" . dirvish-layout-toggle)
+  ("M-s" . dirvish-setup-menu)
+  ("M-e" . dirvish-emerge-menu)
+  ("M-j" . dirvish-fd-jump))
    )
 
   (dirvish-define-preview exa (file)
@@ -61,7 +77,5 @@
   (setq tramp-chunksize 2000)
   (setq tramp-use-ssh-controlmaster-options nil))
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/dirvish/extensions/")
-(require 'dirvish-fd)
 
 (provide 'init-dirvish)

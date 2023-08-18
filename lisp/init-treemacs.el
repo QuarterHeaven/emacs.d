@@ -6,10 +6,12 @@
 
 (use-package treemacs
 ;  :ensure t
+  ;; :load-path "~/.emacs.d/site-lisp/treemacs"
+  ;; :load-path "~/.emacs.d/site-lisp/treemacs/src/elisp"
+  ;; :load-path "~/.emacs.d/site-lisp/treemacs/src/extra"
   :defer t
   :init
-  (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  (global-set-key (kbd "C-c t") 'treemacs-select-window)
   :config
   (progn
     (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0)
@@ -91,6 +93,8 @@
         ("C-x t B"   . treemacs-bookmark)
         ("C-x t C-t" . treemacs-find-file)
         ("C-x t M-t" . treemacs-find-tag)))
+(with-eval-after-load 'treemacs
+  (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action))
 
 (use-package treemacs-projectile
   :after (treemacs projectile)

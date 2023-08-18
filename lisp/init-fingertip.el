@@ -1,4 +1,3 @@
-(add-to-list 'load-path "~/.emacs.d/site-lisp/fingertip")
 (require 'fingertip)
 
 (dolist (hook (list

@@ -24,10 +24,7 @@
 	url = git@github.com:ahyatt/emacs-websocket.git
 [submodule "site-lisp/grammatical-edit"]
 	path = site-lisp/grammatical-edit
-	url = git@github.com:manateelazycat/grammatical-edit.git
-[submodule "site-lisp/awesome-tab"]
-	path = site-lisp/awesome-tab
-	url = git@github.com:manateelazycat/awesome-tab.git
+  url = git@github.com:manateelazycat/grammatical-edit.git
 [submodule "site-lisp/fingertip"]
 	path = site-lisp/fingertip
 	url = https://github.com/manateelazycat/fingertip.git
@@ -322,3 +319,60 @@
 [submodule "site-lisp/burly.el"]
 	path = site-lisp/burly.el
 	url = https://github.com/alphapapa/burly.el.git
+[submodule "site-lisp/zotxt-emacs"]
+	path = site-lisp/zotxt-emacs
+	url = https://github.com/egh/zotxt-emacs.git
+[submodule "site-lisp/emacs-request"]
+	path = site-lisp/emacs-request
+	url = https://github.com/tkf/emacs-request.git
+[submodule "site-lisp/emacs-deferred"]
+	path = site-lisp/emacs-deferred
+	url = https://github.com/kiwanami/emacs-deferred.git
+[submodule "site-lisp/org-xlatex"]
+	path = site-lisp/org-xlatex
+	url = https://github.com/ksqsf/org-xlatex.git
+[submodule "site-lisp/org-mode"]
+	path = site-lisp/org-mode
+	url = https://git.tecosaur.net/tec/org-mode.git
+[submodule "site-lisp/jupyter"]
+	path = site-lisp/jupyter
+	url = https://github.com/emacs-jupyter/jupyter.git
+[submodule "site-lisp/emacs-ipython-notebook"]
+	path = site-lisp/emacs-ipython-notebook
+	url = https://github.com/millejoh/emacs-ipython-notebook.git
+[submodule "site-lisp/vertico"]
+	path = site-lisp/vertico
+	url = https://github.com/minad/vertico.git
+[submodule "site-lisp/consult"]
+	path = site-lisp/consult
+	url = https://github.com/minad/consult.git
+[submodule "site-lisp/orderless"]
+	path = site-lisp/orderless
+	url = https://github.com/oantolin/orderless.git
+[submodule "site-lisp/marginalia"]
+	path = site-lisp/marginalia
+	url = https://github.com/minad/marginalia.git
+[submodule "site-lisp/embark"]
+	path = site-lisp/embark
+	url = https://github.com/oantolin/embark.git
+[submodule "site-lisp/consult-projectile"]
+	path = site-lisp/consult-projectile
+	url = https://gitlab.com/OlMon/consult-projectile.git
+[submodule "site-lisp/consult-org-roam"]
+	path = site-lisp/consult-org-roam
+	url = https://github.com/jgru/consult-org-roam.git
+[submodule "site-lisp/org-appear"]
+	path = site-lisp/org-appear
+	url = https://github.com/awth13/org-appear.git
+[submodule "site-lisp/awesome-tab"]
+	path = site-lisp/awesome-tab
+	url = git@github.com:manateelazycat/awesome-tab.git
+[submodule "site-lisp/awesome-tray"]
+	path = site-lisp/awesome-tray
+	url = git@github.com:manateelazycat/awesome-tray.git
+[submodule "site-lisp/jieba.el"]
+	path = site-lisp/jieba.el
+	url = git@github.com:cireu/jieba.el.git
+[submodule "site-lisp/holo-layer"]
+	path = site-lisp/holo-layer
+	url = https://github.com/manateelazycat/holo-layer.git

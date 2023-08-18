@@ -14,10 +14,23 @@
 (require 'ob-rust)
 (require 'emacsql-sqlite-builtin)
 (require 'xenops)
+(require 'org-tempo)
+(require 'org-zotxt)
+(require 'zotxt)
+(require 'org-appear)
 
 					; (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 					; (add-hook 'org-mode-hook 'variable-pitch-mode)
 ;;(add-hook 'org-mode-hook 'org-variable-pitch-minor-mode)
+
+
+;; new org mode test
+(setq org-latex-preview-auto-generate 'live
+      org-latex-preview-debounce 0.2
+      org-latex-preview-throttle 0.2)
+(add-hook 'org-mode-hook 'org-latex-preview-auto-mode)
+
+
 
 (add-hook 'org-mode-hook (lambda()
 			   (setq prettify-symbols-alist
@@ -37,7 +50,7 @@
 				   ("- [ ]" . ?)
 				   ("- [-]" . ?)
 				   ("- [X]" . ?)
-			           ("- [x]" . ?)
+			    ("- [x]" . ?)
 				   ("[#A]" . ?🅐)
 				   ("[#B]" . ?🅑)
 				   ("[#C]" . ?🅒)
@@ -52,9 +65,10 @@
 			   (prettify-symbols-mode)))
 
 (setq org-hide-emphasis-markers t)
+(add-hook 'org-mode-hook 'org-appear-mode)
 
 (use-package org-modern
-  ;; :defer t
+  :defer t
   :custom
   ;; Org modern settings
   (org-modern-star nil)
@@ -78,11 +92,9 @@
 (setq modus-themes-org-blocks 'gray-background)
 (add-hook 'org-mode-hook #'valign-mode)
 
-(require 'org-tempo)
-
 ;; org roam settings
 (use-package org-roam
-  ;; :defer t
+  :defer t
   :config
   ;; (add-hook 'after-init-hook 'org-roam-mode)
   (org-roam-db-autosync-enable)
@@ -98,7 +110,7 @@
   (add-to-list 'whitespace-display-mappings '(space-mark #x200b [?▾])))
 
 (use-package writeroom
-  ;; :defer t
+  :defer t
 
   :init
   (setq writeroom-fullscreen-effect 'maximized)
@@ -135,6 +147,8 @@
    (shell . t)
    (latex . t)
    (rust . t)))
+(when (executable-find "jupyter")
+  (add-to-list 'org-babel-load-languages '(jupyter . t) t))
 
 (setq word-wrap-by-category t)
 
@@ -144,107 +158,15 @@
 
 (setq org-babel-python-command "python3.10")
 
-;; xenops
-(add-hook 'latex-mode-hook #'xenops-mode)
-(add-hook 'LaTeX-mode-hook #'xenops-mode)
-(add-hook 'org-mode-hook #'xenops-mode)
-(setq xenops-cache-directory "~/Documents/orgs/ltximg/")
-(setq xenops-font-height 160)
-(setq xenops-font-height-code 140)
-(setq xenops-math-image-scale-factor 1.7)
-(setq xenops-reveal-on-entry t)
-(defun xenops-math-reveal-alt (element)
-    (xenops-element-overlays-delete element)
-    (if current-prefix-arg
-        (delete-file (xenops-math-get-cache-file element)))
-    (let ((element-type (plist-get element :type))
-          (begin-content (plist-get element :begin-content)))
-      (goto-char (if (eq element-type 'block-math)
-                     (1+ begin-content)
-                   begin-content))))
-  (advice-add #'xenops-math-reveal :override #'xenops-math-reveal-alt)
-
-(setq org-latex-compiler "xelatex"
-      org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f")
-      org-preview-latex-default-process 'xdvsvgm
-      xenops-math-latex-process 'xdvsvgm
-      org-preview-latex-process-alist
-      '((xdvsvgm :programs ("xelatex" "dvisvgm")
-                 :description "xdv > svg" :use-xcolor t
-                 :message "you need to install the programs: xelatex and dvisvgm."
-                 :image-input-type "xdv" :image-output-type "svg" :image-size-adjust (1.7 . 1.5)
-                 :latex-compiler ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
-                 :image-converter ("dvisvgm %f -n -b min -c %S -o %O"))
-        (imagemagick :programs ("xelatex" "convert")
-                     :description "pdf > png" :use-xcolor t
-                     :message "you need to install the programs: xelatex and imagemagick."
-                     :image-input-type "pdf" :image-output-type "png" :image-size-adjust (1.0 . 1.0)
-                     :latex-compiler ("xelatex -interaction nonstopmode -output-directory %o %f")
-                     :image-converter ("convert -density %D -trim -antialias %f -quality 100 %O")))
-      xenops-math-latex-process-alist
-      '((xdvsvgm :programs ("xelatex" "dvisvgm")
-                 :description "xdv > svg" :use-xcolor t
-                 :message "you need to install the programs: xelatex and dvisvgm."
-                 :image-input-type "xdv" :image-output-type "svg" :image-size-adjust (1.7 . 1.5)
-                 :latex-compiler ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
-                 :image-converter ("dvisvgm %f -n -b min -c %S -o %O"))
-	(imagemagick :programs ("latex" "convert")
-		     :description "pdf > png"
-		     :message "you need to install the programs: latex and imagemagick."
-		     :image-input-type "pdf" :image-output-type "png" :image-size-adjust (1.0 . 1.0)
-		     :latex-compiler ("pdflatex -interaction nonstopmode -shell-escape -output-directory %o %f")
-		     :image-converter ("convert -density %D -trim -antialias %f -quality 100 %O"))))
-
 (with-eval-after-load 'org
   (add-to-list 'org-latex-default-packages-alist '("" "mathspec" t ("xelatex")))
   (add-to-list 'org-latex-default-packages-alist '("UTF8" "ctex" t ("xelatex"))))
-;; (add-to-list 'org-latex-default-packages-alist '("slantfont,boldfont" "xeCJK" t ("xelatex")))
 
-;; 公式编号
-(defun eli/xenops-renumber-environment (orig-func element latex colors
-                                                    cache-file display-image)
-    (let ((results '())
-          (counter -1)
-          (numberp))
-      (setq results (cl-loop for (begin .  env) in
-                             (org-element-map (org-element-parse-buffer)
-                                 'latex-environment
-                               (lambda (env)
-                                 (cons
-                                  (org-element-property :begin env)
-                                  (org-element-property :value env))))
-                             collect
-                             (cond
-                              ((and (string-match "\\\\begin{equation}" env)
-                                    (not (string-match "\\\\tag{" env)))
-                               (cl-incf counter)
-                               (cons begin counter))
-                              ((and (string-match "\\\\begin{align}" env)
-                                    (string-match "\\\\notag" env))
-                               (cl-incf counter)
-                               (cons begin counter))
-                              ((string-match "\\\\begin{align}" env)
-                               (prog2
-                                   (cl-incf counter)
-                                   (cons begin counter)
-                                 (with-temp-buffer
-                                   (insert env)
-                                   (goto-char (point-min))
-                                   ;; \\ is used for a new line. Each one leads
-                                   ;; to a number
-                                   (cl-incf counter (count-matches "\\\\$"))
-                                   ;; unless there are nonumbers.
-                                   (goto-char (point-min))
-                                   (cl-decf counter
-                                            (count-matches "\\nonumber")))))
-                              (t
-                               (cons begin nil)))))
-      (when (setq numberp (cdr (assoc (plist-get element :begin) results)))
-        (setq latex
-              (concat
-               (format "\\setcounter{equation}{%s}\n" numberp)
-               latex))))
-    (funcall orig-func element latex colors cache-file display-image))
-  (advice-add 'xenops-math-latex-create-image :around #'eli/xenops-renumber-environment)
+
+;; org-xlatex
+(use-package org-xlatex
+  :after (org)
+  :hook (org-mode . org-xlatex-mode))
+(setq org-xlatex-position-indicator t)
 
 (provide 'init-org)

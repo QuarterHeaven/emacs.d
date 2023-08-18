@@ -221,11 +221,12 @@
      (string-prefix-p "*Warnings" name)
      (string-prefix-p " *company" name)
      (string-prefix-p " *lsp" name)
+     (string-prefix-p "*xwidget-webkit" name)
      (and (string-prefix-p "magit" name)
                (not (file-name-extension name)))
      )))
 (awesome-tab-mode t)
-(global-set-key (kbd "C-;") 'awesome-tab-ace-jump)
+(global-set-key (kbd "C-M-;") 'awesome-tab-ace-jump)
 
 (setq beacon-mode t)
 
