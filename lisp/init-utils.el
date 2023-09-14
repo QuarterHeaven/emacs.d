@@ -141,8 +141,8 @@
   (when (display-graphic-p)
     ;; Set default font
     (cl-loop for font in '("FiraCode Nerd Font" "Jetbrains Mono"
-                           "SF Mono" "Hack" "Source Code Pro" "Menlo"
-                           "Monaco" "DejaVu Sans Mono" "Consolas" "sketchybar-app-font")
+                           "SF Mono" "SF Pro Display" "Hack" "Source Code Pro" "Menlo"
+                           "Monaco" "DejaVu Sans Mono" "Consolas")
              when (font-installed-p font)
              return (set-face-attribute 'default nil
                                         :family font

@@ -8,7 +8,8 @@
 ;; (require-package 'atom-one-dark-theme)
 ;; (require 'lazycat-theme)
 ;; (require 'init-modus)
-;; (require-package 'doom-themes)
+(require 'doom-themes)
+(add-to-list 'load-path "~/.emacs.d/site-lisp/themes/extensions/")
 
 (require 'all-the-icons)
 (require 'mixed-pitch)
@@ -30,8 +31,25 @@
 (setq custom-safe-themes t)
 
 ;;If you don't customize it, this is the theme you get.
-;; (setq-default custom-enabled-themes '(doom-ayu-light))
-(setq-default custom-enabled-themes '(ef-spring))
+;; (setq-default custom-enabled-themes '(doom-city-light))
+(use-package doom-themes
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-ayu-light t)
+
+  ;; Enable flashing mode-line on errors
+  ;; (doom-themes-visual-bell-config)
+  ;; (doom-themes-neotree-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  ;; (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  ;; (doom-themes-org-config)
+  )
+;; (setq-default custom-enabled-themes '(ef-spring))
 (setq ef-themes-mixed-fonts 't)
 ;(require 'nano)
 
@@ -193,7 +211,9 @@
   (setq doom-modeline-icon t
         doom-modeline-height 1
         doom-modeline-window-width-limit 110
-        doom-modeline-minor-modes t))
+        doom-modeline-minor-modes t
+	doom-modeline-project-detection 'auto
+	doom-modeline-workspace-name t))
 
 (use-package hide-mode-line
   :hook (((completion-list-mode
@@ -222,6 +242,8 @@
      (string-prefix-p " *company" name)
      (string-prefix-p " *lsp" name)
      (string-prefix-p "*xwidget-webkit" name)
+     (string-prefix-p "*holo-layer*" name)
+     (string-prefix-p "*holo-layer-epc" name)
      (and (string-prefix-p "magit" name)
                (not (file-name-extension name)))
      )))

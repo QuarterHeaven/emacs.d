@@ -27,5 +27,6 @@
             ("Updated" 10 t nil updated nil)))))
 
 (setq auth-sources '("~/.authinfo.gpg"))
+(magit-auto-revert-mode -1)
 
 (provide 'init-magit)

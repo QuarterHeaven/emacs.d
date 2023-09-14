@@ -27,7 +27,7 @@
     (set-face-attribute 'org-level-2 nil :family "Linux Biolinum O" :height 210)
     (set-face-attribute 'org-level-3 nil :family "Linux Biolinum O" :height 190)
     (set-face-attribute 'org-level-4 nil :family "Linux Biolinum O" :height 160)
-    (set-face-attribute 'fixed-pitch nil :family "Fira Code")
+    (set-face-attribute 'fixed-pitch nil :family "FiraCode Nerd Font Mono")
     ;; (set-face-attribute 'org-block nil :background
     ;;                     (color-darken-name
     ;;                      (face-attribute 'default :background) 3) :inherit 'fixed-pitch :family "Fira Code")
@@ -46,6 +46,12 @@
     ;;                      (face-attribute 'default :background) 4) :inherit 'fixed-pitch :family "Fira Code")
     (set-face-attribute 'org-block-begin-line nil :inherit 'fixed-pitch)
 )
+
+(setq ef-themes-headings
+      (quote ((1 semibold 1.5)
+	      (2 1.3)
+	      (3 1.2)
+	      (t variable-pitch))))
 
 (defface my-org-emphasis-bold
   '((default :inherit bold)

@@ -40,8 +40,8 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
 
 ;;; 光标自动变色
 ;; (with-eval-after-load 'rime
-(require 'im-cursor-chg)
-(cursor-chg-mode 1)
+;; (require 'im-cursor-chg)
+;; (cursor-chg-mode 1)
 ;; )
 
 (provide 'init-rime)

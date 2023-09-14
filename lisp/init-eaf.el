@@ -38,7 +38,7 @@
   (setq eaf-webengine-font-size 18)
   (setq eaf-webengine-fixed-font-size 18)
   (setq eaf-terminal-font-family "FiraCode Nerd Font")
-   (setq eaf-file-manager-show-hidden-file nil)
+  (setq eaf-file-manager-show-hidden-file nil)
 )
 
 (provide 'init-eaf)

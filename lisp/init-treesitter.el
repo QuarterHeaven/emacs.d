@@ -129,8 +129,19 @@
         (sh-mode         . bash-ts-mode)
         (typescript-mode . typescript-ts-mode)))
 
+
+(setq org-src-lang-modes
+	     '(("python" . python-ts)
+	       ("C++" . c++-ts)
+	       ("C" . c-ts)
+	       ("cpp" . c++-ts)))
+
 (add-hook 'emacs-lisp-mode-hook #'(lambda () (treesit-parser-create 'elisp)))
 (add-hook 'org-mode-hook #'(lambda() (treesit-parser-create 'org)))
+
+(use-package treesit-auto
+  :config
+  (global-treesit-auto-mode))
 
 (provide 'init-treesitter)
 

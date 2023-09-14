@@ -1,10 +1,10 @@
 (require 'holo-layer)
-(setq holo-layer-python-command "~/miniconda/bin/python")
+(setq holo-layer-python-command "~/miniconda3/bin/python3")
 (setq holo-layer-cursor-animation-type "jelly easing")
 (setq holo-layer-cursor-color "blue")
 (setq holo-layer-cursor-alpha 200)
 (setq holo-layer-enable-cursor-animation t)
 (setq holo-layer-enable-place-info nil)
 
-;; (holo-layer-enable)
+(holo-layer-enable)
 (provide 'init-holo-layer)

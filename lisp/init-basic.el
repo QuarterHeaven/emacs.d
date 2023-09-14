@@ -3,6 +3,7 @@
 (setq auto-save-default nil)
 (setq create-lockfiles nil)
 
+
 (setq url-gateway-method 'socks)
 (setq socks-server '("Default server" "127.0.0.1" 1081 5))
 
@@ -40,5 +41,8 @@
 (setq tab-bar-show 1)
 
 (setq use-short-answers t)
+
+(use-package pixel-scroll
+  :config (pixel-scroll-precision-mode t))
 
 (provide 'init-basic)

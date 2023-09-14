@@ -376,3 +376,21 @@
 [submodule "site-lisp/holo-layer"]
 	path = site-lisp/holo-layer
 	url = https://github.com/manateelazycat/holo-layer.git
+[submodule "site-lisp/wolfram-mode"]
+	path = site-lisp/wolfram-mode
+	url = https://github.com/kawabata/wolfram-mode.git
+[submodule "site-lisp/treesit-auto"]
+	path = site-lisp/treesit-auto
+	url = https://github.com/renzmann/treesit-auto.git
+[submodule "site-lisp/vulpea"]
+	path = site-lisp/vulpea
+	url = https://github.com/d12frosted/vulpea.git
+[submodule "site-lisp/org-visual-outline"]
+	path = site-lisp/org-visual-outline
+	url = https://github.com/legalnonsense/org-visual-outline.git
+[submodule "site-lisp/themes"]
+	path = site-lisp/themes
+	url = https://github.com/doomemacs/themes.git
+[submodule "site-lisp/olivetti"]
+	path = site-lisp/olivetti
+	url = https://github.com/rnkn/olivetti.git
