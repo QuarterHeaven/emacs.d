@@ -1,5 +1,0 @@
-((dirvish-quick-access nil)
- (magit-commit ("--all") nil ("--all" "--allow-empty"))
- (magit-gitignore nil) (magit-log ("-n256" "--graph" "--decorate"))
- (magit-merge nil) (magit-push nil) (magit-submodule nil ("--force"))
- (magit-tag ("--force")))

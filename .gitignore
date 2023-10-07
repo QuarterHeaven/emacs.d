@@ -7,6 +7,10 @@
 *.tmp
 *bak/
 .DS_Store
+emacs.pdump
+.projectile
+Emacs.icns
+transient/
 .cache/
 .cask/
 .dap-*

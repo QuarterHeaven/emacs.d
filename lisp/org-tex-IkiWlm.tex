@@ -1,0 +1,927 @@
+
+\usepackage[active,tightpage,auctex]{preview}
+
+\setlength{\textwidth}{0.6\paperwidth}
+
+\begin{document}
+
+\setlength\abovedisplayskip{0pt} % Remove padding before equation environments.
+
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  &E[E[Y|X]] =E[g(x)] = \int_{IR} g(x) f_x(x) \mathrm{d} x, g(x) = E[Y|X=x]\\
+  &\Rightarrow \int_{IR}[\int_{IR} y f_{Y|X}(y|x) \mathrm{d}y] f_X(x)\mathrm{d}x\\
+  &=\int_{IR}[\int_{IR}yf_{Y|X}(y|x)f_X(x)\mathrm{d}y]\mathrm{d}x\\
+  &=\int_{IR}\int_{IR} yf(x, y)\mathrm{d}y \mathrm{d}x\\
+  &=E[Y].
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  D(X|Y = y) = E\{[X - E(X|Y=y)]^2|Y=y\}
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(E(Y|X=x) = \mu(x), E(X|Y=y) = \delta(y)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+f_Z(z) = \int_{IR}f(x, z-x)dz
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+P\left\{\frac{\sum^n_{i=1} X_i - n\mu}{\sqrt{n\sigma^2}}\leq x \right\} \rightarrow \Phi(x)
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(X, Y\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(Z = X + jY\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  E(Z) = E(X) + j E(Y), j = \sqrt{-1}.
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  E(e^{jtX}) &= E(\cos{t}X) + jE(\sin{t}X)\\
+&=\int^{+\infty}_{-\infty} \cos{tx}  \mathrm{d}F(x) + j\int^{+\infty}_{-\infty} \sin{tx}\mathrm{d}F(x)\\
+&=\int^{+\infty}_{-\infty} e^{jtx}\mathrm{d}F(x)
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\forall t \in R, \cos{t}x, \sin{t}x\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(E(e^{jtX})\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(E(e^{jtX})\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(X\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\((\Omega, \mathcal{F}, P)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  \varphi(t) = E(e^{jtX}) = \int^{+\infty}_{-\infty} e^{jtX} \mathrm{d}F(x), t\in R
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(X\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}P\{X = c\} = 1, \varphi(t) = E(e^{jtc}) = e^{jtc}, t \in R\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+\varphi(t) &= e^{jt \cdot 0} (1-p) + e^{jt \cdot 1} p\\
+&= 1 - p + pe^{jt} = q + pe^{jt}, t\in R
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  \varphi(t) = (q + pe^{jt})^n, t \in R
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  \varphi(t) = e^{\lambda(e^{jt} - 1)}, t \in R
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  f(x) =
+\left\{
+\begin{aligned}
+\lambda e^{- \lambda x}, & &x \geq 0;\\
+0, & &x<0.\\
+\end{aligned}
+\right.{(\lambda > 0)}
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  \varphi(t) &= \int^{+\infty}_{0} \lambda e^{jtx} e^{-\lambda x} \mathrm{d}x\\
+&=\int^{+\infty}_{0} \lambda e^{-\lambda x} \cos{tx} \mathrm{d}x + j \lambda \int^{+\infty}_{0} e^{-\lambda x} \sin{tx} \mathrm{d}x\\
+&= \lambda \frac{\lambda}{\lambda^2 + t^2} + j \lambda \frac{t}{\lambda^2 + t^2} = \left(1- \frac{jt}{\lambda}\right)^{-1}, t \in R.
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(U[-a, a]\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  \varphi(t) = \frac{\sin{at}}{at}, t \in R
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(N(a, \sigma^2)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  \varphi(t) = e^{jat - \frac{1}{2}\sigma^2 t^2}, t\in R
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(N(0, 1)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  \varphi(t) = e^{-\frac{1}{2}t^2}, t \in R.
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(|\varphi(t)| \leq \varphi(0) = 1\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\overline{\varphi(t)} = \varphi (-t)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\varphi_X(t)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(Y = a X + b\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(  \varphi_Y(t) = e^{jbt} \varphi_X(at)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\varphi(t)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(z_1, z_2, ..., z_n\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(t_r \in R, r = 1, 2, ..., n\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\sum^n_{r=1} \sum^n_{s = 1} \varphi(t_r - t_s) z_r \overline{z_s} \geq 0\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\varphi(t)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\varphi(t)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\varphi^{(k)}(t)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  E(X^k) = j^{-k} \varphi^{(k)}(0), k \leq n.
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+E[(X-a)^k] =
+\left\{
+\begin{aligned}
+&0, &k \% 2 == 1\\
+&1 \cdot 3 \cdot 5 \cdot ...  \cdot (k-1)\sigma^k, & k \% 2 == 0\\
+\end{aligned}
+\right.
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(F(x)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\varphi(t)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(x_1, x_2(x_1 < x_2)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  \frac{F(x_2 + 0) + F(x_2 - 0)}{2} - \frac{F(x_1 + 0) + F(x_1 - 0)}{2} =\\ \lim_{T \rightarrow \infty} \frac{1}{2\pi} \int^T_{-T} \frac{e^{-jtx_1} - e^{-jtx_2}}{jt} \varphi(t) \mathrm{d}t.
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(x_1, x_2\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(F(x)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  F(x_2) - F(x_1) = \lim_{T \rightarrow \infty} \frac{1}{2\pi}\int^T_{-T} \frac{e^{-jtx_1} - e^{-jtx_2}}{jt}\varphi(t) \mathrm{d}t.
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(x_2 = x, x_1 \rightarrow -\infty\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  F(x) = \lim_{x_1 \rightarrow -\infty} \lim_{T \rightarrow +\infty} \frac{1}{2\pi} \int_{-T}^{T}\frac{e^{-jtx_1} - e^{-jtx}}{jt}\varphi(t) \mathrm{d}t.
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(F_1(x)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(F_2(x)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\varphi_1(t)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\varphi_2(t)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\xi\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  f(x) = \frac{1}{\sqrt{2\pi} \sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}},x \in \mathbb{R}
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\xi\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\xi \sim N(\mu, \sigma^2)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(a \xi + b \sim N(a\mu + b, a^2 \sigma^2);\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+   \begin{align}
+   \xi \sim N(\mu, \sigma^2),
+   \end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\xi \sim N(m_1, \sigma_1^2), \eta \sim N(m_2, \sigma_2^2)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\( \xi + \eta \sim N(m_1 + m_2, \sigma_1^2 + \sigma_2^2).\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  \varphi_{\xi+\eta}(t) = E[e^{jt(\xi+\eta)}] = &E[e^{jt\xi} \cdot e^{jt\eta}] \\
+=&e^{jm_1t - \frac{1}{2}\sigma_1^2t^2 + jm_2t - \frac{1}{2}\sigma_2^2t^2}\\
+=&e^{j(m_1+m_2)t - \frac{\sigma_1^2+\sigma_2^2}{2}t^2}
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\((\xi, \eta)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  f(x, y) = \frac{1}{2\pi \sigma_1 \sigma_2 \sqrt{1 - r^2}} \exp\{-\frac{1}{2(1-r^2)}[\frac{(x-m_1)^2}{\sigma_1^2} - \\2r \frac{(x-m_1)(y-m_2)}{\sigma_1 \sigma_2} + \frac{(y - m_2)^2}{\sigma_2^2}]\}, (x, y) \in \mathbb{R}^2
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(m_1, m_2, \sigma_1 > 0, \sigma_2 > 0\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\vert r \vert < 1\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\((\xi, \eta)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\((\xi, \eta) \sim N(m_1, \sigma_1^2; m_2, \sigma_2^2;r)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\xi \sim N(m_1, \sigma_1^2), \eta \sim N(m_2, \sigma_2^2).\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(E(\xi) = m_1, D(\xi) = \sigma_1^2;\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(E(\eta) = m_2, D(\eta) = \sigma_2^2;\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(Cov(\xi, \eta) = r \sigma_1 \sigma_2, \rho_{\xi\eta} = r.\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\((\xi, \eta)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(r = 0\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\xi\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\eta\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\xi\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\eta\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(f(x, y) = f_\xi(x) f_\eta(y) \Leftrightarrow r = 0.\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+E
+\begin{bmatrix}
+\xi \\ \eta
+\end{bmatrix}
+=
+\begin{bmatrix}
+E(\xi)\\ E(\eta)
+\end{bmatrix}
+=
+\begin{bmatrix}
+m_1 \\ m_2
+\end{bmatrix}
+= M
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  \Sigma =
+\begin{bmatrix}
+\sigma_1^2&r\sigma_1\sigma_2\\
+r\sigma_1\sigma_2&\sigma_2^2
+\end{bmatrix}
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\sigma_1 > 0, \sigma_2 > 0, \vert r \vert < 1\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\vert \Sigma \vert \neq 0\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  X=
+\begin{bmatrix}
+x\\y
+\end{bmatrix}
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  f(x, y) =& \frac{1}{2\pi \sigma_1 \sigma_2 \sqrt{1 - r^2}} \exp\{-\frac{1}{2(1-r^2)}[\frac{(x-m_1)^2}{\sigma_1^2} - \\
+&2r \frac{(x-m_1)(y-m_2)}{\sigma_1 \sigma_2} + \frac{(y - m_2)^2}{\sigma_2^2}]\}, (x, y) \in \mathbb{R}^2\\
+=&\frac{1}{2\pi\vert\Sigma\vert^{1/2}}\exp\{-\frac{1}{2}(X - M)' \Sigma^{-1} (X-M)\}
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\((\xi, \eta) \sim N(M, \Sigma).\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\((\xi_1, \xi_2, ..., \xi_n)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(f(x_1, x_2, ..., x_n) = \frac{1}{(2\pi)^{n/2}\vert\Sigma\vert^{1/2}}\exp\{-\frac{1}{2}(X-M)'\Sigma^{-1}(X-M)\}\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\Sigma = (\sigma_{ij})\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\vert \Sigma \vert\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(X = (x_1, x_2, ..., x_n)'\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\( M=(m_1, m_2, ..., m_n)'\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\((\xi_1, \xi_2, ..., \xi_n)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(X = (X_1, X_2, ..., X_n)^\top\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  \varphi(t) = \exp\{jM^\top t-\frac{1}{2}t^\top C t\}\label{con:Characteristic}
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(t = (t_1, t_2, ..., t_m)^\top , M = E(X) = (m_1, m_2, ..., m_n)^\top\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\ref{con:Characteristic}\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\varphi(u)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\vert C \vert = 0\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\omega \rightarrow (X(\omega, t), t \in (-\infty, +\infty))\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\{X_t, t \in R\}\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\((\Omega, F, P)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(T\subset R\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(t \in T, X_t(\omega)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+\{X_t(\omega), t\in T\}
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\((\Omega, F, P)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+\{X_t(\omega), t\in T\} = (X_1, X_2, \cdots, X_n)
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+\{X_t(\omega), t\in T\} = (X_1, X_2, \cdots, X_n, \cdots)
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(T=[0, +\infty)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+\{X_t(\omega), t \in T\} = \{X_t(\omega), t \in [0, +\infty)\}
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(T = \{(x, y): a < x < b, c < y < d\}\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+\{X_t(\omega), t \in T\}
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(X_t, t \in T\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\{X_t, t \in T\}\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(T \times \Omega = \{(t, \omega): t\in T, \omega \in \Omega\}\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(T\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(X_t(\omega)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(T \times \Omega\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(t \in T, X_t(\omega)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\((\Omega, F, P)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\omega_0 \in \Omega\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(x_t(\omega_0)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\{X_t(\omega), t \in T\}\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\{X_t, t \in T\}\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\{\varphi_{t_1, t_2, ..., t_n}(u_1, u_2, ..., t_n): t_i \in T, i = 1, 2, 3,..., n, (u_1, u_2, ..., u_n) \in R^n, n \geq 1\}\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\{X_t(\rightarrow), t\in T\}\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\varphi_{t_1, t_2,...,t_n}(u_1, u_2, ..., u_n) = E(e^{j(u_1X_{t_1}+u_2X_{t_2}+...+u_nX_{tn})})\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\((X_{t_1}, X_{t_2}, \cdots, X_{t_n})\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\{X_t(\omega), t \in T\}\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+m(t) \hat{=} E(X_t) = \int^{+\infty}_{-\infty} x \mathrm{d} F_t(x), t\in T
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(D(t) \hat{=} D[X_t] = E[X_t - m(t)]^2\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\{X_t(\rightarrow), t \in T\}\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\sigma(t) = \sqrt{D_X(t)}\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+C(s, t) \hat{=} Cov(X_s, X_t) = E\{[X_s - m(s)][X_t - m(t)]\}
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  R(s, t) \hat{=} E[X_sX_t]
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\{X_t, t \in T\}\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(\{Y_t, t \in T\}\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  Z_t \hat{=} X_t + jY_t, t \in T, j = \sqrt{-1}
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+m_Z(t) \hat{=}E[X_t] + jE[Y_t], t \in T.
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  D_Z(t) \hat{=} E\{\vert Z_t - m_Z(t)\vert^2\} = D_X(t) + D_Y(t).
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  R_Z(s, t) \hat= E[Z_S \bar{Z_t}].
+\end{align}
+
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\((\Omega, F, P)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(T\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\(t \in T\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\((\Omega, F, P)\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\((X_t^{(1)}(\rightarrow),X_t^{(2)}(\rightarrow),...,X_t^{(n)}(\rightarrow))\)
+\end{preview}
+
+\begin{preview}
+\setcounter{equation}{0}%
+\begin{align}
+  \{(X_t^{(1)}(\rightarrow),X_t^{(2)}(\rightarrow),...,X_t^{(n)}(\rightarrow)), t\in T\}
+\end{align}
+
+\end{preview}
+
+\end{document}
