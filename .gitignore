@@ -11,6 +11,7 @@ emacs.pdump
 .projectile
 Emacs.icns
 transient/
+blink-search/
 .cache/
 .cask/
 .dap-*
