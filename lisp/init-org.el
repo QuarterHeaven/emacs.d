@@ -19,17 +19,18 @@
 (require 'org-appear)
 (require 'org-visual-indent)
 					; (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
-					; (add-hook 'org-mode-hook 'variable-pitch-mode)
-;;(add-hook 'org-mode-hook 'org-variable-pitch-minor-mode)
+;; (add-hook 'org-mode-hook 'variable-pitch-mode)
+;; (add-hook 'org-mode-hook 'org-variable-pitch-minor-mode)
+;; (add-hook 'org-mode-hook (lambda() (buffer-face-mode -1)))
 
 
 ;; new org mode test
 (setq org-latex-preview-auto-generate 'live
-      org-latex-preview-debounce 0.2
-      org-latex-preview-throttle 0.2
-      org-latex-preview-numbered nil)
+      org-latex-preview-debounce 1.0
+      org-latex-preview-throttle 1.0
+      org-latex-preview-numbered nil
+      org-startup-with-latex-preview t)
 (plist-put org-latex-preview-options :zoom 1.1)
-(add-hook 'org-mode-hook 'org-latex-preview-auto-mode)
 
 
 
@@ -68,28 +69,35 @@
 (setq org-hide-emphasis-markers t)
 (add-hook 'org-mode-hook 'org-appear-mode)
 
-(use-package org-modern
+;; (use-package org-modern
+;;   :custom
+;;   ;; Org modern settings
+;;   (org-modern-priority nil)
+;;   (org-modern-list nil)
+;;   (org-modern-checkbox nil)
+;;   (org-modern-todo t)
+;;   (org-modern-keyword nil)
+;;   (org-modern-block nil)
+;;   (org-modern-star '("⚀" "⚁" "⚂" "⚃" "⚄" "⚅"))
+
+;;   ;; Editor settings
+;;   (org-auto-align-tags nil)
+;; 					; (org-tags-column 0)
+;;   (org-catch-invisible-edits 'show-and-error)
+;;   (org-special-ctrl-a/e t)
+
+;;   :config
+;;   (global-org-modern-mode 1)
+;;   )
+
+(use-package org-superstar
   :custom
-  ;; Org modern settings
-  (org-modern-priority nil)
-  (org-modern-list nil)
-  (org-modern-checkbox nil)
-  (org-modern-todo t)
-  (org-modern-keyword nil)
-  (org-modern-block nil)
-  (org-modern-star '("⚀" "⚁" "⚂" "⚃" "⚄" "⚅"))
+  (org-superstar-headline-bullets-list '("⚀" "⚁" "⚂" "⚃" "⚄" "⚅"))
+  (org-superstar-prettify-item-bullets nil)
+  :hook
+  (org-mode . org-superstar-mode))
 
-  ;; Editor settings
-  (org-auto-align-tags nil)
-					; (org-tags-column 0)
-  (org-catch-invisible-edits 'show-and-error)
-  (org-special-ctrl-a/e t)
-
-  :config
-  (global-org-modern-mode 1)
-  )
-
-(setq modus-themes-org-blocks 'gray-background)
+;; (setq modus-themes-org-blocks 'gray-background)
 (add-hook 'org-mode-hook #'valign-mode)
 
 ;; org roam settings
@@ -128,7 +136,7 @@
   (org-mode . variable-pitch-mode)
   (org-mode . visual-line-mode)
   (visual-line-mode . visual-fill-column-mode)
-  
+
   :config
   (setq split-width-threshold 120
 

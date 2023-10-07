@@ -394,3 +394,15 @@
 [submodule "site-lisp/olivetti"]
 	path = site-lisp/olivetti
 	url = https://github.com/rnkn/olivetti.git
+[submodule "site-lisp/blink-search"]
+	path = site-lisp/blink-search
+	url = https://github.com/manateelazycat/blink-search.git
+[submodule "site-lisp/popper"]
+	path = site-lisp/popper
+	url = https://github.com/karthink/popper.git
+[submodule "site-lisp/posframe-plus"]
+	path = site-lisp/posframe-plus
+	url = https://github.com/zbelial/posframe-plus.git
+[submodule "site-lisp/treesitter-context.el"]
+	path = site-lisp/treesitter-context.el
+	url = https://github.com/zbelial/treesitter-context.el.git

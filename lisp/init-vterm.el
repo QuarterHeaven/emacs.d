@@ -38,4 +38,6 @@
                 (reusable-frames . visible)
                 (window-height . 0.3)))
 
+(setq)
+
 (provide 'init-vterm)

@@ -1,4 +1,6 @@
+(add-to-list 'load-path "~/.emacs.d/site-lisp/vertico/extensions")
 (require 'vertico)
+(require 'vertico-directory)
 (require 'consult)
 (require 'consult-xref)
 (require 'consult-org-roam)
@@ -23,6 +25,8 @@
   ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
   ;; (setq vertico-cycle t)
   )
+(define-key minibuffer-local-map (kbd "<backspace>") #'vertico-directory-delete-char)
+
 
 ;; Enable orderless completion
 (setq completion-styles '(orderless basic)
@@ -117,7 +121,6 @@
          ("M-s g" . consult-grep)
          ("M-s G" . consult-git-grep)
          ("M-s r" . consult-ripgrep)
-         ("C-s" . consult-line)
          ("M-s L" . consult-line-multi)
          ("M-s k" . consult-keep-lines)
          ("M-s u" . consult-focus-lines)

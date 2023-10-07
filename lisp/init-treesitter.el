@@ -143,6 +143,14 @@
   :config
   (global-treesit-auto-mode))
 
+
+;; treesitter-context-mode
+(require 'treesitter-context)
+(add-hook 'rust-ts-mode-hook #'treesitter-context-mode)
+(add-hook 'c++-ts-mode-hook #'treesitter-context-mode)
+(add-hook 'c-ts-mode-hook #'treesitter-context-mode)
+(add-hook 'go-ts-mode-hook #'treesitter-context-mode)
+
 (provide 'init-treesitter)
 
 ;;; init-treesit.el ends here

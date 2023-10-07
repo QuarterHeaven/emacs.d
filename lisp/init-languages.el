@@ -6,7 +6,7 @@
 (setq lsp-bridge-python-command "~/miniconda3/bin/python3.10")
 (conda-env-initialize-interactive-shells)                        ;; support interactive shell
 (conda-env-initialize-eshell)                                    ;; support eshell
-(conda-env-autoactivate-mode t)                                  ;; auto-activation
+;; (conda-env-autoactivate-mode t)                                  ;; auto-activation
 (custom-set-variables '(conda-anaconda-home "~/miniconda3/"))     ;; specify installation directory
 (add-hook 'conda-post-activate-hook                              ;; restart lsp-bridge
           (lambda ()

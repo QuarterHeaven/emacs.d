@@ -31,7 +31,8 @@
     ;; (set-face-attribute 'org-block nil :background
     ;;                     (color-darken-name
     ;;                      (face-attribute 'default :background) 3) :inherit 'fixed-pitch :family "Fira Code")
-    (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
+    ;; (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
+    (set-face-attribute 'org-block nil :family "FiraCode Nerd Font Mono")
     ;; (set-face-attribute 'org-code nil :background
     ;;                     (color-darken-name
     ;;                      (face-attribute 'default :background) 3) :inherit 'fixed-pitch :family "Fira Code")
@@ -40,12 +41,13 @@
     ;;                      (face-attribute 'default :background) 3) :inherit 'fixed-pitch :family "Fira Code")
     ;; (set-face-attribute 'org-block-begin-line nil :background
     ;;                     "#F1E6F8")
-    (set-face-attribute 'org-block-begin-line nil :inherit 'fixed-pitch)
+    ;; (set-face-attribute 'org-block-begin-line nil :inherit 'fixed-pitch)
+    (set-face-attribute 'org-block-begin-line nil :family "FiraCode Nerd Font Mono")
     ;; (set-face-attribute 'org-block-end-line nil :background
     ;;                     (color-darken-name
     ;;                      (face-attribute 'default :background) 4) :inherit 'fixed-pitch :family "Fira Code")
-    (set-face-attribute 'org-block-begin-line nil :inherit 'fixed-pitch)
 )
+(setq buffer-face-mode-face 'fixed-pitch)
 
 (setq ef-themes-headings
       (quote ((1 semibold 1.5)

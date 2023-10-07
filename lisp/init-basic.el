@@ -30,7 +30,7 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 ; 当前行高亮
-;; (global-hl-line-mode)
+(global-hl-line-mode)
 
 ; gpg
 (setq epa-pinentry-mode 'loopback)
@@ -44,5 +44,23 @@
 
 (use-package pixel-scroll
   :config (pixel-scroll-precision-mode t))
+
+; 编码设置
+(set-language-info
+     "UTF-8"
+     'coding-priority
+     '(utf-8 gb18030 gbk gb2312 iso-2022-cn chinese-big5 chinese-iso-8bit iso-8859-1))
+    (prefer-coding-system 'cp950)
+    (prefer-coding-system 'gb2312)
+    (prefer-coding-system 'cp936)
+    (prefer-coding-system 'gb18030)
+    (prefer-coding-system 'utf-16)
+    (prefer-coding-system 'utf-8-dos)
+    (prefer-coding-system 'utf-8-unix)
+    (prefer-coding-system 'utf-8)
+
+;;(setq file-name-coding-system 'gb18030)
+
+(setq default-buffer-file-conding-system 'utf-8)
 
 (provide 'init-basic)

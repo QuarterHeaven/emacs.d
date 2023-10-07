@@ -35,8 +35,8 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
   (default-input-method "rime")
   (setq rime-cursor "˰"))
 
-;; (global-set-key (kbd "C-s") 'phi-search)
-;; (global-set-key (kbd "C-r") 'phi-search-backward)
+(global-set-key (kbd "C-s") 'phi-search)
+(global-set-key (kbd "C-r") 'phi-search-backward)
 
 ;;; 光标自动变色
 ;; (with-eval-after-load 'rime
