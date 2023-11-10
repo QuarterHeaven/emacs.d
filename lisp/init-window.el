@@ -1,9 +1,15 @@
-(require 'ace-window)
-(require 'eyebrowse)
+(use-package ace-window
+  :straight t
+  :config
+  (global-set-key (kbd "C-x o") 'ace-window))
 
-(global-set-key (kbd "C-x o") 'ace-window)
-(eyebrowse-mode t)
-(eyebrowse-setup-opinionated-keys)
+(use-package auto-dim-other-buffers
+  :straight t
+  :hook
+  (after-init . auto-dim-other-buffers-mode))
+
+;; (eyebrowse-mode t)
+;; (eyebrowse-setup-opinionated-keys)
 
 ;; (desktop-save-mode 1)
 ;; (push '(company-posframe-mode . nil)

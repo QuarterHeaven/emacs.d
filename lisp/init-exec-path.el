@@ -2,20 +2,21 @@
 ;;; Commentary:
 ;;; Code:
 
-;; (require-package 'exec-path-from-shell)
-(require 'exec-path-from-shell)
+(use-package exec-path-from-shell
+  :straight t
+  :init
 
-(with-eval-after-load 'exec-path-from-shell
-  (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
-    (add-to-list 'exec-path-from-shell-variables var)))
+  (with-eval-after-load 'exec-path-from-shell
+    (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
+      (add-to-list 'exec-path-from-shell-variables var)))
 
 
-(when (or (memq window-system '(mac ns x pgtk))
-          (unless (memq system-type '(ms-dos windows-nt))
-            (daemonp)))
-  (setq exec-path-from-shell-check-startup-files nil) ;
-  (setq exec-path-from-shell-arguments '("-l" )) ;remove -i read form .zshenv
-  (exec-path-from-shell-initialize))
+  (when (or (memq window-system '(mac ns x pgtk))
+            (unless (memq system-type '(ms-dos windows-nt))
+              (daemonp)))
+    (setq exec-path-from-shell-check-startup-files nil) ;
+    (setq exec-path-from-shell-arguments '("-l" )) ;remove -i read form .zshenv
+    (exec-path-from-shell-initialize)))
 
 (provide 'init-exec-path)
 ;;; init-exec-path.el ends here

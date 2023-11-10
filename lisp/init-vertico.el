@@ -1,17 +1,7 @@
-(add-to-list 'load-path "~/.emacs.d/site-lisp/vertico/extensions")
-(require 'vertico)
-(require 'vertico-directory)
-(require 'consult)
-(require 'consult-xref)
-(require 'consult-org-roam)
-(require 'orderless)
-(require 'marginalia)
-
-
 ;; Enable vertico
 (use-package vertico
-  :init
-  (vertico-mode)
+  :straight (:files (:defaults "extensions/*.el"))
+  :hook (after-init . vertico-mode)
 
   ;; Different scroll margin
   ;; (setq vertico-scroll-margin 0)
@@ -23,18 +13,31 @@
   ;; (setq vertico-resize t)
 
   ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-  ;; (setq vertico-cycle t)
-  )
+  (setq vertico-cycle t)
+  :bind
+  ("C-M-r" . vertico-repeat-select))
 (define-key minibuffer-local-map (kbd "<backspace>") #'vertico-directory-delete-char)
+
+(use-package vertico-directory
+             :straight nil
+  :after (vertico))
+
+(use-package vertico-repeat
+             :straight nil
+  :after (vertico))
 
 
 ;; Enable orderless completion
-(setq completion-styles '(orderless basic)
-      completion-category-overrides '((file (styles basic partial-completion))))
+(use-package orderless
+  :straight t
+  :init
+  (setq completion-styles '(orderless basic)
+	completion-category-overrides '((file (styles basic partial-completion)))))
 
 
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
+  :straight t
   ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
   ;; available in the *Completions* buffer, add it to the
   ;; `completion-list-mode-map'.
@@ -47,7 +50,11 @@
   ;; Marginalia must be activated in the :init section of use-package such that
   ;; the mode gets enabled right away. Note that this forces loading the
   ;; package.
-  (marginalia-mode))
+  (marginalia-mode)
+  :config
+  (setopt marginalia-align 'right
+          marginalia-separator "⎸"
+          ))
 
 
 ;; Enable embark
@@ -84,63 +91,33 @@
 ;; consult setting
 ;; Example configuration for Consult
 (use-package consult
+  :straight t
   ;; Replace bindings. Lazily loaded due by `use-package'.
-  :bind (;; C-c bindings in `mode-specific-map'
-         ("C-c M-x" . consult-mode-command)
-         ("C-c h" . consult-history)
-         ("C-c k" . consult-kmacro)
-         ("C-c m" . consult-man)
-         ("C-c i" . consult-info)
-         ([remap Info-search] . consult-info)
-         ;; C-x bindings in `ctl-x-map'
-         ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
-         ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
-         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-         ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
-         ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
-         ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
-         ;; Custom M-# bindings for fast register access
-         ("M-#" . consult-register-load)
-         ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
-         ("C-M-#" . consult-register)
-         ;; Other custom bindings
-         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
-         ;; M-g bindings in `goto-map'
-         ("M-g e" . consult-compile-error)
-         ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
-         ("M-g g" . consult-goto-line)             ;; orig. goto-line
-         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
-         ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
-         ("M-g m" . consult-mark)
-         ("M-g k" . consult-global-mark)
-         ("M-g i" . consult-imenu)
-         ("M-g I" . consult-imenu-multi)
-         ;; M-s bindings in `search-map'
-         ("M-s d" . consult-find)
-         ("M-s D" . consult-locate)
-         ("M-s g" . consult-grep)
-         ("M-s G" . consult-git-grep)
-         ("M-s r" . consult-ripgrep)
-         ("M-s L" . consult-line-multi)
-         ("M-s k" . consult-keep-lines)
-         ("M-s u" . consult-focus-lines)
-         ;; Isearch integration
-         ("M-s e" . consult-isearch-history)
-         :map isearch-mode-map
-         ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
-         ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
-         ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
-         ("M-s L" . consult-line-multi)            ;; needed by consult-line to detect isearch
-         ;; Minibuffer history
-         :map minibuffer-local-map
-         ("M-s" . consult-history)                 ;; orig. next-matching-history-element
-         ("M-r" . consult-history))                ;; orig. previous-matching-history-element
+  :bind (([remap bookmark-jump]                 . consult-bookmark)
+         ([remap list-registers]                . consult-register)
+         ([remap goto-line]                     . consult-goto-line)
+         ([remap imenu]                         . consult-imenu)
+         ("C-c i"                               . consult-imenu)
+         ("C-c I"                               . consult-imenu-multi)
+         ([remap locate]                        . consult-locate)
+         ([remap load-theme]                    . consult-theme)
+         ([remap man]                           . consult-man)
+         ([remap recentf-open-files]            . consult-recent-file)
+         ([remap switch-to-buffer]              . consult-buffer)
+         ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
+         ([remap switch-to-buffer-other-frame]  . consult-buffer-other-frame)
+         ([remap yank-pop]                      . consult-yank-pop)
+         ("C-c d r"                             . consult-ripgrep)
+         ("C-c d f"                             . consult-fd)
+         :map minibuffer-mode-map
+         ("C-r" . consult-history))
 
   ;; Enable automatic preview at point in the *Completions* buffer. This is
   ;; relevant when you use the default completion UI.
-  :hook (completion-list-mode . consult-preview-at-point-mode)
+  ;; :hook (completion-list-mode . consult-preview-at-point-mode)
 
   ;; The :init configuration is always executed (Not lazy)
+  ;; :config
   :init
 
   ;; Optionally configure the register formatting. This improves the register
@@ -198,39 +175,60 @@
   ;; (setq consult-project-function (lambda (_) (projectile-project-root)))
   ;;;; 5. No project support
   ;; (setq consult-project-function nil)
-)
+  )
+
+(use-package consult-imenu
+  :after (consult))
 
 (use-package consult-org-roam
-   :after org-roam
-   :init
-   (require 'consult-org-roam)
-   ;; Activate the minor mode
-   (consult-org-roam-mode 1)
-   :custom
-   ;; Use `ripgrep' for searching with `consult-org-roam-search'
-   (consult-org-roam-grep-func #'consult-ripgrep)
-   ;; Configure a custom narrow key for `consult-buffer'
-   (consult-org-roam-buffer-narrow-key ?r)
-   ;; Display org-roam buffers right after non-org-roam buffers
-   ;; in consult-buffer (and not down at the bottom)
-   (consult-org-roam-buffer-after-buffers t)
-   :config
-   ;; Eventually suppress previewing for certain functions
-   (consult-customize
-    consult-org-roam-forward-links
-    :preview-key (kbd "M-."))
-   :bind
-   ;; Define some convenient keybindings as an addition
-   ("C-c n e" . consult-org-roam-file-find)
-   ("C-c n b" . consult-org-roam-backlinks)
-   ("C-c n l" . consult-org-roam-forward-links)
-   ("C-c n r" . consult-org-roam-search))
+  :straight t
+  :after org-roam
+  :init
+  (require 'consult-org-roam)
+  ;; Activate the minor mode
+  (consult-org-roam-mode 1)
+  :custom
+  ;; Use `ripgrep' for searching with `consult-org-roam-search'
+  (consult-org-roam-grep-func #'consult-ripgrep)
+  ;; Configure a custom narrow key for `consult-buffer'
+  (consult-org-roam-buffer-narrow-key ?r)
+  ;; Display org-roam buffers right after non-org-roam buffers
+  ;; in consult-buffer (and not down at the bottom)
+  (consult-org-roam-buffer-after-buffers t)
+  :config
+  ;; Eventually suppress previewing for certain functions
+  (consult-customize
+   consult-org-roam-forward-links
+   :preview-key (kbd "M-."))
+  :bind
+  ;; Define some convenient keybindings as an addition
+  ("C-c n e" . consult-org-roam-file-find)
+  ("C-c n b" . consult-org-roam-backlinks)
+  ("C-c n l" . consult-org-roam-forward-links)
+  ("C-c n r" . consult-org-roam-search))
+
+(use-package consult-dir
+  :straight t
+  :bind (([remap list-directory] . consult-dir)
+         :map minibuffer-local-completion-map
+         ("C-x C-d" . consult-dir)
+         ("C-x C-j" . consult-dir-jump-file))
+  :config
+  (add-to-list 'consult-dir-sources 'consult-dir--source-tramp-ssh t)
+  (add-to-list 'consult-dir-sources 'consult-dir--source-tramp-local t)
+  )
 
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
   :init
-  (savehist-mode))
+  (savehist-mode)
+  :config
+  (setq-default savehist-additional-variables
+		'(kill-ring))
+  (with-eval-after-load 'vertico
+    (add-to-list 'savehist-additional-variables 'vertico-repeat-history))
+  (add-hook 'minibuffer-setup-hook #'vertico-repeat-save))
 
 
 ;; A few more useful configurations...

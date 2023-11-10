@@ -1,17 +1,12 @@
-(global-set-key "\C-x\C-b" 'ibuffer)
-(setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
-(require 'ibuffer-projectile)
-(require 'all-the-icons-ibuffer)
-
 (use-package ibuffer
-  :ensure nil
+  :straight t
   :bind ("C-x C-b" . ibuffer)
   :init (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
   :config
   ;; Display icons for buffers
   (use-package all-the-icons-ibuffer
     :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
-  
+
   (with-eval-after-load 'counsel
     (with-no-warnings
       (defun my-ibuffer-find-file ()
@@ -24,7 +19,6 @@
           (counsel-find-file default-directory)))
       (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file))))
 
-
 (defun icon-displayable-p ()
   "Return non-nil if icons are displayable."
        (or (display-graphic-p) (daemonp))
@@ -33,6 +27,7 @@
 
 ;; Group ibuffer's list by project root
 (use-package ibuffer-projectile
+  :straight t
   :functions all-the-icons-octicon ibuffer-do-sort-by-alphabetic
   :hook ((ibuffer . (lambda ()
                       (ibuffer-projectile-set-filter-groups)

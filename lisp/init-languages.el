@@ -1,15 +1,27 @@
-(require 'quickrun)
-(require 'conda)
-(add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-ipython-notebook/lisp")
-(require 'ein)
+(use-package conda
+  :straight t
+  :defer t
+  :config
+  (conda-env-initialize-interactive-shells)                        ;; support interactive shell
+  (conda-env-initialize-eshell)                                    ;; support eshell
+  ;; (conda-env-autoactivate-mode t)                                  ;; auto-activation
+  (custom-set-variables '(conda-anaconda-home "~/miniconda3/"))     ;; specify installation directory
+  )
 
-(setq lsp-bridge-python-command "~/miniconda3/bin/python3.10")
-(conda-env-initialize-interactive-shells)                        ;; support interactive shell
-(conda-env-initialize-eshell)                                    ;; support eshell
-;; (conda-env-autoactivate-mode t)                                  ;; auto-activation
-(custom-set-variables '(conda-anaconda-home "~/miniconda3/"))     ;; specify installation directory
-(add-hook 'conda-post-activate-hook                              ;; restart lsp-bridge
-          (lambda ()
-            (lsp-bridge-restart-process)))
+(use-package quickrun
+  :straight t
+  :defer t
+  :bind (("C-c r"  . quickrun))
+  :config
+  (setq quickrun-focus-p nil))
+
+;; [elec-pair]
+(use-package elec-pair
+  :hook ((prog-mode conf-mode yaml-mode org-mode markdown-mode) . electric-pair-mode)
+  :config
+  (setq electric-pair-inhibit-predicate 'electric-pair-default-inhibit))
+
+(use-package ein
+  :straight t)
 
 (provide 'init-languages)

@@ -1,42 +1,31 @@
-(require 'dashboard)
-(require 'page-break-lines)
+(use-package dashboard
+  :straight t
+  ;; :init
+  ;; (dashboard-setup-startup-hook)
+  :config
+  (run-with-idle-timer 0.1 nil 'toggle-frame-maximized)
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 
-;(use-package page-break-lines
-;  :ensure t
-;  :demand t)
+  ;; Set the title
+  (setq dashboard-banner-logo-title "Welcome to Emacs, TakaObsid!")
+  ;; Set the banner
+  (setq dashboard-startup-banner "/Users/takaobsid/.emacs.d/seth.jpeg")
+  (setq dashboard-image-banner-max-height 250)
+  (setq dashboard-center-content t)
+  (setq dashboard-show-shortcuts nil)
 
-(run-with-idle-timer 0.1 nil 'toggle-frame-maximized)
-(dashboard-setup-startup-hook)
-(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (projects . 5)
+                          ;; (agenda . 5)
+                          (registers . 5)))
 
-;; Set the title
-(setq dashboard-banner-logo-title "Welcome to Emacs, TakaObsid!")
-;; Set the banner
-(setq dashboard-startup-banner "/Users/takaobsid/.emacs.d/seth.jpeg")
-;; Value can be
-;; 'official which displays the official emacs logo
-;; 'logo which displays an alternative emacs logo
-;; 1, 2 or 3 which displays one of the text banners
-;; "path/to/your/image.gif", "path/to/your/image.png" or "path/to/your/text.txt" which displays whatever gif/image/text you would prefer
-(setq dashboard-image-banner-max-height 350)
-
-
-;; Content is not centered by default. To center, set
-(setq dashboard-center-content t)
-
-;; To disable shortcut "jump" indicators for each section, set
-(setq dashboard-show-shortcuts nil)
-
-(setq dashboard-items '((recents  . 5)
-                        (bookmarks . 5)
-                        (projects . 5)
-                        (agenda . 5)
-                        (registers . 5)))
-
-(setq dashboard-set-heading-icons t)
-(setq dashboard-set-file-icons t)
-(setq dashboard-week-agenda t)
-(setq dashboard-set-navigator t)
-(setq dashboard-agenda-sort-strategy '(time-up))
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-week-agenda t)
+  (setq dashboard-set-navigator t)
+  (setq dashboard-agenda-sort-strategy '(time-up))
+  (setq dashboard-page-separator "\n\f\n") 
+  )
 
 (provide 'init-dashboard)

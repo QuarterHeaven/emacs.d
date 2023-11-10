@@ -1,24 +1,26 @@
-(add-to-list 'load-path "~/.emacs.d/site-lisp/dirvish/extensions/")
-(require 'dirvish)
-(require 'dirvish-extras)
-(require 'dirvish-widgets)
-(require 'dirvish-collapse)
-(require 'dirvish-emerge)
-(require 'dirvish-fd)
-(require 'dirvish-history)
-(require 'dirvish-icons)
-(require 'dirvish-ls)
-(require 'dirvish-narrow)
-(require 'dirvish-peek)
-(require 'dirvish-quick-access)
-(require 'dirvish-side)
-(require 'dirvish-subtree)
-(require 'dirvish-vc)
-(require 'dirvish-yank)
-
 (use-package dirvish
-  :init
-  (dirvish-override-dired-mode)
+  :straight t
+  ;; :load-path "~/.emacs.d/site-lisp/dirvish/extensions/"
+  :autoload (
+	     dirvish-extras
+	     dirvish-widgets
+	     dirvish-collapse
+	     dirvish-emerge
+	     dirvish-fd
+	     dirvish-history
+	     dirvish-icons
+	     dirvish-ls
+	     dirvish-narrow
+	     dirvish-peek
+	     dirvish-quick-access
+	     dirvish-side
+	     dirvish-subtree
+	     dirvish-vc
+	     dirvish-yank
+	     )
+  :commands (dirvish)
+  :hook
+  (dired-mode . dirvish-override-dired-mode)
   :custom
   (dirvish-quick-access-entries ; It's a :custom option
    '(("h" "~/"                          "Home")
@@ -35,35 +37,36 @@
   (setq insert-directory-program "gls")
   (setq dired-listing-switches
         "-l --almost-all --human-readable --time-style=long-iso --group-directories-first --no-group")
- :bind ; Bind `dirvish|dirvish-side|dirvish-dwim' as you see fit
- (("C-c f" . dirvish-fd)
-  :map dirvish-mode-map ; Dirvish inherits `dired-mode-map'
-  ("a"   . dirvish-quick-access)
-  ("f"   . dirvish-file-info-menu)
-  ("y"   . dirvish-yank-menu)
-  ("N"   . dirvish-narrow)
-  ("^"   . dirvish-history-last)
-  ("h"   . dirvish-history-jump) ; remapped `describe-mode'
-  ("s"   . dirvish-quicksort)    ; remapped `dired-sort-toggle-or-edit'
-  ("v"   . dirvish-vc-menu)      ; remapped `dired-view-file'
-  ("TAB" . dirvish-subtree-toggle)
-  ("M-f" . dirvish-history-go-forward)
-  ("M-b" . dirvish-history-go-backward)
-  ("M-l" . dirvish-ls-switches-menu)
-  ("M-m" . dirvish-mark-menu)
-  ("M-t" . dirvish-layout-toggle)
-  ("M-s" . dirvish-setup-menu)
-  ("M-e" . dirvish-emerge-menu)
-  ("M-j" . dirvish-fd-jump))
-   )
-
   (dirvish-define-preview exa (file)
-  "Use `exa' to generate directory preview."
-  :require ("exa") ; tell Dirvish to check if we have the executable
-  (when (file-directory-p file) ; we only interest in directories here
-    `(shell . ("exa" "-al" "--color=always" "--icons"
-               "--group-directories-first" ,file))))
+    "Use `exa' to generate directory preview."
+    :require ("exa") ; tell Dirvish to check if we have the executable
+    (when (file-directory-p file) ; we only interest in directories here
+      `(shell . ("exa" "-al" "--color=always" "--icons"
+		 "--group-directories-first" ,file))))
   (add-to-list 'dirvish-preview-dispatchers 'exa)
+
+  :bind ; Bind `dirvish|dirvish-side|dirvish-dwim' as you see fit
+  (("C-c f" . dirvish-fd)
+   :map dirvish-mode-map ; Dirvish inherits `dired-mode-map'
+   ("a"   . dirvish-quick-access)
+   ("f"   . dirvish-file-info-menu)
+   ("y"   . dirvish-yank-menu)
+   ("N"   . dirvish-narrow)
+   ("^"   . dired-up-directory)
+   ("h"   . dirvish-history-jump) ; remapped `describe-mode'
+   ("s"   . dirvish-quicksort)    ; remapped `dired-sort-toggle-or-edit'
+   ("v"   . dirvish-vc-menu)      ; remapped `dired-view-file'
+   ("TAB" . dirvish-subtree-toggle)
+   ("M-f" . dirvish-history-go-forward)
+   ("M-b" . dirvish-history-go-backward)
+   ("M-l" . dirvish-ls-switches-menu)
+   ("M-m" . dirvish-mark-menu)
+   ("M-t" . dirvish-layout-toggle)
+   ("M-s" . dirvish-setup-menu)
+   ("M-e" . dirvish-emerge-menu)
+   ("M-j" . dirvish-fd-jump))
+  )
+
 
 (use-package tramp
   :config

@@ -1,18 +1,11 @@
-(add-to-list 'load-path "~/.emacs.d/site-lisp/treemacs/src/elisp")
-(add-to-list 'load-path "~/.emacs.d/site-lisp/treemacs/src/extra")
-(require 'treemacs)
-(require 'treemacs-projectile)
-(require 'treemacs-git-commit-diff-mode)
-
 (use-package treemacs
-;  :ensure t
-  ;; :load-path "~/.emacs.d/site-lisp/treemacs"
-  ;; :load-path "~/.emacs.d/site-lisp/treemacs/src/elisp"
-  ;; :load-path "~/.emacs.d/site-lisp/treemacs/src/extra"
-  :defer t
+  :straight t
+  ;; :defer t
   :init
   (global-set-key (kbd "C-c t") 'treemacs-select-window)
   :config
+  (setq projectile-switch-project-action #'(lambda ()(progn (projectile-find-file)
+						(treemacs))))
   (progn
     (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0)
           treemacs-deferred-git-apply-delay        0.5
@@ -97,28 +90,28 @@
   (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action))
 
 (use-package treemacs-projectile
+  :straight nil
   :after (treemacs projectile)
-  ;:ensure t
   )
 
 (use-package treemacs-icons-dired
+  :straight nil
   :hook (dired-mode . treemacs-icons-dired-enable-once)
-  ;:ensure t
   )
 
 (use-package treemacs-magit
+  :straight nil
   :after (treemacs magit)
-  ;:ensure t
   )
 
 (use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
+  :straight nil
   :after (treemacs persp-mode) ;;or perspective vs. persp-mode
-  ;:ensure t
   :config (treemacs-set-scope-type 'Perspectives))
 
 (use-package treemacs-tab-bar ;;treemacs-tab-bar if you use tab-bar-mode
+  :straight nil
   :after (treemacs)
-  ;:ensure t
   :config (treemacs-set-scope-type 'Tabs))
 
 (provide 'init-treemacs)

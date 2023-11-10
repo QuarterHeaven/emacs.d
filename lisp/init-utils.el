@@ -33,7 +33,6 @@
       (setq pos (match-end group)))
     result))
 
-
 
 ;; Delete the current file
 
@@ -140,7 +139,7 @@
   "Setup fonts."
   (when (display-graphic-p)
     ;; Set default font
-    (cl-loop for font in '("FiraCode Nerd Font" "Jetbrains Mono"
+    (cl-loop for font in '("BlexMono Nerd Font Mono" "Jetbrains Mono"
                            "SF Mono" "SF Pro Display" "Hack" "Source Code Pro" "Menlo"
                            "Monaco" "DejaVu Sans Mono" "Consolas")
              when (font-installed-p font)
@@ -151,7 +150,7 @@
                                                       (t 100))))
 
     ;; Set mode-line font
-    (cl-loop for font in '("Menlo" "SF Pro Display" "Helvetica")
+    (cl-loop for font in '("BlexMono Nerd Font Mono" "Unifont Upper" "Noto Color Emoji" "SF Pro Display" "Helvetica")
              when (font-installed-p font)
              return (progn
                       (set-face-attribute 'mode-line nil :family font :height 120)
@@ -160,11 +159,16 @@
                       (set-face-attribute 'mode-line-inactive nil :family font :height 120)))
 
     ;; Specify font for all unicode characters
-    (cl-loop for font in '("Segoe UI Symbol" "Symbola" "Symbol")
+    (cl-loop for font in '("Symbola" "Unifont Upper" "Segoe UI Symbol")
              when (font-installed-p font)
              return (if (< emacs-major-version 27)
                         (set-fontset-font "fontset-default" 'unicode font nil 'prepend)
-                      (set-fontset-font t 'symbol (font-spec :family font) nil 'prepend)))
+
+		      (set-fontset-font t 'symbol (font-spec :family font) nil 'prepend)
+		      (set-fontset-font t 'unicode (font-spec :family font
+							      :height (cond (sys/macp 130)
+									    (sys/win32p 110)
+									    (t 100))) nil 'prepend)))
 
     ;; Emoji
     (cl-loop for font in '("Noto Color Emoji" "Apple Color Emoji" "Segoe UI Emoji")
@@ -175,14 +179,29 @@
                      ((< emacs-major-version 28)
                       (set-fontset-font t 'symbol (font-spec :family font) nil 'prepend))
                      (t
-                      (set-fontset-font t 'emoji (font-spec :family font) nil 'prepend))))
+                      (set-fontset-font t 'emoji (font-spec :family font
+							    :height (cond (sys/macp 130)
+									  (sys/win32p 110)
+									  (t 100)))))))
 
     ;; Specify font for Chinese characters
     (cl-loop for font in '("LXGW WenKai Mono" "WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei" "STFangsong")
              when (font-installed-p font)
              return (progn
                       (setq face-font-rescale-alist `((,font . 1.0)))
-                      (set-fontset-font t '(#x4e00 . #x9fff) (font-spec :family font))))))
+                      (set-fontset-font t '(#x4e00 . #x9fa5) (font-spec :family font
+									:height (cond (sys/macp 130)
+										      (sys/win32p 110)
+										      (t 100))))
+		      (set-fontset-font t '(#xff00 . #xffef) (font-spec :family font
+									:height (cond (sys/macp 130)
+										      (sys/win32p 110)
+										      (t 100))))
+		      (set-fontset-font t '(#x3000 . #x303f) (font-spec :family font
+									:height (cond (sys/macp 130)
+										      (sys/win32p 110)
+										      (t 100))))
+		      ))))
 
 
 (defun lsp-bridge-set-project-path ()
@@ -192,5 +211,25 @@
 			(save-match-data
 			  (and (string-match default-directory filepath)
 				   (match-string 0 filepath))))))
+
+
+(defmacro defadvice! (symbol arglist &rest body)
+  "Define an advice called SYMBOL and add it to PLACES.
+
+ARGLIST is as in `defun'. WHERE is a keyword as passed to `advice-add', and
+PLACE is the function to which to add the advice, like in `advice-add'.
+DOCSTRING and BODY are as in `defun'.
+
+\(fn SYMBOL ARGLIST &rest [WHERE PLACES...] BODY\)"
+  (declare (indent defun))
+  (let (where-alist)
+    (while (keywordp (car body))
+      (push `(cons ,(pop body) (ensure-list ,(pop body)))
+            where-alist))
+    `(progn
+       (defun ,symbol ,arglist ,@body)
+       (dolist (targets (list ,@(nreverse where-alist)))
+         (dolist (target (cdr targets))
+           (advice-add target (car targets) #',symbol))))))
 
 (provide 'init-utils)

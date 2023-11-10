@@ -3,7 +3,6 @@
 (setq auto-save-default nil)
 (setq create-lockfiles nil)
 
-
 (setq url-gateway-method 'socks)
 (setq socks-server '("Default server" "127.0.0.1" 1081 5))
 
@@ -38,12 +37,27 @@
 (global-set-key (kbd "C-c v") 'split-window-vertically)
 (global-set-key (kbd "C-c h") 'split-window-horizontally)
 
-(setq tab-bar-show 1)
-
 (setq use-short-answers t)
 
 (use-package pixel-scroll
-  :config (pixel-scroll-precision-mode t))
+  :config
+  (pixel-scroll-precision-mode 1)
+  (setq pixel-scroll-precision-interpolate-page t)
+  (defun +pixel-scroll-interpolate-down (&optional lines)
+    (interactive)
+    (if lines
+	(pixel-scroll-precision-interpolate (* -1 lines (pixel-line-height)))
+      (pixel-scroll-interpolate-down)))
+
+  (defun +pixel-scroll-interpolate-up (&optional lines)
+    (interactive)
+    (if lines
+	(pixel-scroll-precision-interpolate (* lines (pixel-line-height))))
+    (pixel-scroll-interpolate-up))
+
+  (defalias 'scroll-up-command '+pixel-scroll-interpolate-down)
+  (defalias 'scroll-down-command '+pixel-scroll-interpolate-up)
+  )
 
 ; 编码设置
 (set-language-info
@@ -62,5 +76,14 @@
 ;;(setq file-name-coding-system 'gb18030)
 
 (setq default-buffer-file-conding-system 'utf-8)
+
+;; disable title-bar; emacs >= 29 only
+(add-to-list 'default-frame-alist '(undecorated . t))
+
+(setq-default bidi-display-reordering nil)
+(setq bidi-inhibit-bpa t
+      long-line-threshold 1000
+      large-hscroll-threshold 1000
+      syntax-wholeline-max 1000)
 
 (provide 'init-basic)

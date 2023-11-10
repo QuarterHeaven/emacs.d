@@ -1,5 +1,6 @@
 (use-package blink-search
+  :straight t
   :bind
-  ("C-c C-s" . blink-search))
+  ("M-s M-s" . blink-search))
 
 (provide 'init-blink)

@@ -1,4 +1,6 @@
-(require 'rg)
-(rg-enable-default-bindings)
+(use-package rg
+  :straight t
+  :bind ("C-c s" . #'rg-menu)
+  )
 
 (provide 'init-rg)

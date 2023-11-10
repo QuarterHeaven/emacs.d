@@ -28,13 +28,6 @@
  window-resize-pixelwise t
  frame-resize-pixelwise t)
 
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-(when (fboundp 'set-scroll-bar-mode)
-  (set-scroll-bar-mode nil))
-
-(menu-bar-mode -1)
-
 (let ((no-border '(internal-border-width . 0)))
   (add-to-list 'default-frame-alist no-border)
   (add-to-list 'initial-frame-alist no-border))
@@ -54,18 +47,11 @@
 (when (and *is-a-mac* (fboundp 'toggle-frame-fullscreen))
   ;; Command-Option-f to toggle fullscreen mode
   ;; Hint: Customize `ns-use-native-fullscreen'
-  (global-set-key (kbd "M-ƒ") 'toggle-frame-fullscreen))
+  (global-set-key (kbd "H-M-f") 'toggle-frame-fullscreen))
 
-;; TODO: use seethru package instead?
 (global-set-key (kbd "M-C-8") (lambda () (interactive) (sanityinc/adjust-opacity nil -2)))
 (global-set-key (kbd "M-C-9") (lambda () (interactive) (sanityinc/adjust-opacity nil 2)))
 (global-set-key (kbd "M-C-7") (lambda () (interactive) (modify-frame-parameters nil `((alpha . 100)))))
-
-
-(when *is-a-mac*
-  (when (require 'ns-auto-titlebar)
-  (ns-auto-titlebar-mode)))
-
 
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
@@ -81,15 +67,13 @@
 
 ;; Change global font size easily
 
-(require 'default-text-scale)
+(use-package default-text-scale
+  :straight t)
 (add-hook 'after-init-hook 'default-text-scale-mode)
 
 
 
-(require 'disable-mouse)
-
-
-(require 'burly)
+;; (require 'burly)
 
 (provide 'init-gui-frames)
 ;;; init-gui-frames.el ends here

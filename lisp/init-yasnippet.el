@@ -1,11 +1,6 @@
-;(require-package 'yasnippet)
-;(require-package 'yasnippet-snippets)
-;(require-package 'auto-yasnippet)
-(require 'yasnippet)
-
 (use-package yasnippet
-  ;; :defer t
-  :config
+  :straight t
+  :init
   (yas-global-mode 1))
 
 ;(use-package auto-yasnippet

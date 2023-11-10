@@ -1,7 +1,8 @@
-(require 'vterm)
-(require 'vterm-toggle)
-
-(defvar vterm-compile-buffer nil)
+(use-package vterm
+  :straight t
+  :bind ("C-t" . vterm-toggle)
+  :config
+  (defvar vterm-compile-buffer nil)
   (defun vterm-compile ()
     "Compile the program including the current buffer in `vterm'."
     (interactive)
@@ -18,26 +19,26 @@
           (vterm-send-M-w)
           (vterm-send-string compile-command t)
           (vterm-send-return)))))
-
-(global-set-key (kbd "C-t") 'vterm-toggle)
-(setq vterm-toggle-hide-method 'delete-window)
-
-(defvar vterm-buffer-name  "*vterm*")
-(setq vterm-toggle-fullscreen-p nil)
-(add-to-list 'display-buffer-alist
-             '((lambda (buffer-or-name _)
+  (defvar vterm-buffer-name  "*vterm*")
+  (setq vterm-toggle-fullscreen-p nil)
+  (add-to-list 'display-buffer-alist
+               '((lambda (buffer-or-name _)
                    (let ((buffer (get-buffer buffer-or-name)))
                      (with-current-buffer buffer
                        (or (equal major-mode 'vterm-mode)
                            (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-                (display-buffer-reuse-window display-buffer-at-bottom)
-                ;;(display-buffer-reuse-window display-buffer-in-direction)
-                ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-                ;;(direction . bottom)
-                ;;(dedicated . t) ;dedicated is supported in emacs27
-                (reusable-frames . visible)
-                (window-height . 0.3)))
+                 (display-buffer-reuse-window display-buffer-at-bottom)
+                 ;;(display-buffer-reuse-window display-buffer-in-direction)
+                 ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                 ;;(direction . bottom)
+                 ;;(dedicated . t) ;dedicated is supported in emacs27
+                 (reusable-frames . visible)
+                 (window-height . 0.3))))
 
-(setq)
+(use-package vterm-toggle
+  :straight t
+  :after (vterm)
+  :config
+  (setq vterm-toggle-hide-method 'delete-window))
 
 (provide 'init-vterm)
