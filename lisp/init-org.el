@@ -318,6 +318,30 @@
 ;; (load "~/.emacs.d/site-lisp/next-spec-day.el")
 (setq org-agenda-files '("~/Documents/orgs/agenda.org"))
 
+(use-package org-super-agenda
+  :straight t
+  :after (org)
+  :init
+  (org-super-agenda-mode +1)
+  (let ((org-super-agenda-groups
+       '(;; Each group has an implicit boolean OR operator between its selectors.
+         (:name "Today"  ; Optionally specify section name
+                :time-grid t  ; Items that appear on the time grid
+                :todo "TODAY")  ; Items that have this TODO keyword
+         (:name "Important"
+                ;; Single arguments given alone
+                :tag "bills"
+                :priority "A")
+         (:priority<= "B"
+                      ;; Show this section after "Today" and "Important", because
+                      ;; their order is unspecified, defaulting to 0. Sections
+                      ;; are displayed lowest-number-first.
+                      :order 1)
+         ;; After the last group, the agenda will display items that didn't
+         ;; match any of these groups, with the default order position of 99
+         )))
+  (org-agenda nil "a")))
+
 (use-package org-tempo
   :after (org))
 

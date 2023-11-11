@@ -7,17 +7,18 @@
   (use-package all-the-icons-ibuffer
     :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 
-  (with-eval-after-load 'counsel
-    (with-no-warnings
-      (defun my-ibuffer-find-file ()
-        (interactive)
-        (let ((default-directory (let ((buf (ibuffer-current-buffer)))
-                                   (if (buffer-live-p buf)
-                                       (with-current-buffer buf
-                                         default-directory)
-                                     default-directory))))
-          (counsel-find-file default-directory)))
-      (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file))))
+  ;; (with-eval-after-load 'counsel
+  ;;   (with-no-warnings
+  ;;     (defun my-ibuffer-find-file ()
+  ;;       (interactive)
+  ;;       (let ((default-directory (let ((buf (ibuffer-current-buffer)))
+  ;;                                  (if (buffer-live-p buf)
+  ;;                                      (with-current-buffer buf
+  ;;                                        default-directory)
+  ;;                                    default-directory))))
+  ;;         (counsel-find-file default-directory)))
+  ;;     (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file)))
+  )
 
 (defun icon-displayable-p ()
   "Return non-nil if icons are displayable."

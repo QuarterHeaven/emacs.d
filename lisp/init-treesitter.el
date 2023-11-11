@@ -43,12 +43,13 @@
         (python-mode     . python-ts-mode)
         (sh-mode         . bash-ts-mode)
         (typescript-mode . typescript-ts-mode)))
-(add-to-list 'auto-mode-alist '(("\\(?:Dockerfile\\(?:\\..*\\)?\\|\\.[Dd]ockerfile\\)\\'" . dockerfile-ts-mode)
-				("\\.go\\'" . go-ts-mode)
-				("/go\\.mod\\'" . go-mod-ts-mode)
-				("\\.rs\\'" . rust-ts-mode)
-				("\\.ts\\'" . typescript-ts-mode)
-				("\\.y[a]?ml\\'" . yaml-ts-mode)))
+	
+(add-to-list 'auto-mode-alist '("\\(?:Dockerfile\\(?:\\..*\\)?\\|\\.[Dd]ockerfile\\)\\'" . dockerfile-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
+(add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
 
 (setq org-src-lang-modes
 	     '(("python" . python-ts)
@@ -59,9 +60,10 @@
 (add-hook 'emacs-lisp-mode-hook #'(lambda () (treesit-parser-create 'elisp)))
 (add-hook 'org-mode-hook #'(lambda() (treesit-parser-create 'org)))
 
-(use-package treesit-auto
-  :config
-  (global-treesit-auto-mode))
+;; (use-package treesit-auto
+;;   :straight t
+;;   :config
+;;   (global-treesit-auto-mode))
 
 
 ;; treesitter-context-mode

@@ -59,6 +59,7 @@
 
 ;; Enable embark
 (use-package embark
+  :straight t
   :bind
   (("C-." . embark-act)         ;; pick some comfortable binding
    ("C-;" . embark-dwim)        ;; good alternative: M-.
@@ -84,6 +85,7 @@
 
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
+  :straight t
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
