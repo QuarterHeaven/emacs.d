@@ -19,4 +19,8 @@
          ("C-c w p" . search-web-at-point)
          ("C-c w r" . search-web-region)))
 
+(use-package grip-mode
+  :straight t
+  :hook (markdown-mode . grip-mode))
+
 (provide 'init-web)

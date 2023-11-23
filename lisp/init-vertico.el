@@ -2,7 +2,6 @@
 (use-package vertico
   :straight (:files (:defaults "extensions/*.el"))
   :hook (after-init . vertico-mode)
-
   ;; Different scroll margin
   ;; (setq vertico-scroll-margin 0)
 
@@ -13,17 +12,20 @@
   ;; (setq vertico-resize t)
 
   ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-  (setq vertico-cycle t)
+  :config
+  (setq vertico-cycle t
+	vertico-resize nil
+	vertico-count 15)
   :bind
   ("C-M-r" . vertico-repeat-select))
 (define-key minibuffer-local-map (kbd "<backspace>") #'vertico-directory-delete-char)
 
 (use-package vertico-directory
-             :straight nil
+  :straight nil
   :after (vertico))
 
 (use-package vertico-repeat
-             :straight nil
+  :straight nil
   :after (vertico))
 
 
@@ -32,7 +34,8 @@
   :straight t
   :init
   (setq completion-styles '(orderless basic)
-	completion-category-overrides '((file (styles basic partial-completion)))))
+	completion-category-overrides '((file (styles basic partial-completion))
+					(eglot (styles . (orderless flex))))))
 
 
 ;; Enable rich annotations using the Marginalia package

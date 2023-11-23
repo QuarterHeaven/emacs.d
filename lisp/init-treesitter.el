@@ -32,6 +32,11 @@
         (toml . ("https://github.com/tree-sitter/tree-sitter-toml"))
         (zig . ("https://github.com/GrayJack/tree-sitter-zig"))))
 
+(use-package protobuf-ts-mode
+  :disabled
+  :straight (:type git :repo "emacsmirror/protobuf-ts-mode")
+  :defer t)
+
 (setq major-mode-remap-alist
       '((c-mode          . c-ts-mode)
         (c++-mode        . c++-ts-mode)
@@ -43,7 +48,7 @@
         (python-mode     . python-ts-mode)
         (sh-mode         . bash-ts-mode)
         (typescript-mode . typescript-ts-mode)))
-	
+
 (add-to-list 'auto-mode-alist '("\\(?:Dockerfile\\(?:\\..*\\)?\\|\\.[Dd]ockerfile\\)\\'" . dockerfile-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
 (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
@@ -67,7 +72,11 @@
 
 
 ;; treesitter-context-mode
+(use-package posframe-plus
+  :straight (posframe-plus :host github :repo "zbelial/posframe-plus"))
+
 (use-package treesitter-context
+  :after (posframe-plus)
   :straight (treesitter-context :host github :repo "zbelial/treesitter-context.el")
   :hook (rust-ts-mode . #'treesitter-context-mode)
   (c++-ts-mode . #'treesitter-context-mode)

@@ -24,4 +24,7 @@
 (use-package ein
   :straight t)
 
+(use-package protobuf-mode
+  :straight t)
+
 (provide 'init-languages)

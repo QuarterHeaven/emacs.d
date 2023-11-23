@@ -164,11 +164,14 @@
              return (if (< emacs-major-version 27)
                         (set-fontset-font "fontset-default" 'unicode font nil 'prepend)
 
-		      (set-fontset-font t 'symbol (font-spec :family font) nil 'prepend)
-		      (set-fontset-font t 'unicode (font-spec :family font
+		      (set-fontset-font t 'symbol (font-spec :family font
 							      :height (cond (sys/macp 130)
 									    (sys/win32p 110)
-									    (t 100))) nil 'prepend)))
+									    (t 100))))))
+		      ;; (set-fontset-font t 'unicode (font-spec :family font
+		      ;; 					      :height (cond (sys/macp 130)
+		      ;; 							    (sys/win32p 110)
+		      ;; 							    (t 100))) nil 'prepend)))
 
     ;; Emoji
     (cl-loop for font in '("Noto Color Emoji" "Apple Color Emoji" "Segoe UI Emoji")
@@ -177,7 +180,10 @@
                      ((< emacs-major-version 27)
                       (set-fontset-font "fontset-default" 'unicode font nil 'prepend))
                      ((< emacs-major-version 28)
-                      (set-fontset-font t 'symbol (font-spec :family font) nil 'prepend))
+                      (set-fontset-font t 'symbol (font-spec :family font
+							      :height (cond (sys/macp 130)
+									    (sys/win32p 110)
+									    (t 100))) nil 'prepend))
                      (t
                       (set-fontset-font t 'emoji (font-spec :family font
 							    :height (cond (sys/macp 130)
@@ -200,8 +206,8 @@
 		      (set-fontset-font t '(#x3000 . #x303f) (font-spec :family font
 									:height (cond (sys/macp 130)
 										      (sys/win32p 110)
-										      (t 100))))
-		      ))))
+										      (t 100))))))
+    ))
 
 
 (defun lsp-bridge-set-project-path ()

@@ -90,27 +90,27 @@
   (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action))
 
 (use-package treemacs-projectile
-  :straight nil
+  :straight t
   :after (treemacs projectile)
   )
 
 (use-package treemacs-icons-dired
-  :straight nil
+  :straight t
   :hook (dired-mode . treemacs-icons-dired-enable-once)
   )
 
 (use-package treemacs-magit
-  :straight nil
+  :straight t
   :after (treemacs magit)
   )
 
 (use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
-  :straight nil
+  :straight t
   :after (treemacs persp-mode) ;;or perspective vs. persp-mode
   :config (treemacs-set-scope-type 'Perspectives))
 
 (use-package treemacs-tab-bar ;;treemacs-tab-bar if you use tab-bar-mode
-  :straight nil
+  :straight t
   :after (treemacs)
   :config (treemacs-set-scope-type 'Tabs))
 

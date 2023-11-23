@@ -2,7 +2,7 @@
   :straight t)
 
 (use-package org
-  :defer
+  :defer t
   :straight `(org
               :fork (:host nil
 			   :repo "https://git.tecosaur.net/tec/org-mode.git"
@@ -28,12 +28,13 @@
                    "(provide 'org-version)\n")))
               :pin nil)
   :hook
-  ((org-mode . org-latex-preview-auto-mode)
-   (org-mode . org-toggle-pretty-entities))
+  (
+   (org-mode . org-latex-preview-auto-mode)
+   (org-mode . org-toggle-pretty-entities)
+   (org-mode . org-cdlatex-mode))
+  :bind ("C-c <backspace>" . org-mark-ring-goto)
+  :init (require 'tex-mode)
   :config
-  (define-key org-mode-map (kbd "C-C <C-backspace>") 'org-mark-ring-goto)
-  (define-key org-mode-map (kbd "H-SPC")
-	      (lambda () (interactive) (insert "\u200b")))
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
@@ -49,7 +50,16 @@
   (setq word-wrap-by-category t)
   (setq org-babel-python-command "python3.10")
   (setq org-image-actual-width nil)
-  (setq org-use-sub-superscripts '{})
+
+  (defun my/org-raise-scripts-no-braces (_)
+  (when (and (eq (char-after (match-beginning 3)) ?{)
+             (eq (char-before (match-end 3)) ?}))
+    (remove-text-properties (match-beginning 3) (1+ (match-beginning 3))
+                    (list 'invisible nil))
+    (remove-text-properties (1- (match-end 3)) (match-end 3)
+                    (list 'invisible nil))))
+
+  (advice-add 'org-raise-scripts :after #'my/org-raise-scripts-no-braces)
 
   (setq org-latex-compiler "pdflatex"
 	org-latex-preview-process-alist '((dvipng :programs ("latex" "dvipng") :description "dvi > png"
@@ -139,10 +149,17 @@
 	  ("T1" "fontenc" t ("pdflatex"))))
 
   (setq org-latex-preview-auto-generate 'live
-	org-latex-preview-debounce 1.0
+	org-latex-preview-debounce 2.0
 	org-latex-preview-throttle 1.0
 	org-latex-preview-numbered nil
-	org-startup-with-latex-preview nil)
+	;; org-startup-with-latex-preview t
+	)
+  (setq org-latex-preview-options '(:foreground auto
+						:background "Transparent" :scale 1.0
+						:matchers
+						("begin" "$1" "$" "$$" "\\(" "\\[") :zoom 1.1))
+
+  (setq org-highlight-latex-and-related '(entities native latex))
 
   ;; dont cache latex preview images
   (setq org-latex-preview-persist nil)
@@ -150,45 +167,46 @@
   (setq org-element-use-cache nil))
 
 (use-package prettify-symbols
-  :after (org)
-  :hook (org-mode . prettify-symbols-mode)
-  :config
-  (setq prettify-symbols-alist
-	'(("lambda"  . ?λ)
-	  (":PROPERTIES:" . ?)
-	  (":ID:" . ?)
-	  (":END:" . ?)
-	  ("#+TITLE:" . ?)
-	  ("#+AUTHOR:" . ?)
-	  ("#+RESULTS:" . ?)
-	  (":properties:" . ?)
-	  (":id:" . ?)
-	  (":end:" . ?)
-	  ("#+title:" . ?)
-	  ("#+author:" . ?)
-	  ("#+results:" . ?)
-	  ("- [ ]" . ?)
-	  ("- [-]" . ?)
-	  ("- [X]" . ?)
-	  ("- [x]" . ?)
-	  ("[#A]" . ?🅐)
-	  ("[#B]" . ?🅑)
-	  ("[#C]" . ?🅒)
-	  ("#+BEGIN_SRC" . "λ")  ; previously ✎
-	  ("#+END_SRC" . "□")
-	  ("#+begin_src" . "λ")
-	  ("#+end_src" . "□")
-	  ("#+begin_quote:"   . "❝")
-	  ("#+end_quote:"     . "❞")
-          ("#+BEGIN_QUOTE:"   . "❝")
-          ("#+END_QUOTE:"     . "❞")
-	  ("#+attr_latex:"    . "🄛")
-	  ("#+attr_html:"     . "🄗")
-	  ("#+attr_org:"      . "⒪")
-	  ("#+ATTR_LATEX:"    . "🄛")
-	  ("#+ATTR_HTML:"     . "🄗")
-	  ("#+ATTR_ORG:"      . "⒪")
-	  )))
+  :hook
+  (org-mode . prettify-symbols-mode)
+  (org-mode . (lambda () (setq prettify-symbols-alist
+			       '(("lambda"  . ?λ)
+				 (":PROPERTIES:" . ?)
+				 (":ID:" . ?)
+				 (":END:" . ?)
+				 ("#+TITLE:" . ?)
+				 ("#+AUTHOR:" . ?)
+				 ("#+RESULTS:" . ?)
+				 (":properties:" . ?)
+				 (":id:" . ?)
+				 (":end:" . ?)
+				 ("#+title:" . ?)
+				 ("#+author:" . ?)
+				 ("#+results:" . ?)
+				 ("- [ ]" . ?)
+				 ("- [-]" . ?)
+				 ("- [X]" . ?)
+				 ("- [x]" . ?)
+				 ("[#A]" . ?🅐)
+				 ("[#B]" . ?🅑)
+				 ("[#C]" . ?🅒)
+				 ("#+BEGIN_SRC" . "λ")  ; previously ✎
+				 ("#+END_SRC" . "□")
+				 ("#+begin_src" . "λ")
+				 ("#+end_src" . "□")
+				 ("#+begin_quote:"   . "❝")
+				 ("#+end_quote:"     . "❞")
+				 ("#+BEGIN_QUOTE:"   . "❝")
+				 ("#+END_QUOTE:"     . "❞")
+				 ("#+attr_latex:"    . "🄛")
+				 ("#+attr_html:"     . "🄗")
+				 ("#+attr_org:"      . "⒪")
+				 ("#+ATTR_LATEX:"    . "🄛")
+				 ("#+ATTR_HTML:"     . "🄗")
+				 ("#+ATTR_ORG:"      . "⒪")
+				 ))))
+  :init
+  (setq org-startup-with-inline-images t))
 
 (use-package org-remoteimg
   :straight (org-remoteimg :type git :host github :repo "gaoDean/org-remoteimg")
@@ -268,7 +286,6 @@
 ;; org roam settings
 (use-package org-roam
   :straight t
-  :defer t
   :after (org)
   :load-path "~/.emacs.d/site-lisp/org-roam/extensions"
   :init
@@ -283,8 +300,8 @@
   :straight t
   :after (org-roam))
 
-(use-package init-dynamic-agenda
-  :after (org))
+;; (use-package init-dynamic-agenda
+;;   :after (org))
 
 ;; whitespace mode 下显示零宽空格
 (with-eval-after-load 'whitespace
@@ -294,7 +311,11 @@
 (use-package writeroom-mode
   :straight t
   :hook
-  (after-init . global-writeroom-mode)
+  ;; (after-init . global-writeroom-mode)
+  ((c-ts-mode c++-ts-mode rust-ts-mode python-ts-mode haskell-ts-mode clojure-ts-mode) . writeroom-mode)
+  ((prog-mode conf-mode yaml-mode shell-mode eshell-mode) . writeroom-mode)
+  (org-mode . writeroom-mode)
+  (dashboard-mode . writeroom-mode)
   (org-mode . variable-pitch-mode)
   (org-mode . visual-line-mode)
   (visual-line-mode . visual-fill-column-mode)
@@ -316,31 +337,31 @@
 
 ;; agenda settings
 ;; (load "~/.emacs.d/site-lisp/next-spec-day.el")
-(setq org-agenda-files '("~/Documents/orgs/agenda.org"))
+(setq org-agenda-files '("~/Documents/orgs/agendas/"))
 
-(use-package org-super-agenda
-  :straight t
-  :after (org)
-  :init
-  (org-super-agenda-mode +1)
-  (let ((org-super-agenda-groups
-       '(;; Each group has an implicit boolean OR operator between its selectors.
-         (:name "Today"  ; Optionally specify section name
-                :time-grid t  ; Items that appear on the time grid
-                :todo "TODAY")  ; Items that have this TODO keyword
-         (:name "Important"
-                ;; Single arguments given alone
-                :tag "bills"
-                :priority "A")
-         (:priority<= "B"
-                      ;; Show this section after "Today" and "Important", because
-                      ;; their order is unspecified, defaulting to 0. Sections
-                      ;; are displayed lowest-number-first.
-                      :order 1)
-         ;; After the last group, the agenda will display items that didn't
-         ;; match any of these groups, with the default order position of 99
-         )))
-  (org-agenda nil "a")))
+;; (use-package org-super-agenda
+;;   :straight t
+;;   :after (org)
+;;   :hook (org-agenda . org-super-agenda-mode)
+;;   :init
+;;   (let ((org-super-agenda-groups
+;;        '(;; Each group has an implicit boolean OR operator between its selectors.
+;;          (:name "Today"  ; Optionally specify section name
+;;                 :time-grid t  ; Items that appear on the time grid
+;;                 :todo "TODAY")  ; Items that have this TODO keyword
+;;          (:name "Important"
+;;                 ;; Single arguments given alone
+;;                 :tag "bills"
+;;                 :priority "A")
+;;          (:priority<= "B"
+;;                       ;; Show this section after "Today" and "Important", because
+;;                       ;; their order is unspecified, defaulting to 0. Sections
+;;                       ;; are displayed lowest-number-first.
+;;                       :order 1)
+;;          ;; After the last group, the agenda will display items that didn't
+;;          ;; match any of these groups, with the default order position of 99
+;;          )))
+;;   (org-agenda nil "a")))
 
 (use-package org-tempo
   :after (org))
@@ -360,6 +381,19 @@
 
 ;; org-capture
 (setq org-default-notes-file "~/Documents/orgs/agenda.org")
+
+(use-package org
+  :defer t
+  :config
+  (setq org-capture-templates
+	'(("t" "Tasks")
+	  ("tc" "Class Task" entry
+	   (file+headline "~/Documents/orgs/agendas/Class.org" "Class")
+	   "* TODO %^{任务名}\n%U\nSCHEDULED:%^T\nDEADLINE:%^T")
+	  ("tt" "Normal Task" entry
+	   (file+headline "~/Documents/orgs/agendas/Tasks.org" "Tasks")
+	   "* TODO %^{任务名}\n%U")))
+  )
 
 
 ;; org-zotxt

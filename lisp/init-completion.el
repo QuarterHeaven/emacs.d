@@ -38,11 +38,13 @@
          (minibuffer-setup . corfu-enable-in-minibuffer))
   :bind (:map corfu-map
               ("s-m" . corfu-move-to-minibuffer)
-              ("RET" . nil))
+              ("RET" . nil)
+	      ("H-SPC" . corfu-insert-separator))
+
   :config
   (setq corfu-cycle t                ;; Enable cycling for `corfu-next/previous'
         corfu-auto t                 ;; Enable auto completion
-        corfu-separator "&"          ;; Orderless field separator
+        ;; corfu-separator "&"          ;; Orderless field separator
         corfu-auto-prefix 2          ;; minimun prefix to enable completion
         corfu-preview-current nil
         corfu-auto-delay 0.1)

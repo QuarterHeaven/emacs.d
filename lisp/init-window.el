@@ -1,7 +1,7 @@
 (use-package ace-window
   :straight t
-  :config
-  (global-set-key (kbd "C-x o") 'ace-window))
+  :bind
+  ("C-x o" . ace-window))
 
 (use-package auto-dim-other-buffers
   :straight t

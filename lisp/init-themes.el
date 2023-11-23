@@ -106,7 +106,7 @@
         doom-modeline-minor-modes t
 	doom-modeline-project-detection 'auto
 	doom-modeline-workspace-name t
-	doom-modeline-position-column-line-format '("%l:%c")
+	;; doom-modeline-position-column-line-format '("%l:%c")
 	doom-modeline-total-line-number t
 	doom-modeline-env-version t
 	find-file-visit-truename t
@@ -140,7 +140,7 @@
 (use-package tab-bar
   :config
   (setq tab-bar-separator ""
-        tab-bar-new-tab-choice "*dashboard*"
+        ;; tab-bar-new-tab-choice "*dashboard*"
         tab-bar-tab-name-truncated-max 20
         tab-bar-auto-width nil
         tab-bar-close-button-show nil

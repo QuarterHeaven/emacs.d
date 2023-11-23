@@ -1,4 +1,5 @@
 (use-package yasnippet
+  :defer t
   :straight t
   :init
   (yas-global-mode 1))

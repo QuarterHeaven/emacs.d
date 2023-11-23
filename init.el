@@ -1,10 +1,16 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
+(toggle-debug-on-error)
+
 (let (
       ;; 加载的时候临时增大`gc-cons-threshold'以加速启动速度。
       (gc-cons-threshold most-positive-fixnum)
       ;; 清空避免加载远程文件的时候分析文件。
       (file-name-handler-alist nil))
+  (require 'benchmark-init-modes)
+  (require 'benchmark-init)
+  (benchmark-init/activate)
+
 
   ;;  ;; 下面才写你的其它配置
 
@@ -27,11 +33,10 @@
   (require 'init-basic)
   (require 'init-const)
   (require 'init-site-lisp) ;; Must come before elpa, as it may provide package.el
-  ;; ;; Calls (package-initialize)
-  ;; 					;  (require 'init-elpa)      ;; Machinery for installing required packages
+  ;; Calls (package-initialize)
+  ;; (require 'init-elpa)      ;; Machinery for installing required packages
   (require 'init-straight)
   (require 'init-exec-path) ;; Set up $PATH
-  ;; (require 'cache-path-from-shell)
   (require 'bind-key)
   (require 'init-autosave)
   (require 'init-latex)
@@ -72,4 +77,6 @@
 
   (require 'init-cloud)
   (require 'init-esup)
+  (require 'init-emms)
+  (require 'init-tokenizer)
   )
