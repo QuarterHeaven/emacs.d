@@ -10,10 +10,10 @@
   ;; Set the title
   (setq dashboard-banner-logo-title "Welcome to Emacs, TakaObsid!")
   ;; Set the banner
-  (setq banner '("/Users/takaobsid/.emacs.d/seth.jpeg" "/Users/takaobsid/.emacs.d/Kalan.jpeg"))
+  (setq banner '("~/.emacs.d/seth.jpeg" "~/.emacs.d/Kalan.jpeg"))
   ;; (setq dashboard-startup-banner "/Users/takaobsid/.emacs.d/seth.jpeg")
 
-  (setq dashboard-image-banner-max-height 250)
+  (setq dashboard-image-banner-max-height (/ (window-pixel-height) 2))
   (setq dashboard-center-content t)
   (setq dashboard-show-shortcuts nil)
 
