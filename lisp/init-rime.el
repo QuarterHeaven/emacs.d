@@ -1,5 +1,8 @@
 (use-package rime
-  :straight t
+  :straight  (rime :type git
+                   :host github
+                   :repo "DogLooksGood/emacs-rime"
+                   :files ("*.el" "Makefile" "lib.c"))
   :config
   (setq rime-librime-root "~/.emacs.d/librime/dist")
   (setq rime-user-data-dir "~/Library/Rime")

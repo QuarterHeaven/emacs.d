@@ -27,4 +27,8 @@
 (use-package protobuf-mode
   :straight t)
 
+(use-package devdocs
+  :straight t
+  :bind ("C-h D" . devdocs-lookup))
+
 (provide 'init-languages)

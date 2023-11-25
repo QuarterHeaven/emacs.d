@@ -36,7 +36,8 @@
   ;; Calls (package-initialize)
   ;; (require 'init-elpa)      ;; Machinery for installing required packages
   (require 'init-straight)
-  (require 'init-exec-path) ;; Set up $PATH
+
+  (require 'init-exec-path)   ;; Set up $PATH
   (require 'bind-key)
   (require 'init-autosave)
   (require 'init-latex)
