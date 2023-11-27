@@ -1,4 +1,39 @@
-#+TITLE: README.md
+#+TITLE: README
 #+AUTHOR TakaObsid
 
-Rewrite my emacs profiles.
+* Summary
+This is my personal maintained emacs configs. This profile mainly runs on macOS so other platforms may have some strange behavious.
+
+* Prerequisite
+ - =git=
+ - fonts
+   - =BlexMono Nerd Font Mono=
+   - =Symbola=
+   - =Noto Color Emoji=
+   - =LXGW WenKai=
+ - =rg=
+ - =fd=
+ - =grip= for markdown preview
+ - LSP backends that you need
+ - GTK3 build for some xwidgets features.
+
+* Installation
+To install, clone this repo to =~/.emacs.d=, i.e. ensure that the init.el contained in this repo ends up at =~/.emacs.d/init.el=:
+
+#+begin_src sh
+  git clone https://github.com/QuarterHeaven/emacs.d.git ~/.emacs.d
+#+end_src
+
+Then generate a =custom.el= file under =~/.emacs.d=:
+
+#+begin_src sh
+  touch ~/.emacs.d/custom.el
+#+end_src
+
+Upon starting up Emacs for the first time, further third-party packages will be automatically downloaded and installed.
+
+* Program
+For most of the programming languages, there are tree-sitter settings in =lisp/init-treesitter.el=. What you need is <kbd>M-x treesit-install-language-grammar</kdb> and choose the language you need.
+
+* Updates
+Update the config with =git pull=. You can also use =Magit= (<kbd>C-x g</kbd> then <kbd>F</kbd>) to pull the config then restart Emacs.
