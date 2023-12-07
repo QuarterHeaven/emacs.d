@@ -312,7 +312,7 @@
   :straight t
   :hook
   ;; (after-init . global-writeroom-mode)
-  ((c-ts-mode c++-ts-mode rust-ts-mode python-ts-mode haskell-ts-mode clojure-ts-mode) . writeroom-mode)
+  ((c-ts-mode c++-ts-mode rust-ts-mode python-ts-mode haskell-ts-mode clojure-ts-mode typst-ts-mode) . writeroom-mode)
   ((prog-mode conf-mode yaml-mode shell-mode eshell-mode) . writeroom-mode)
   (org-mode . writeroom-mode)
   (dashboard-mode . writeroom-mode)
@@ -456,7 +456,7 @@
   "Insert custom inline css"
   (when (eq exporter 'html)
     (let* ((dir (ignore-errors (file-name-directory (buffer-file-name))))
-           (path (concat dir "style.css"))
+           (path (concat dir "style2.css"))
            (homestyle (and (or (null dir) (null (file-exists-p path)))
                            (not (null-or-unboundp 'my-org-inline-css-file))))
            (final (if homestyle my-org-inline-css-file path)))

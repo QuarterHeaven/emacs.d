@@ -75,6 +75,7 @@
   (require 'init-clojure)
   (require 'init-web)
   (require 'init-wolfram)
+  (require 'init-typst)
 
   (require 'init-cloud)
   (require 'init-esup)

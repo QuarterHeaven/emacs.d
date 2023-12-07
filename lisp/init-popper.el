@@ -60,11 +60,12 @@
           "\\*prolog\\*" inferior-python-mode inf-ruby-mode swift-repl-mode
           "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
           rustic-cargo-outdated-mode rustic-cargo-test-mode
+	  typst-ts-compilation-mode
 	  ))
 
   :config
   (popper-echo-mode 1)
-  
+
   ;; HACK: close popper window with `C-g'
   (defun +popper-close-window-hack (&rest _)
     "Close popper window via `C-g'."
