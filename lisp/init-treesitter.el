@@ -18,6 +18,7 @@
         (lua . ("https://github.com/Azganoth/tree-sitter-lua"))
         (make . ("https://github.com/alemuller/tree-sitter-make"))
         (markdown . ("https://github.com/MDeiml/tree-sitter-markdown" nil "tree-sitter-markdown/src"))
+	(nix . ("https://github.com/nix-community/tree-sitter-nix.git"))
         (ocaml . ("https://github.com/tree-sitter/tree-sitter-ocaml" nil "ocaml/src"))
         (org . ("https://github.com/milisims/tree-sitter-org"))
         (python . ("https://github.com/tree-sitter/tree-sitter-python"))
@@ -37,6 +38,14 @@
   :disabled
   :straight (:type git :repo "emacsmirror/protobuf-ts-mode")
   :defer t)
+
+(use-package nix-mode
+  :straight t
+  :mode "\\.nix\\'")
+
+(use-package nix-ts-mode
+  :straight t
+  :mode "\\.nix\\'")
 
 (setq major-mode-remap-alist
       '((c-mode          . c-ts-mode)

@@ -31,4 +31,12 @@
   :straight t
   :bind ("C-h D" . devdocs-lookup))
 
+(use-package clangd-inactive-regions
+  :straight (:type git :host github :repo "fargiolas/clangd-inactive-regions.el")
+  :hook
+  (eglot-managed-mode . clangd-inactive-regions)
+  :config
+  (clangd-inactive-regions-set-method "darken-foreground")
+  (clangd-inactive-regions-set-opacity 0.55))
+
 (provide 'init-languages)

@@ -147,7 +147,7 @@
                                         :family font
                                         :height (cond (sys/macp 130)
                                                       (sys/win32p 110)
-                                                      (t 200))))
+                                                      (t 110))))
 
     ;; Set mode-line font
     (cl-loop for font in '("BlexMono Nerd Font Mono" "Unifont Upper" "Noto Color Emoji" "SF Pro Display" "Helvetica")
@@ -155,14 +155,14 @@
              return (progn
                       (set-face-attribute 'mode-line nil :family font :height (cond (sys/macp 130)
 										    (sys/win32p 110)
-										    (t 200)))
+										    (t 110)))
                       (when (facep 'mode-line-active)
                         (set-face-attribute 'mode-line-active nil :family font :height (cond (sys/macp 130)
 											     (sys/win32p 110)
-											     (t 200))))
+											     (t 110))))
                       (set-face-attribute 'mode-line-inactive nil :family font :height (cond (sys/macp 130)
 											     (sys/win32p 110)
-											     (t 200)))))
+											     (t 110)))))
 
     ;; Specify font for all unicode characters
     (cl-loop for font in '("Symbola" "Unifont Upper" "Segoe UI Symbol")
@@ -173,7 +173,7 @@
 		      (set-fontset-font t 'symbol (font-spec :family font
 							      :height (cond (sys/macp 130)
 									    (sys/win32p 110)
-									    (t 200))))))
+									    (t 110))))))
 		      ;; (set-fontset-font t 'unicode (font-spec :family font
 		      ;; 					      :height (cond (sys/macp 130)
 		      ;; 							    (sys/win32p 110)
@@ -189,12 +189,12 @@
                       (set-fontset-font t 'symbol (font-spec :family font
 							      :height (cond (sys/macp 130)
 									    (sys/win32p 110)
-									    (t 200))) nil 'prepend))
+									    (t 110))) nil 'prepend))
                      (t
                       (set-fontset-font t 'emoji (font-spec :family font
 							    :height (cond (sys/macp 130)
 									  (sys/win32p 110)
-									  (t 200)))))))
+									  (t 110)))))))
 
     ;; Specify font for Chinese characters
     (cl-loop for font in '("LXGW WenKai Mono" "WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei" "STFangsong")
@@ -204,15 +204,15 @@
                       (set-fontset-font t '(#x4e00 . #x9fa5) (font-spec :family font
 									:height (cond (sys/macp 130)
 										      (sys/win32p 110)
-										      (t 200))))
+										      (t 110))))
 		      (set-fontset-font t '(#xff00 . #xffef) (font-spec :family font
 									:height (cond (sys/macp 130)
 										      (sys/win32p 110)
-										      (t 200))))
+										      (t 110))))
 		      (set-fontset-font t '(#x3000 . #x303f) (font-spec :family font
 									:height (cond (sys/macp 130)
 										      (sys/win32p 110)
-										      (t 200))))))
+										      (t 110))))))
     ))
 
 
