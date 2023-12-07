@@ -21,5 +21,11 @@
           ("State" 6 t nil state nil)
           ("Updated" 10 t nil updated nil))))
 
+(use-package diff-hl
+  :straight t
+  :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
+	 (magit-post-refresh . diff-hl-magit-post-refresh))
+  :init
+  (global-diff-hl-mode))
 
 (provide 'init-magit)
