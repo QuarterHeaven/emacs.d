@@ -375,8 +375,10 @@
 (use-package org-xlatex
   :straight t
   :after (org)
-  :hook (org-mode . org-xlatex-mode))
-(setq org-xlatex-position-indicator t)
+  :hook (org-mode . org-xlatex-mode)
+  :config
+  (setq org-xlatex-position-indicator t))
+
 
 
 ;; org-capture
@@ -478,5 +480,12 @@
 ;; LaTeX input settings
 (use-package auctex
   :straight t)
+
+
+;; xeft for note searching
+(use-package xeft
+  :straight t
+  :config
+  (setq xeft-recursive t))
 
 (provide 'init-org)

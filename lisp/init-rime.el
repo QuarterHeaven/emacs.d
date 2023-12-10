@@ -4,7 +4,9 @@
                    :repo "DogLooksGood/emacs-rime"
                    :files ("*.el" "Makefile" "lib.c"))
   :config
-  (setq rime-librime-root "~/.emacs.d/librime/dist")
+  (setq rime-emacs-module-header-root (file-truename (concat (file-name-directory (directory-file-name (file-truename invocation-directory))) "include")))
+  (cond (sys/macp (setq rime-librime-root "~/.emacs.d/librime/dist"))
+	(sys/linuxp (setq rime-librime-root (substring (shell-command-to-string "nix eval nixpkgs#librime.outPath") 1 -2))))
   (setq rime-user-data-dir "~/Library/Rime")
   (setq rime-cursor "˰")
   (setq rime-show-candidate 'minibuffer)
