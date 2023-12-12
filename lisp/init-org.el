@@ -236,7 +236,8 @@
 (use-package org-faces
   :after (org)
   :init
-  (set-face-attribute 'variable-pitch nil :family "EB Garamond" :height 160)
+  ;; (set-face-attribute 'variable-pitch nil :family "EB Garamond" :height 160)
+  (set-face-attribute 'variable-pitch nil :family "Alegreya" :height 160)
   (set-face-attribute 'org-level-1 nil :weight 'semi-bold :family "EB Garamond" :height 240)
   (set-face-attribute 'org-level-2 nil :family "Linux Biolinum O" :height 210)
   (set-face-attribute 'org-level-3 nil :family "Linux Biolinum O" :height 190)
