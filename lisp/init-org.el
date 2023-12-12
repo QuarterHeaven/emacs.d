@@ -237,11 +237,19 @@
   :after (org)
   :init
   ;; (set-face-attribute 'variable-pitch nil :family "EB Garamond" :height 160)
-  (set-face-attribute 'variable-pitch nil :family "Alegreya" :height 160)
-  (set-face-attribute 'org-level-1 nil :weight 'semi-bold :family "EB Garamond" :height 240)
-  (set-face-attribute 'org-level-2 nil :family "Linux Biolinum O" :height 210)
-  (set-face-attribute 'org-level-3 nil :family "Linux Biolinum O" :height 190)
-  (set-face-attribute 'org-level-4 nil :family "Linux Biolinum O" :height 160)
+  (if sys/WSL
+      (progn
+	(set-face-attribute 'variable-pitch nil :family "Alegreya" :height 200)
+	(set-face-attribute 'org-level-1 nil :weight 'semi-bold :family "EB Garamond" :height 300)
+	(set-face-attribute 'org-level-2 nil :family "Linux Biolinum O" :height 262)
+	(set-face-attribute 'org-level-3 nil :family "Linux Biolinum O" :height 237)
+	(set-face-attribute 'org-level-4 nil :family "Linux Biolinum O" :height 200))
+    (progn
+      (set-face-attribute 'variable-pitch nil :family "Alegreya" :height 160)
+      (set-face-attribute 'org-level-1 nil :weight 'semi-bold :family "EB Garamond" :height 240)
+      (set-face-attribute 'org-level-2 nil :family "Linux Biolinum O" :height 210)
+      (set-face-attribute 'org-level-3 nil :family "Linux Biolinum O" :height 190)
+      (set-face-attribute 'org-level-4 nil :family "Linux Biolinum O" :height 160)))
   (set-face-attribute 'fixed-pitch nil :family "FiraCode Nerd Font Mono")
   (set-face-attribute 'org-block nil :family "FiraCode Nerd Font Mono")
   (set-face-attribute 'org-block-begin-line nil :family "FiraCode Nerd Font Mono"))
@@ -374,6 +382,7 @@
 
 ;; org-xlatex
 (use-package org-xlatex
+  :disabled
   :straight t
   :after (org)
   :hook (org-mode . org-xlatex-mode)
