@@ -83,6 +83,11 @@ Loaded by `org-babel-load-file'.")
   (and (display-graphic-p) sys/linuxp)
   "Are we running under X on a GNU/Linux system?")
 
+(defconst sys/WSL
+  (and (eq system-type 'gnu/linux)
+       (string-match "-[Mm]icrosoft" operating-system-release))
+  "Are we running on a GNU/Linux system?")
+
 (defconst sys/cygwinp
   (eq system-type 'cygwin)
   "Are we running on a Cygwin system?")
