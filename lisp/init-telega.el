@@ -4,6 +4,21 @@
   :commands (telega)
   :init
   (setq telega-chat-folder-format nil)
+  (add-hook 'telega-load-hook #'(lambda ()
+                              (set-face-attribute 'telega-msg-heading nil
+                                                  :background nil
+                                                  :underline 't
+                                                  :height 1.2
+                                                  )
+                              (set-face-attribute 'telega-msg-inline-forward nil
+                                                  ;; :background "light gray"
+                                                  :underline nil
+                                                  :height 0.84)
+                              (set-face-attribute 'telega-msg-inline-reply nil
+                                                  ;; :background "light gray"
+                                                  :underline nil
+                                                  :height 0.84)
+                              ))
   :hook
   (telega-root-mode . (lambda() (setq bidi-display-reordering t)))
   (telega-chat-mode . (lambda() (setq bidi-display-reordering t)))
@@ -21,8 +36,8 @@
   (setq telega-use-docker nil
 	telega-root-default-view-function 'telega-view-folders
 	telega-root-keep-cursor 'track
-	telega-root-fill-column 34
-	telega-chat-fill-column 65
+	telega-root-fill-column 70
+	telega-chat-fill-column 70
 	telega-chat-show-avatars t
 	telega-user-show-avatars t
 	telega-root-show-avatars t
@@ -67,6 +82,7 @@
                 :replace "\\1\\2...")))
   (advice-add #'telega-msg-goto :after #'(lambda () (recenter)
 					   (pulse-momentary-highlight-one-line (point))))
+
   )
 
 (provide 'init-telega)

@@ -17,9 +17,17 @@
 
 ;; [elec-pair]
 (use-package elec-pair
+  :disabled
   :hook ((prog-mode conf-mode yaml-mode org-mode markdown-mode) . electric-pair-mode)
   :config
   (setq electric-pair-inhibit-predicate 'electric-pair-default-inhibit))
+
+(use-package puni
+  :straight t
+  :defer t
+  :init
+  (puni-global-mode)
+  (add-hook 'term-mode-hook #'puni-disable-puni-mode))
 
 (use-package ein
   :straight t)

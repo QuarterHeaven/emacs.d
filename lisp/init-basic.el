@@ -40,9 +40,11 @@
 (setq use-short-answers t)
 
 (use-package pixel-scroll
-  :disabled
+  ;; :disabled
   :config
-  (add-hook 'org-mode-hook 'pixel-scroll-mode-hook nil 'make-it-local)
+  ;; (setq make-it-local t)
+  ;; (add-hook 'org-mode-hook 'pixel-scroll-precision-mode-hook nil 'make-it-local)
+  (add-hook 'org-mode-hook 'pixel-scroll-precision-mode-hook nil t)
   ;; (pixel-scroll-precision-mode 1)
   (setq pixel-scroll-precision-interpolate-page t)
   (defun +pixel-scroll-interpolate-down (&optional lines)

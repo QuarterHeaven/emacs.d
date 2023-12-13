@@ -381,13 +381,13 @@
 
 
 ;; org-xlatex
-(use-package org-xlatex
-  :disabled
-  :straight t
-  :after (org)
-  :hook (org-mode . org-xlatex-mode)
-  :config
-  (setq org-xlatex-position-indicator t))
+(if sys/macp
+    (use-package org-xlatex
+      :straight t
+      :after (org)
+      :hook (org-mode . org-xlatex-mode)
+      :config
+      (setq org-xlatex-position-indicator t)))
 
 
 
