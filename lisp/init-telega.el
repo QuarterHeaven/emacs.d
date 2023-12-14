@@ -33,8 +33,7 @@
   ;; 			(display-buffer (current-buffer) '((display-buffer-in-side-window)))))
 
   :config
-  (setq telega-use-docker nil
-	telega-root-default-view-function 'telega-view-folders
+  (setq telega-root-default-view-function 'telega-view-folders
 	telega-root-keep-cursor 'track
 	telega-root-fill-column 70
 	telega-chat-fill-column 70
@@ -52,6 +51,9 @@
 	telega-completing-read-function completing-read-function
 	telega-proxies (list '(:server "127.0.0.1" :port 1081 :enable t :type (:@type "proxyTypeSocks5")))
 	telega-avatar-workaround-gaps-for '(return t))
+
+  (if sys/macp (setq telega-use-docker nil)
+    (setq telega-use-docker t))
 
   ;; src: https://emacs-china.org/t/telega/25759/16 by #1ab, double checkmark
   (setq telega-symbols-emojify (assq-delete-all 'checkmark telega-symbols-emojify))

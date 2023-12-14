@@ -20,7 +20,7 @@
 	     )
   :commands (dirvish)
   :hook
-  (dired-mode . dirvish-override-dired-mode)
+  (after-init . dirvish-override-dired-mode)
   :custom
   (dirvish-quick-access-entries ; It's a :custom option
    '(("h" "~/"                          "Home")

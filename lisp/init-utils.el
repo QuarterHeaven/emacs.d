@@ -114,7 +114,39 @@
       (shell-command (concat "pngpaste " image-file))
       (org-insert-link nil (concat "file:" image-file) ""))
     ;; (org-display-inline-images) ;; inline显示图片
-    )))
+     )))
+
+
+;; insert image under wsl2, from https://emacs-china.org/t/wsl-org/14100/2
+(defun my-yank-image-from-win-clipboard-through-powershell()
+  "to simplify the logic, use c:/Users/Public as temporary directoy, then move it into current directoy
+
+Anyway, if need to modify the file name, please DONT delete or modify file extension \".png\",
+otherwise this function don't work and don't know the reason
+"
+  (interactive)
+  (let* ((powershell "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe")
+         (file-name (format "%s" (read-from-minibuffer "Img Name:" (format-time-string "screenshot_%Y%m%d_%H%M%S.png"))))
+         ;; (file-path-powershell (concat "c:/Users/\$env:USERNAME/" file-name))
+         (file-path-wsl (concat "./img/" file-name)))
+    (if (file-exists-p "./img")
+        (ignore)
+      (make-directory "./img"))
+    ;; (shell-command (concat powershell " -command \"(Get-Clipboard -Format Image).Save(\\\"C:/Users/\\$env:USERNAME/" file-name "\\\")\""))
+    (shell-command (concat powershell " -command \"(Get-Clipboard -Format Image).Save(\\\"C:/Users/Public/" file-name "\\\")\""))
+    (rename-file (concat "/mnt/c/Users/Public/" file-name) file-path-wsl)
+    (format "%s" file-path-wsl)
+    ))
+
+(defun org-insert-image-wsl ()
+  "call `my-yank-image-from-win-clipboard-through-powershell' and insert image file link with org-mode format"
+  (interactive)
+  (let* ((file-path (my-yank-image-from-win-clipboard-through-powershell))
+         (file-link (format "file:%s" file-path (file-name-sans-extension (file-name-nondirectory file-path))))
+         )
+    (org-insert-link nil file-link "")
+    ))
+
 
 (defvar resize-window-repeat-map
     (let ((map (make-sparse-keymap)))

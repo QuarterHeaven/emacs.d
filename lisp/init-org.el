@@ -498,4 +498,15 @@
   :config
   (setq xeft-recursive t))
 
+
+;; org-download for insert images under linux (on mac use org-insert-image defined at init-utils)
+(use-package org-download
+  :straight t
+  :hook
+  (org-mode . org-download-enable)
+  :config
+  (setq-default org-download-image-dir "~/Dropbox/orgs/img")
+  (setq org-download-timestamp t
+	org-download-backend "curl"))
+
 (provide 'init-org)
