@@ -25,6 +25,8 @@
 (use-package puni
   :straight t
   :defer t
+  :bind
+  ("C-c C-<backspace>" . #'puni-force-delete)
   :init
   (puni-global-mode)
   (add-hook 'term-mode-hook #'puni-disable-puni-mode))

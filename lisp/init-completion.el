@@ -39,16 +39,33 @@
   :bind (:map corfu-map
               ("s-m" . corfu-move-to-minibuffer)
               ("RET" . nil)
-	      ("H-SPC" . corfu-insert-separator))
+	      ("SPC" . (lambda ()
+			    (interactive)
+			    (if current-prefix-arg
+				;;we suppose that we want leave the word like that, so do a space
+				(progn
+				  (corfu-quit)
+				  (insert " "))
+			      (if (and (= (char-before) corfu-separator)
+				       (or
+					;; check if space, return or nothing after
+					(not (char-after))
+					(= (char-after) ?\s)
+					(= (char-after) ?\n)))
+				  (progn
+				    (corfu-insert)
+				    (insert " "))
+				(corfu-insert-separator))))))
 
   :config
   (setq corfu-cycle t                ;; Enable cycling for `corfu-next/previous'
         corfu-auto t                 ;; Enable auto completion
         ;; corfu-separator "&"          ;; Orderless field separator
-	corfu-separator "-"
+	corfu-separator 32
         corfu-auto-prefix 2          ;; minimun prefix to enable completion
         corfu-preview-current nil
         corfu-auto-delay 0.1)
+
 
   ;; Transfer completion to the minibuffer
   (defun corfu-move-to-minibuffer ()

@@ -505,7 +505,7 @@
   :hook
   (org-mode . org-download-enable)
   :config
-  (setq-default org-download-image-dir "~/Dropbox/orgs/img")
+  (setq-default org-download-image-dir "~/Documents/orgs/img")
   (setq org-download-timestamp t
 	org-download-backend "curl"))
 
