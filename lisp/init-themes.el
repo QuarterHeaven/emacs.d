@@ -146,7 +146,7 @@
         tab-bar-close-button-show nil
         tab-bar-tab-hints t
 	tab-bar-mode t)
-  (customize-set-variable 'tab-bar-select-tab-modifiers '(hyper))
+  (setq tab-bar-select-tab-modifiers '(hyper))
 
   ;; [telega]
   (defvar +tab-bar-telega-indicator-cache nil)

@@ -55,9 +55,9 @@
   ;; package.
   (marginalia-mode)
   :config
-  (setopt marginalia-align 'right
-          marginalia-separator "⎸"
-          ))
+  (setq marginalia-align 'right
+          marginalia-separator "⎸")
+)
 
 
 ;; Enable embark
