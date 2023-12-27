@@ -295,8 +295,10 @@
 ;; org roam settings
 (use-package org-roam
   :straight t
-  :after (org)
+  ;; :after (org)
+  :defer t
   :load-path "~/.emacs.d/site-lisp/org-roam/extensions"
+  :load-path "~/.emacs.d/site-lisp/org-roam-db-last-update-time"
   :init
   (setq org-roam-directory (file-truename "~/Documents/orgs")
 	org-roam-database-connector 'sqlite-builtin)  ;; roam 应用的文件夹
