@@ -263,4 +263,22 @@
   ;; Enable recursive minibuffers
   (setq enable-recursive-minibuffers t))
 
+
+(use-package nano-vertico
+  :disabled
+  :straight (:type git :host github :repo "rougier/nano-vertico")
+  :init
+  (nano-vertico-mode 1))
+
+
+(use-package vertico-posframe
+  :disabled
+  :straight (:type git :host github :repo "tumashu/vertico-posframe")
+  :init
+  (vertico-posframe-mode 1)
+  :config
+  (setq vertico-posframe-parameters
+      '((left-fringe . 8)
+        (right-fringe . 8))))
+
 (provide 'init-vertico)

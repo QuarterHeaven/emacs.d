@@ -30,8 +30,8 @@
   (load custom-file)
 
   (require 'init-utils)
-  (require 'init-basic)
   (require 'init-const)
+  (require 'init-basic)
   (require 'init-site-lisp) ;; Must come before elpa, as it may provide package.el
   ;; Calls (package-initialize)
   ;; (require 'init-elpa)      ;; Machinery for installing required packages

@@ -82,9 +82,9 @@
 (setq default-buffer-file-conding-system 'utf-8)
 
 ;; disable title-bar; emacs >= 29 only
-;; (cond (sys/macp
-(add-to-list 'default-frame-alist '(undecorated . t))
-;; ))
+(cond (sys/macp
+       (add-to-list 'default-frame-alist '(undecorated . t)))
+      )
 
 (setq-default bidi-display-reordering nil)
 (setq bidi-inhibit-bpa t
