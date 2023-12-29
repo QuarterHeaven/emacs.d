@@ -286,4 +286,52 @@ DOCSTRING and BODY are as in `defun'.
          (dolist (target (cdr targets))
            (advice-add target (car targets) #',symbol))))))
 
+
+(defun z/emacs-Q-test ()
+  "Run emacs -Q async for packages you choose."
+  (interactive)
+  (let* ((pkgs    (completing-read-multiple "Packages: " features))
+         (process (start-process
+                   "*emacs-Q*" "*emacs-Q*"
+                   (concat invocation-directory invocation-name)
+                   "-Q"
+
+                   ;; EVAL basics before everything
+                   "--eval" "(progn                           \
+(setq debug-on-error t)                                       \
+(setq load-prefer-newer t)                                    \
+)"
+                   ;; LOAD PATH from current running emacs
+                   "--eval" (format "(setq load-path '%s)"
+                                    (with-output-to-string (prin1 load-path)))
+
+                   ;; LOAD some goodies first
+                   "--eval" "(progn                           \
+                                                              \
+(defun sk-stop-using-minibuffer ()                            \
+  (when (and (>= (recursion-depth) 1)                         \
+             (active-minibuffer-window))                      \
+    (top-level)))                                             \
+(add-hook 'mouse-leave-buffer-hook 'sk-stop-using-minibuffer) \
+                                                              \
+(require 'vertico)                                            \
+(vertico-mode 1)                                              \
+                                                              \
+(require 'orderless)                                          \
+(setq completion-styles '(orderless basic emacs22))           \
+                                                              \
+)"
+
+                   ;; LOAD testing packages
+                   "--eval" (format "(dolist (pkg '%s) (require (intern-soft pkg)))" pkgs)
+
+                   ;; EVAL: more
+                   "--eval" "(progn                           \
+
+)")))
+    (set-process-sentinel
+     process
+     (lambda (proc _)
+       (kill-buffer (process-buffer proc))))))
+
 (provide 'init-utils)
