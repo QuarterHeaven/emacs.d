@@ -81,4 +81,5 @@
   (require 'init-esup)
   (require 'init-emms)
   (require 'init-tokenizer)
+  (require 'init-fileinfo)
   )

@@ -35,8 +35,8 @@
   :config
   (setq telega-root-default-view-function 'telega-view-folders
 	telega-root-keep-cursor 'track
-	telega-root-fill-column 70
-	telega-chat-fill-column 70
+	;; telega-root-fill-column 70
+	;; telega-chat-fill-column 70
 	telega-chat-show-avatars t
 	telega-user-show-avatars t
 	telega-root-show-avatars t
