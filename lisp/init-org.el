@@ -28,8 +28,7 @@
                    "(provide 'org-version)\n")))
               :pin nil)
   :hook
-  (
-   (org-mode . org-latex-preview-auto-mode)
+  ((org-mode . org-latex-preview-auto-mode)
    (org-mode . org-toggle-pretty-entities)
    (org-mode . org-cdlatex-mode))
   :bind ("C-c <backspace>" . org-mark-ring-goto)
@@ -47,17 +46,17 @@
      (rust . t)))
   (when (executable-find "jupyter")
     (add-to-list 'org-babel-load-languages '(jupyter . t) t))
-  (setq word-wrap-by-category t)
-  (setq org-babel-python-command "python3.10")
-  (setq org-image-actual-width nil)
+  (setq word-wrap-by-category t
+	org-babel-python-command "python3.10"
+	org-image-actual-width nil)
 
   (defun my/org-raise-scripts-no-braces (_)
-  (when (and (eq (char-after (match-beginning 3)) ?{)
-             (eq (char-before (match-end 3)) ?}))
-    (remove-text-properties (match-beginning 3) (1+ (match-beginning 3))
-                    (list 'invisible nil))
-    (remove-text-properties (1- (match-end 3)) (match-end 3)
-                    (list 'invisible nil))))
+    (when (and (eq (char-after (match-beginning 3)) ?{)
+               (eq (char-before (match-end 3)) ?}))
+      (remove-text-properties (match-beginning 3) (1+ (match-beginning 3))
+			      (list 'invisible nil))
+      (remove-text-properties (1- (match-end 3)) (match-end 3)
+			      (list 'invisible nil))))
 
   (advice-add 'org-raise-scripts :after #'my/org-raise-scripts-no-braces)
 
@@ -510,5 +509,20 @@
   (setq-default org-download-image-dir "~/Documents/orgs/img")
   (setq org-download-timestamp t
 	org-download-backend "curl"))
+
+
+(use-package org-noter
+  :straight t
+
+  )
+
+
+;; LOGBOOK settings
+(use-package org
+  :config
+  (setq org-todo-keywords '((sequence "TODO(t)" "|" "DONE(d!)")
+			    (sequence "REPORT(r)" "BUG(b@/!)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
+			    (sequence "|" "CANCELED(c@)")))
+  (setq org-clock-into-drawer t))
 
 (provide 'init-org)

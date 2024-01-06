@@ -17,7 +17,7 @@
 
 ;; [elec-pair]
 (use-package elec-pair
-  :disabled
+  ;; :disabled
   :hook ((prog-mode conf-mode yaml-mode org-mode markdown-mode) . electric-pair-mode)
   :config
   (setq electric-pair-inhibit-predicate 'electric-pair-default-inhibit))
@@ -27,6 +27,7 @@
   :defer t
   :bind
   ("C-c C-<backspace>" . #'puni-force-delete)
+  ("C-c H-<backspace>" . #'puni-force-delete)
   :init
   (puni-global-mode)
   (add-hook 'term-mode-hook #'puni-disable-puni-mode))
