@@ -53,7 +53,8 @@
 	telega-avatar-workaround-gaps-for '(return t))
 
   (if sys/macp (setq telega-use-docker nil)
-    (setq telega-use-docker t))
+    (setq telega-use-docker t)
+    )
 
   ;; src: https://emacs-china.org/t/telega/25759/16 by #1ab, double checkmark
   (setq telega-symbols-emojify (assq-delete-all 'checkmark telega-symbols-emojify))
