@@ -28,16 +28,17 @@
         (setenv "PATH" path-from-shell)
         (setq exec-path (split-string path-from-shell
 				      path-separator))))
-(if sys/macp
-    (add-hook 'after-init-hook 'set-exec-path-from-shell-PATH)
-  (use-package exec-path-from-shell
-    :straight t
-    :commands exec-path-from-shell-initialize
-    :if (not (memq system-type '(cygwin windows-nt)))
-    :custom
-    (exec-path-from-shell-arguments '("-l"))
-    :config
-    (exec-path-from-shell-initialize)))
+;; (if sys/macp
+;;     (add-hook 'after-init-hook 'set-exec-path-from-shell-PATH)
+(use-package exec-path-from-shell
+  :straight t
+  :commands exec-path-from-shell-initialize
+  :if (not (memq system-type '(cygwin windows-nt)))
+  :custom
+  (exec-path-from-shell-arguments '("-l"))
+  :config
+  (exec-path-from-shell-initialize))
+;; )
 
 (provide 'init-exec-path)
 ;;; init-exec-path.el ends here

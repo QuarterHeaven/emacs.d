@@ -298,6 +298,9 @@
   :defer t
   :load-path "~/.emacs.d/site-lisp/org-roam/extensions"
   :load-path "~/.emacs.d/site-lisp/org-roam-db-last-update-time"
+  :bind
+  (("C-c n f" . 'org-roam-find)
+   ("C-c n i" . 'org-roam-insert))
   :init
   (setq org-roam-directory (file-truename "~/Documents/orgs")
 	org-roam-database-connector 'sqlite-builtin)  ;; roam 应用的文件夹
@@ -511,9 +514,13 @@
 	org-download-backend "curl"))
 
 
-(use-package org-noter
+(use-package djvu
   :straight t
+  )
 
+(use-package org-noter
+  :after (djvu)
+  :straight t
   )
 
 
