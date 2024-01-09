@@ -1,6 +1,5 @@
 (use-package dirvish
   :straight t
-  ;; :load-path "~/.emacs.d/site-lisp/dirvish/extensions/"
   :autoload (
 	     dirvish-extras
 	     dirvish-widgets

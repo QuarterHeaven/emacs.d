@@ -284,30 +284,56 @@
 
   :config
   ;; (with-eval-after-load 'org (global-org-modern-mode))
+  (setq line-spacing 0.2)
   )
+
+(use-package org-margin
+  :disabled
+  :straight (:host github :repo "rougier/org-margin")
+  :init
+  (org-margin-mode 1)
+  :config
+  (setq org-margin-markers (("\\(#\\+begin_src\\)" .
+			     #(" " 0 2 (face (font-lock-comment-face bold))))
+			    ("\\(#\\+BEGIN_SRC\\)" .
+			     #(" " 0 2 (face (font-lock-comment-face bold))))
+			    ("\\(#\\+begin_quote\\)" .
+			     #(" " 0 2 (face (font-lock-comment-face bold))))
+			    ("\\(#\\+BEGIN_QUOTE\\)" .
+			     #(" " 0 2 (face (font-lock-comment-face bold)))))))
 
 (use-package valign
   :straight t
   :hook
   (org-mode . valign-mode))
 
+
 ;; org roam settings
+(use-package s
+  :straight t)
+
 (use-package org-roam
   :straight t
   ;; :after (org)
   :defer t
-  :load-path "~/.emacs.d/site-lisp/org-roam/extensions"
-  :load-path "~/.emacs.d/site-lisp/org-roam-db-last-update-time"
+  :load-path "~/.emacs.d/site-lisp/org-roam-db-last-update-time.el"
   :bind
-  (("C-c n f" . 'org-roam-find)
+  (("C-c n f" . 'org-roam-node-find)
+   ("C-c n a" . 'org-roam-tag-add)
+   ("C-c n d" . 'org-roam-tag-remove)
    ("C-c n i" . 'org-roam-insert))
   :init
   (setq org-roam-directory (file-truename "~/Documents/orgs")
 	org-roam-database-connector 'sqlite-builtin)  ;; roam 应用的文件夹
+  (require 'org-roam-backlink-collections)
+
+  :hook
+  (org-mode . org-roam-backlink-collections-mode)
 
   :config
   (org-roam-db-autosync-mode +1)
-  )
+  ;; If you're using a vertical completion framework, you might want a more informative completion interface
+  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:20}" 'face 'org-tag))))
 
 (use-package org-roam-ui
   :straight t
@@ -338,7 +364,7 @@
 
         writeroom-width 128
         writeroom-bottom-divider-width 0
-        writeroom-fringes-outside-margins t
+        writeroom-fringes-outside-margins nil
         writeroom-fullscreen-effect nil
         writeroom-major-modes '(text-mode prog-mode conf-mode special-mode Info-mode dired-mode)
         writeroom-major-modes-exceptions '(process-menu-mode proced-mode)

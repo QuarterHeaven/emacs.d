@@ -38,34 +38,16 @@
          (minibuffer-setup . corfu-enable-in-minibuffer))
   :bind (:map corfu-map
               ("s-m" . corfu-move-to-minibuffer)
-              ("RET" . nil)
-	      ("SPC" . (lambda ()
-			    (interactive)
-			    (if current-prefix-arg
-				;;we suppose that we want leave the word like that, so do a space
-				(progn
-				  (corfu-quit)
-				  (insert " "))
-			      (if (and (= (char-before) corfu-separator)
-				       (or
-					;; check if space, return or nothing after
-					(not (char-after))
-					(= (char-after) ?\s)
-					(= (char-after) ?\n)))
-				  (progn
-				    (corfu-insert)
-				    (insert " "))
-				(corfu-insert-separator))))))
+              ("RET" . corfu-complete)
+	      ("SPC" . corfu-insert-separator))
 
   :config
   (setq corfu-cycle t                ;; Enable cycling for `corfu-next/previous'
         corfu-auto t                 ;; Enable auto completion
-        ;; corfu-separator "&"          ;; Orderless field separator
 	corfu-separator 32
         corfu-auto-prefix 2          ;; minimun prefix to enable completion
         corfu-preview-current nil
         corfu-auto-delay 0.1)
-
 
   ;; Transfer completion to the minibuffer
   (defun corfu-move-to-minibuffer ()
@@ -78,8 +60,7 @@
   (defun corfu-enable-in-minibuffer ()
     "Enable Corfu in the minibuffer if `completion-at-point' is bound."
     (when (where-is-internal #'completion-at-point (list (current-local-map)))
-      (corfu-mode 1)))
-  )
+      (corfu-mode 1))))
 
 
 (use-package corfu-history
@@ -103,6 +84,13 @@
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-tex)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
+  (add-to-list 'completion-at-point-functions #'cape-tex))
+
+(use-package kind-icon
+  :straight t
+  :after (corfu)
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 (provide 'init-completion)

@@ -187,7 +187,7 @@
 
 (use-package consult-org-roam
   :straight t
-  :after org-roam
+  ;; :after org-roam
   :init
   (require 'consult-org-roam)
   ;; Activate the minor mode
