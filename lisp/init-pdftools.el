@@ -17,7 +17,8 @@
   :init
   (setq pdf-view-use-scaling t
         pdf-view-use-imagemagick nil
-        pdf-annot-activate-created-annotations t)
+        pdf-annot-activate-created-annotations t
+	pdf-view-selection-style 'glyph)
   :config
   (pdf-tools-install t nil t nil))
 
