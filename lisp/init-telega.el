@@ -50,7 +50,8 @@
 	telega-chat-prompt-format "> "
 	telega-completing-read-function completing-read-function
 	telega-proxies (list '(:server "127.0.0.1" :port 1081 :enable t :type (:@type "proxyTypeSocks5")))
-	telega-avatar-workaround-gaps-for '(return t))
+	telega-avatar-workaround-gaps-for '(return t)
+	)
 
   (if sys/macp (setq telega-use-docker nil)
     (setq telega-use-docker t)

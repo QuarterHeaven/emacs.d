@@ -193,16 +193,16 @@
 				 ("#+END_SRC" . "□")
 				 ("#+begin_src" . "λ")
 				 ("#+end_src" . "□")
-				 ("#+begin_quote:"   . "❝")
-				 ("#+end_quote:"     . "❞")
-				 ("#+BEGIN_QUOTE:"   . "❝")
-				 ("#+END_QUOTE:"     . "❞")
-				 ("#+attr_latex:"    . "🄛")
-				 ("#+attr_html:"     . "🄗")
-				 ("#+attr_org:"      . "⒪")
-				 ("#+ATTR_LATEX:"    . "🄛")
-				 ("#+ATTR_HTML:"     . "🄗")
-				 ("#+ATTR_ORG:"      . "⒪")
+				 ("#+begin_quote"   . "❝")
+				 ("#+end_quote"     . "❞")
+				 ("#+BEGIN_QUOTE"   . "❝")
+				 ("#+END_QUOTE"     . "❞")
+				 ("#+attr_latex"    . "🄛")
+				 ("#+attr_html"     . "🄗")
+				 ("#+attr_org"      . "⒪")
+				 ("#+ATTR_LATEX"    . "🄛")
+				 ("#+ATTR_HTML"     . "🄗")
+				 ("#+ATTR_ORG"      . "⒪")
 				 ))))
   :init
   (setq org-startup-with-inline-images t))
@@ -318,10 +318,11 @@
   :defer t
   :load-path "~/.emacs.d/site-lisp/org-roam-db-last-update-time.el"
   :bind
-  (("C-c n f" . 'org-roam-node-find)
-   ("C-c n a" . 'org-roam-tag-add)
-   ("C-c n d" . 'org-roam-tag-remove)
-   ("C-c n i" . 'org-roam-insert))
+  (("C-c r f" . 'org-roam-node-find)
+   ("C-c r a" . 'org-roam-tag-add)
+   ("C-c r d" . 'org-roam-tag-remove)
+   ("C-c r i" . 'org-roam-insert)
+   ("C-c r t" . 'org-roam-buffer-toggle))
   :init
   (setq org-roam-directory (file-truename "~/Documents/orgs")
 	org-roam-database-connector 'sqlite-builtin)  ;; roam 应用的文件夹
@@ -426,15 +427,22 @@
 
 (use-package org
   :defer t
+  :bind
+  ("C-c c" . 'org-capture)
   :config
+  (defun my/org-capture-maybe-create-id ()
+    (when (org-capture-get :create-id)
+      (org-id-get-create)))
+  (add-hook 'org-capture-prepare-finalize-hook #'my/org-capture-maybe-create-id)
+
   (setq org-capture-templates
 	'(("t" "Tasks")
 	  ("tc" "Class Task" entry
 	   (file+headline "~/Documents/orgs/agendas/Class.org" "Class")
-	   "* TODO %^{任务名}\n%U\nSCHEDULED:%^T\nDEADLINE:%^T")
+	   "* TODO %^{任务名}\n%iCaptured On: %U\nSCHEDULED:%^T\nDEADLINE:%^T" :empty-lines-before 1 :create-id t)
 	  ("tt" "Normal Task" entry
 	   (file+headline "~/Documents/orgs/agendas/Tasks.org" "Tasks")
-	   "* TODO %^{任务名}\n%U")))
+	   "* TODO %^{任务名}\n%iCaptured On: %U" :empty-lines-before 1 :create-id t)))
   )
 
 
@@ -547,13 +555,16 @@
   :after (djvu)
   :straight t
   :config
-  (require 'org-noter-pdftools))
+  ;; (require 'org-noter-pdftools)
+  )
 
 (use-package org-pdftools
+  :disabled
   :straight t
   :hook (org-mode . org-pdftools-setup-link))
 
 (use-package org-noter-pdftools
+  :disabled
   :straight t
   :after org-noter
   :bind

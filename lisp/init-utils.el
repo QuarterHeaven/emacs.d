@@ -236,7 +236,7 @@ otherwise this function don't work and don't know the reason
 									  (t 110)))))))
 
     ;; Specify font for Chinese characters
-    (cl-loop for font in '("LXGW WenKai Mono" "WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei" "STFangsong")
+    (cl-loop for font in '("TsangerJinKai02" "LXGW WenKai Mono" "WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei" "STFangsong")
              when (font-installed-p font)
              return (progn
                       (setq face-font-rescale-alist `((,font . 1.0)))
@@ -333,5 +333,13 @@ DOCSTRING and BODY are as in `defun'.
      process
      (lambda (proc _)
        (kill-buffer (process-buffer proc))))))
+
+
+(defun electric-pair ()
+  "If at end of line, insert character pair without surrounding spaces.
+    Otherwise, just insert the typed character."
+  (interactive)
+  (if (eolp) (let (parens-require-spaces) (insert-pair)) (self-insert-command 1)))
+
 
 (provide 'init-utils)

@@ -11,7 +11,7 @@
 (use-package quickrun
   :straight t
   :defer t
-  :bind (("C-c r"  . quickrun))
+  :bind (("C-c r r"  . quickrun))
   :config
   (setq quickrun-focus-p nil))
 

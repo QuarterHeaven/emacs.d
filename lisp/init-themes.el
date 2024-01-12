@@ -168,7 +168,7 @@
 	tab-bar-mode t)
   (setq tab-bar-select-tab-modifiers '(hyper))
 
-  [telega]
+  ;; [telega]
   (defvar +tab-bar-telega-indicator-cache nil)
   ;; (defun +tab-bar-telega-icon-update (&rest rest)
   ;;   (setq +tab-bar-telega-indicator-cache
@@ -316,7 +316,11 @@
     (with-memoization (gethash args eli/svg-tag-cache)
       (apply orig args)))
 
-  (advice-add #'svg-tag-make :around #'eli/svg-tag-with-cache))
+  (advice-add #'svg-tag-make :around #'eli/svg-tag-with-cache)
+
+  ;; 隐藏 org roam 文件的前缀
+  ;; ( tab-bar-tab-name-function )
+  )
 
 (use-package beacon
   :straight t

@@ -57,7 +57,10 @@
    '(";" . meow-reverse)
    '("," . meow-inner-of-thing)
    '("." . meow-bounds-of-thing)
-   '("[" . meow-beginning-of-thing)
+   '("[" . (lambda ()
+	       (interactive)
+	       (if mark-active (command-execute #'electric-pair)
+		   (command-execute #'meow-beginning-of-thing))))
    '("]" . meow-end-of-thing)
    '("a" . meow-append)
    '("A" . meow-open-below)
@@ -102,13 +105,20 @@
    '("y" . meow-save)
    '("Y" . meow-sync-grab)
    '("z" . meow-pop-selection)
-   '("'" . repeat)
-   '("<escape>" . ignore))
+   ;; '("'" . repeat)
+   '(":" . repeat)
+   '("'" . electric-pair)
+   '("(" . electric-pair)
+   '("{" . electric-pair)
+   '("\"" . electric-pair)
+   '("<" . electric-pair)
+   '("<Escape>" . ignore)
+   '("C-," . ignore))
   (meow-define-keys
       'insert
     '("C-," . meow-insert-exit)))
 
-  ;; Use ,, to escape from insert state to normal state
+;; Use ,, to escape from insert state to normal state
 ;;   (defvar meow-two-char-escape-sequence ",,")
 ;;   (defvar meow-two-char-escape-delay 0.5)
 
