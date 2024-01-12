@@ -1,5 +1,5 @@
 ;; Don't bring up key recipient dialogue.
-;; gpg settings
+;; Gpg settings
 (use-package epa-file
   :defer t
   :config

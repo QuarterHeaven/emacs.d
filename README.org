@@ -37,3 +37,22 @@ For most of the programming languages, there are tree-sitter settings in =lisp/i
 
 * Updates
 Update the config with =git pull=. You can also use =Magit= (<kbd>C-x g</kbd> then <kbd>F</kbd>) to pull the config then restart Emacs.
+
+* Secrets
+There are some secrets such as api-keys are encoded. You can specify them in the =lisp/init-secrets.el=. I use =SOPS= as the encoder and decoder. To encode the file, first get into the ~.emacs.d~ directory, then use
+
+#+begin_src sh
+  gpg -k
+#+end_src
+
+to get the fingerprint first, then use
+
+#+begin_src sh
+  sops --gpg fingerprint -e lisp/init-secrets.el > lisp/init-secrets-encoded.el
+#+end_src
+
+To decode the file, use
+
+#+begin_src sh
+  sops -d lisp/init-secrets-encoded.el > lisp/init-secrets.el
+#+end_src

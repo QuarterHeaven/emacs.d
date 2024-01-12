@@ -71,6 +71,7 @@ image-dired/
 images/
 irony/
 librime/
+lisp/init-secrets.el
 magithub/
 mspyls/
 newsticker/

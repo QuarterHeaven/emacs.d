@@ -82,4 +82,7 @@
   (require 'init-emms)
   (require 'init-tokenizer)
   (require 'init-fileinfo)
+  (require 'init-gptel)
+  
+  (require 'init-secrets)
   )
