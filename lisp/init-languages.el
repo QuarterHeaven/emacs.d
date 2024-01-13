@@ -50,4 +50,5 @@
   (clangd-inactive-regions-set-method "darken-foreground")
   (clangd-inactive-regions-set-opacity 0.55))
 
+
 (provide 'init-languages)

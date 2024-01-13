@@ -43,7 +43,9 @@
      (python . t)
      (shell . t)
      (latex . t)
-     (rust . t)))
+     (rust . t)
+     ;; (yaml . t)
+     ))
   (when (executable-find "jupyter")
     (add-to-list 'org-babel-load-languages '(jupyter . t) t))
   (setq word-wrap-by-category t
@@ -321,7 +323,7 @@
   (("C-c r f" . 'org-roam-node-find)
    ("C-c r a" . 'org-roam-tag-add)
    ("C-c r d" . 'org-roam-tag-remove)
-   ("C-c r i" . 'org-roam-insert)
+   ("C-c r i" . 'org-roam-node-insert)
    ("C-c r t" . 'org-roam-buffer-toggle))
   :init
   (setq org-roam-directory (file-truename "~/Documents/orgs")

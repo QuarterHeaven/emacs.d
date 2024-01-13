@@ -17,28 +17,34 @@
 ;;     (setq exec-path-from-shell-check-startup-files nil) ;
 ;;     (setq exec-path-from-shell-arguments '("-l" )) ;remove -i read form .zshenv
 ;;     (exec-path-from-shell-initialize)))
-(defun
-    set-exec-path-from-shell-PATH ()
-      "This is particularly useful under Mac OS X and macOS."
-      (interactive)
-      (let ((path-from-shell (replace-regexp-in-string
-                              "[ \t\n]*$" "" (shell-command-to-string
-                                              "$SHELL --login -c 'echo
-                                              $PATH'"))))
-        (setenv "PATH" path-from-shell)
-        (setq exec-path (split-string path-from-shell
-				      path-separator))))
-;; (if sys/macp
-;;     (add-hook 'after-init-hook 'set-exec-path-from-shell-PATH)
-(use-package exec-path-from-shell
-  :straight t
-  :commands exec-path-from-shell-initialize
-  :if (not (memq system-type '(cygwin windows-nt)))
-  :custom
-  (exec-path-from-shell-arguments '("-l"))
-  :config
-  (exec-path-from-shell-initialize))
-;; )
+;; (defun set-exec-path-from-shell-PATH ()
+;;       "This is particularly useful under Mac OS X and macOS."
+;;       (interactive)
+;;       (let ((path-from-shell (replace-regexp-in-string
+;;                               "[ \t\n]*$" "" (shell-command-to-string
+;;                                               "fish --login -c 'echo
+;;                                               $PATH'"))))
+;;         (setenv "PATH" path-from-shell)
+;;         (setq exec-path (split-string path-from-shell
+;; 				      path-separator))))
+(if sys/macp
+    (condition-case err
+	(let ((path (with-temp-buffer
+                      (insert-file-contents-literally "~/.path")
+                      (buffer-string))))
+	  (setenv "PATH" path)
+	  (setq exec-path (append (parse-colon-path path) (list exec-directory))))
+      (error (warn "%s" (error-message-string err))))
+
+  (use-package exec-path-from-shell
+    :disabled
+    :straight t
+    :commands exec-path-from-shell-initialize
+    :if (not (memq system-type '(cygwin windows-nt)))
+    :custom
+    (exec-path-from-shell-arguments '("-l"))
+    :config
+    (exec-path-from-shell-initialize)))
 
 (provide 'init-exec-path)
 ;;; init-exec-path.el ends here

@@ -15,7 +15,9 @@
 ;; (setq-default custom-enabled-themes '(doom-city-light))
 (use-package doom-themes
   :straight t
-  :init (load-theme 'doom-bluloco-light t)
+  :init
+  (load-theme 'doom-bluloco-light t)
+  ;; (load-theme 'doom-ayu-light t)
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
