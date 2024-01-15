@@ -32,7 +32,9 @@
   ;; (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config)
-  )
+
+  (custom-set-faces
+   '(font-lock-comment-face ((t (:slant italic :family "Victor Mono"))))))
 
 ;; (load-theme 'doom-ayu-light t)
 ;; (load-theme 'doom-tomorrow-day t)
@@ -328,6 +330,13 @@
   :straight t
   :config
   (setq beacon-mode t))
+
+(use-package highlight-indent-guides
+  :straight t
+  :hook
+  (prog-mode . highlight-indent-guides-mode)
+  :config
+  (setq highlight-indent-guides-method 'character))
 
 (provide 'init-themes)
 ;;;init-themes.el ends here

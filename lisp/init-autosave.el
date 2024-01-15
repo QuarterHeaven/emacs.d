@@ -1,7 +1,8 @@
 (use-package auto-save
   :straight (auto-save :host github :repo "manateelazycat/auto-save")
-  :commands (auto-save-enable)
+  ;; :commands (auto-save-enable)
   :init
+  (require 'auto-save)
   (auto-save-enable)
   :config
   (setq auto-save-silent t)   ; quietly save

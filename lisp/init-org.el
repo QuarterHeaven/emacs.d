@@ -30,7 +30,8 @@
   :hook
   ((org-mode . org-latex-preview-auto-mode)
    (org-mode . org-toggle-pretty-entities)
-   (org-mode . org-cdlatex-mode))
+   (org-mode . org-cdlatex-mode)
+   (org-mode . org-num-mode))
   :bind ("C-c <backspace>" . org-mark-ring-goto)
   :init (require 'tex-mode)
   :config
@@ -170,42 +171,42 @@
 (use-package prettify-symbols
   :hook
   (org-mode . prettify-symbols-mode)
-  (org-mode . (lambda () (setq prettify-symbols-alist
-			       '(("lambda"  . ?λ)
-				 (":PROPERTIES:" . ?)
-				 (":ID:" . ?)
-				 (":END:" . ?)
-				 ("#+TITLE:" . ?)
-				 ("#+AUTHOR:" . ?)
-				 ("#+RESULTS:" . ?)
-				 (":properties:" . ?)
-				 (":id:" . ?)
-				 (":end:" . ?)
-				 ("#+title:" . ?)
-				 ("#+author:" . ?)
-				 ("#+results:" . ?)
-				 ("- [ ]" . ?)
-				 ("- [-]" . ?)
-				 ("- [X]" . ?)
-				 ("- [x]" . ?)
-				 ("[#A]" . ?🅐)
-				 ("[#B]" . ?🅑)
-				 ("[#C]" . ?🅒)
-				 ("#+BEGIN_SRC" . "λ")  ; previously ✎
-				 ("#+END_SRC" . "□")
-				 ("#+begin_src" . "λ")
-				 ("#+end_src" . "□")
-				 ("#+begin_quote"   . "❝")
-				 ("#+end_quote"     . "❞")
-				 ("#+BEGIN_QUOTE"   . "❝")
-				 ("#+END_QUOTE"     . "❞")
-				 ("#+attr_latex"    . "🄛")
-				 ("#+attr_html"     . "🄗")
-				 ("#+attr_org"      . "⒪")
-				 ("#+ATTR_LATEX"    . "🄛")
-				 ("#+ATTR_HTML"     . "🄗")
-				 ("#+ATTR_ORG"      . "⒪")
-				 ))))
+  (org-mode . (lambda ()
+		(setq prettify-symbols-alist
+		      '(("lambda"  . ?λ)
+			(":PROPERTIES:" . ?)
+			(":ID:" . ?)
+			(":END:" . ?)
+			("#+TITLE:" . ?)
+			("#+AUTHOR:" . ?)
+			("#+RESULTS:" . ?)
+			(":properties:" . ?)
+			(":id:" . ?)
+			(":end:" . ?)
+			("#+title:" . ?)
+			("#+author:" . ?)
+			("#+results:" . ?)
+			("- [ ]" . ?)
+			("- [-]" . ?)
+			("- [X]" . ?)
+			("- [x]" . ?)
+			("[#A]" . ?🅐)
+			("[#B]" . ?🅑)
+			("[#C]" . ?🅒)
+			("#+BEGIN_SRC" . "λ")  ; previously ✎
+			("#+END_SRC" . "□")
+			("#+begin_src" . "λ")
+			("#+end_src" . "□")
+			("#+begin_quote"   . "❝")
+			("#+end_quote"     . "❞")
+			("#+BEGIN_QUOTE"   . "❝")
+			("#+END_QUOTE"     . "❞")
+			("#+attr_latex"    . "🄛")
+			("#+attr_html"     . "🄗")
+			("#+attr_org"      . "⒪")
+			("#+ATTR_LATEX"    . "🄛")
+			("#+ATTR_HTML"     . "🄗")
+			("#+ATTR_ORG"      . "⒪")))))
   :init
   (setq org-startup-with-inline-images t))
 
@@ -274,19 +275,18 @@
   (org-modern-checkbox nil)
   (org-modern-todo t)
   (org-modern-keyword nil)
-  (org-modern-block nil)
+  (org-modern-block-name nil)
   (org-modern-table nil)
   (org-modern-star '("⚀" "⚁" "⚂" "⚃" "⚄" "⚅"))
 
   ;; Editor settings
   (org-auto-align-tags nil)
-					; (org-tags-column 0)
+  ;; (org-tags-column 0)
   (org-catch-invisible-edits 'show-and-error)
   (org-special-ctrl-a/e t)
 
   :config
-  ;; (with-eval-after-load 'org (global-org-modern-mode))
-  (setq line-spacing 0.2)
+  ;; (setq line-spacing 0.2)
   )
 
 (use-package org-margin
@@ -326,8 +326,9 @@
    ("C-c r i" . 'org-roam-node-insert)
    ("C-c r t" . 'org-roam-buffer-toggle))
   :init
-  (setq org-roam-directory (file-truename "~/Documents/orgs")
-	org-roam-database-connector 'sqlite-builtin)  ;; roam 应用的文件夹
+  (setq org-roam-directory (file-truename "~/Documents/orgs")  ;; roam 应用的文件夹
+	org-roam-database-connector 'sqlite-builtin
+	org-roam-completion-everywhere t)
   ;; (require 'org-roam-backlink-collections)
 
   ;; :hook
