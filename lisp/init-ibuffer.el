@@ -5,6 +5,7 @@
   :config
   ;; Display icons for buffers
   (use-package all-the-icons-ibuffer
+    :straight t
     :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 
   ;; (with-eval-after-load 'counsel

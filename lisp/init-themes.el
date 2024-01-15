@@ -309,9 +309,7 @@
           :face 'tab-bar-svg-active
           :inverse (eq (car tab) 'current-tab) :margin 0 :radius 6 :padding padding)))))
 
-  (setq tab-bar-tab-name-format-function #'eli/tab-bar-tab-name-with-svg)
-
-;;; 给 svg-tag-mode 添加缓存，对于同样的参数使用缓存中的图片
+  ;;; 给 svg-tag-mode 添加缓存，对于同样的参数使用缓存中的图片
   (defvar eli/svg-tag-cache nil)
 
   (defun eli/svg-tag-with-cache (orig &rest args)
@@ -320,7 +318,10 @@
     (with-memoization (gethash args eli/svg-tag-cache)
       (apply orig args)))
 
-  (advice-add #'svg-tag-make :around #'eli/svg-tag-with-cache)
+  (if (not (daemonp))
+      (progn
+	(setq tab-bar-tab-name-format-function #'eli/tab-bar-tab-name-with-svg)
+	(advice-add #'svg-tag-make :around #'eli/svg-tag-with-cache)))
 
   ;; 隐藏 org roam 文件的前缀
   ;; ( tab-bar-tab-name-function )

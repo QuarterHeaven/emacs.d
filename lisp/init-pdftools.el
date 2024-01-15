@@ -20,6 +20,7 @@
         pdf-annot-activate-created-annotations t
 	pdf-view-selection-style 'glyph)
   :config
-  (pdf-tools-install t nil t nil))
+  ;; (pdf-tools-install t nil t nil)
+  (pdf-loader-install))
 
 (provide 'init-pdftools)

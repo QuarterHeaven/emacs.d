@@ -1,4 +1,4 @@
-(use-package emacs-dropbox
+(use-package dropbox
   :straight (emacs-dropbox :host github :repo "lorniu/emacs-dropbox")
   )
 

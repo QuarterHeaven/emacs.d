@@ -1,6 +1,11 @@
 (use-package visual-fill-column
   :straight t)
 
+(use-package ob-rust
+  :straight t
+  :after (org)
+  )
+
 (use-package org
   :defer t
   :straight `(org
@@ -168,47 +173,46 @@
   (setq org-element-cache-persistent nil)
   (setq org-element-use-cache nil))
 
-(use-package prettify-symbols
-  :hook
-  (org-mode . prettify-symbols-mode)
-  (org-mode . (lambda ()
-		(setq prettify-symbols-alist
-		      '(("lambda"  . ?λ)
-			(":PROPERTIES:" . ?)
-			(":ID:" . ?)
-			(":END:" . ?)
-			("#+TITLE:" . ?)
-			("#+AUTHOR:" . ?)
-			("#+RESULTS:" . ?)
-			(":properties:" . ?)
-			(":id:" . ?)
-			(":end:" . ?)
-			("#+title:" . ?)
-			("#+author:" . ?)
-			("#+results:" . ?)
-			("- [ ]" . ?)
-			("- [-]" . ?)
-			("- [X]" . ?)
-			("- [x]" . ?)
-			("[#A]" . ?🅐)
-			("[#B]" . ?🅑)
-			("[#C]" . ?🅒)
-			("#+BEGIN_SRC" . "λ")  ; previously ✎
-			("#+END_SRC" . "□")
-			("#+begin_src" . "λ")
-			("#+end_src" . "□")
-			("#+begin_quote"   . "❝")
-			("#+end_quote"     . "❞")
-			("#+BEGIN_QUOTE"   . "❝")
-			("#+END_QUOTE"     . "❞")
-			("#+attr_latex"    . "🄛")
-			("#+attr_html"     . "🄗")
-			("#+attr_org"      . "⒪")
-			("#+ATTR_LATEX"    . "🄛")
-			("#+ATTR_HTML"     . "🄗")
-			("#+ATTR_ORG"      . "⒪")))))
-  :init
-  (setq org-startup-with-inline-images t))
+
+;; prettify-symbols-mode
+(global-prettify-symbols-mode)
+(setq org-startup-with-inline-images t)
+(setq prettify-symbols-alist
+      '(("lambda"  . ?λ)
+	(":PROPERTIES:" . ?)
+	(":ID:" . ?)
+	(":END:" . ?)
+	("#+TITLE:" . ?)
+	("#+AUTHOR:" . ?)
+	("#+RESULTS:" . ?)
+	(":properties:" . ?)
+	(":id:" . ?)
+	(":end:" . ?)
+	("#+title:" . ?)
+	("#+author:" . ?)
+	("#+results:" . ?)
+	("- [ ]" . ?)
+	("- [-]" . ?)
+	("- [X]" . ?)
+	("- [x]" . ?)
+	("[#A]" . ?🅐)
+	("[#B]" . ?🅑)
+	("[#C]" . ?🅒)
+	("#+BEGIN_SRC" . "λ")  ; previously ✎
+	("#+END_SRC" . "□")
+	("#+begin_src" . "λ")
+	("#+end_src" . "□")
+	("#+begin_quote"   . "❝")
+	("#+end_quote"     . "❞")
+	("#+BEGIN_QUOTE"   . "❝")
+	("#+END_QUOTE"     . "❞")
+	("#+attr_latex"    . "🄛")
+	("#+attr_html"     . "🄗")
+	("#+attr_org"      . "⒪")
+	("#+ATTR_LATEX"    . "🄛")
+	("#+ATTR_HTML"     . "🄗")
+	("#+ATTR_ORG"      . "⒪")))
+
 
 (use-package org-remoteimg
   :straight (org-remoteimg :type git :host github :repo "gaoDean/org-remoteimg")
@@ -409,9 +413,7 @@
 (use-package org-tempo
   :after (org))
 
-(use-package ob-rust
-  :straight t
-  :after (org))
+
 
 
 ;; org-xlatex
@@ -529,8 +531,8 @@
 
 
 ;; LaTeX input settings
-(use-package auctex
-  :straight t)
+(use-package tex
+  :straight auctex)
 
 
 ;; xeft for note searching
@@ -552,6 +554,9 @@
 
 
 (use-package djvu
+  :straight t)
+
+(use-package nov
   :straight t)
 
 (use-package org-noter
