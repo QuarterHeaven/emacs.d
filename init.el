@@ -35,6 +35,7 @@
   (require 'init-exec-path)   ;; Set up $PATH
   (require 'bind-key)
   (require 'init-autosave)
+  (require 'init-outli)
   (require 'init-latex)
   (require 'init-org)
 

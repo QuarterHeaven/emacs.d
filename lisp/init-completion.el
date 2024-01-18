@@ -45,10 +45,11 @@
   :config
   (setq corfu-cycle t                ;; Enable cycling for `corfu-next/previous'
         corfu-auto t                 ;; Enable auto completion
-	corfu-separator 32
+	corfu-separator ?\s
         corfu-auto-prefix 2          ;; minimun prefix to enable completion
         corfu-preview-current nil
         corfu-auto-delay 0.1)
+  ;; (corfu-echo-documentation nil)
 
   ;; Transfer completion to the minibuffer
   (defun corfu-move-to-minibuffer ()

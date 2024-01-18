@@ -35,7 +35,8 @@
   :init
   (setq completion-styles '(orderless basic)
 	completion-category-overrides '((file (styles basic partial-completion))
-					(eglot (styles . (orderless flex))))))
+					(eglot (styles . (orderless flex))))
+	orderless-component-separator " +"))
 
 
 ;; Enable rich annotations using the Marginalia package

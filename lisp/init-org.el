@@ -6,6 +6,7 @@
   :after (org)
   )
 
+;;; org latex
 (use-package org
   :defer t
   :straight `(org
@@ -175,8 +176,7 @@
   (setq org-element-cache-persistent nil)
   (setq org-element-use-cache nil))
 
-
-;; prettify-symbols-mode
+;;; prettify-symbols-mode
 ;; (global-prettify-symbols-mode +1)
 (add-hook 'org-mode-hook 'prettify-symbols-mode)
 (setq-default prettify-symbols-alist
@@ -216,28 +216,13 @@
 	("#+ATTR_HTML"     . "🄗")
 	("#+ATTR_ORG"      . "⒪")))
 
-
-
+;;; display remote images
 (use-package org-remoteimg
   :straight (org-remoteimg :type git :host github :repo "gaoDean/org-remoteimg")
   :config
   (setq org-display-remote-inline-images 'cache))
 
-;; new org mode test
-
-;; (setq org-latex-compiler "xelatex"
-;;       org-latex-preview-precompile nil
-;;       org-latex-preview-process-alist '((dvisvgm :programs
-;; 						 ("xelatex" "dvisvgm")
-;; 						 :description "xdv > svg" :message "you need to install the programs: latex and dvisvgm." :image-input-type "xdv" :image-output-type "svg"
-;; 						 :latex-compiler
-;; 						 ("%l -no-pdf -interaction nonstopmode -output-directory %o %f")
-;; 						 :image-converter
-;; 						 ("dvisvgm --page=1- --optimize --clipjoin --relative --no-fonts --bbox=preview -o %B-%%9p.svg %f")
-;; 						 :post-clean nil)))
-
-
-
+;;; org appearance settings
 (use-package org-variable-pitch
   :after (org)
   :config
@@ -324,8 +309,7 @@
   :hook
   (org-mode . valign-mode))
 
-
-;; org roam settings
+;;; org roam settings
 (use-package s
   :straight t)
 
@@ -358,10 +342,7 @@
   :straight t
   :after (org-roam))
 
-;; (use-package init-dynamic-agenda
-;;   :after (org))
-
-;; whitespace mode 下显示零宽空格
+;;; whitespace mode 下显示零宽空格
 (with-eval-after-load 'whitespace
   (setq whitespace-space-regexp "\\( +\\|\u200b\\)")
   (add-to-list 'whitespace-display-mappings '(space-mark #x200b [?▾])))
@@ -394,7 +375,7 @@
 
 (setq org-ellipsis "⤵")
 
-;; agenda settings
+;;; agenda settings
 ;; (load "~/.emacs.d/site-lisp/next-spec-day.el")
 (setq org-agenda-files '("~/Documents/orgs/agendas/"))
 
@@ -425,10 +406,7 @@
 (use-package org-tempo
   :after (org))
 
-
-
-
-;; org-xlatex
+;;; org-xlatex (only on mac)
 (if sys/macp
     (use-package org-xlatex
       :straight t
@@ -438,8 +416,7 @@
       (setq org-xlatex-position-indicator t)))
 
 
-
-;; org-capture
+;;; org-capture
 (setq org-default-notes-file "~/Documents/orgs/agenda.org")
 
 (use-package org
@@ -462,14 +439,12 @@
 	   "* TODO %^{任务名}\n%iCaptured On: %U" :empty-lines-before 1 :create-id t)))
   )
 
-
-;; org-zotxt
+;;; org-zotxt
 (use-package zotxt
   :straight t
   :hook (org-mode . org-zotxt-mode))
 
-
-;; org-visual-outline
+;;; org-visual-outline
 (use-package org-visual-indent
   :straight (org-visual-outline :type git :host github :repo "legalnonsense/org-visual-outline")
   :after (org color)
@@ -505,16 +480,14 @@
 ;; org-level-1 as the backup. Or figure out your own way of doing it.
 ;; None of it matters anyway.
 
-
-;; org-tidy
+;;; org-tidy
 (use-package org-tidy
   :straight t
   :hook (org-mode . org-tidy-mode)
   :config
   )
 
-
-;; org html export theme
+;;; org html export theme
 (use-package htmlize
   :straight t)
 
@@ -541,20 +514,17 @@
 
 (add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
 
-
-;; LaTeX input settings
+;;; LaTeX input settings
 (use-package tex
   :straight auctex)
 
-
-;; xeft for note searching
+;;; xeft for note searching
 (use-package xeft
   :straight t
   :config
   (setq xeft-recursive t))
 
-
-;; org-download for insert images under linux (on mac use org-insert-image defined at init-utils)
+;;; org-download for insert images under linux (on mac use org-insert-image defined at init-utils)
 (use-package org-download
   :straight t
   :hook
@@ -564,7 +534,7 @@
   (setq org-download-timestamp t
 	org-download-backend "curl"))
 
-
+;;; org noter and pdftools
 (use-package djvu
   :straight t)
 
@@ -620,8 +590,7 @@ With a prefix ARG, remove start location."
   (with-eval-after-load 'pdf-annot
     (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 
-
-;; LOGBOOK settings
+;;; LOGBOOK settings
 (use-package org
   :config
   (setq org-todo-keywords '((sequence "TODO(t)" "|" "DONE(d!)")
