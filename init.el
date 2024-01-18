@@ -1,17 +1,12 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
-(toggle-debug-on-error)
+;; (toggle-debug-on-error)
 
 (let (
       ;; 加载的时候临时增大`gc-cons-threshold'以加速启动速度。
       (gc-cons-threshold most-positive-fixnum)
       ;; 清空避免加载远程文件的时候分析文件。
       (file-name-handler-alist nil))
-  ;;  (require 'benchmark-init-modes)
-  ;;  (require 'benchmark-init)
-  ;;  (benchmark-init/activate)
-
-
   ;;  ;; 下面才写你的其它配置
 
   (setq
@@ -83,6 +78,6 @@
   (require 'init-tokenizer)
   (require 'init-fileinfo)
   (require 'init-gptel)
-  
+
   (require 'init-secrets)
   )

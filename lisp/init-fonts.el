@@ -3,7 +3,8 @@
 
 (centaur-setup-fonts)
 (add-hook 'window-setup-hook #'centaur-setup-fonts)
-(add-hook 'server-after-make-frame-hook #'centaur-setup-fonts)
+(when (daemonp)
+    (add-hook 'server-after-make-frame-hook #'centaur-setup-fonts))
 
 (setq buffer-face-mode-face 'fixed-pitch)
 

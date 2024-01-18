@@ -15,9 +15,11 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 ; 默认窗口最大化
-;; (setq initial-frame-alist (quote ((fullscreen . maximize))))
-;; (setq default-frame-alist (quote ((fullscreen . maximize))))
-; (add-hook 'window-setup-hook #'toggle-frame-maximized)
+(setq initial-frame-alist (quote ((fullscreen . maximize))))
+(setq default-frame-alist (quote ((fullscreen . maximize))))
+(add-hook 'window-setup-hook #'toggle-frame-maximized)
+(when (daemonp)
+    (add-hook 'server-after-make-frame-hook #'toggle-frame-maximized))
 
 ; 隐藏开始界面
 (setq inhibit-startup-message t)
@@ -65,9 +67,9 @@
 
 ; 编码设置
 (set-language-info
-     "UTF-8"
-     'coding-priority
-     '(utf-8 gb18030 gbk gb2312 iso-2022-cn chinese-big5 chinese-iso-8bit iso-8859-1))
+ "UTF-8"
+ 'coding-priority
+ '(utf-8 gb18030 gbk gb2312 iso-2022-cn chinese-big5 chinese-iso-8bit iso-8859-prefer))
     (prefer-coding-system 'cp950)
     (prefer-coding-system 'gb2312)
     (prefer-coding-system 'cp936)
@@ -83,8 +85,7 @@
 
 ;; disable title-bar; emacs >= 29 only
 (cond (sys/macp
-       (add-to-list 'default-frame-alist '(undecorated . t)))
-      )
+       (add-to-list 'default-frame-alist '(undecorated . t))))
 
 (setq-default bidi-display-reordering nil)
 (setq bidi-inhibit-bpa t

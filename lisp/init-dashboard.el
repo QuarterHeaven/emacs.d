@@ -3,6 +3,7 @@
   :after (page-break-lines)
   :init
   (dashboard-setup-startup-hook)
+  :hook (server-after-make-frame . dashboard-refresh-buffer)
   :config
   (run-with-idle-timer 0.1 nil 'toggle-frame-maximized)
   (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))

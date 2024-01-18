@@ -11,12 +11,21 @@
 ;;first-time startup on Emacs > 26.3.
 (setq custom-safe-themes t)
 
+(use-package highlight-indent-guides
+  :straight t
+  :hook
+  (prog-mode . highlight-indent-guides-mode)
+  :config
+  (setq highlight-indent-guides-method 'character))
+
 ;;If you don't customize it, this is the theme you get.
 ;; (setq-default custom-enabled-themes '(doom-city-light))
 (use-package doom-themes
   :straight t
   :init
   (load-theme 'doom-bluloco-light t)
+  :hook
+  (highlight-indent-guides-mode . (lambda () (load-theme 'doom-bluloco-light t)))
   ;; (load-theme 'doom-ayu-light t)
   :config
   ;; Global settings (defaults)
@@ -34,7 +43,15 @@
   (doom-themes-org-config)
 
   (custom-set-faces
-   '(font-lock-comment-face ((t (:slant italic :family "Victor Mono"))))))
+   '(font-lock-comment-face ((t (:slant italic :family "Victor Mono")))))
+
+  (defun my-load-doom-theme (frame)
+    (select-frame frame)
+    (load-theme 'doom-bluloco-light t))
+
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions #'my-load-doom-theme)
+    (load-theme 'doom-bluloco-light t)))
 
 ;; (load-theme 'doom-ayu-light t)
 ;; (load-theme 'doom-tomorrow-day t)
@@ -319,9 +336,10 @@
       (apply orig args)))
 
   (if (not (daemonp))
-      (progn
-	(setq tab-bar-tab-name-format-function #'eli/tab-bar-tab-name-with-svg)
-	(advice-add #'svg-tag-make :around #'eli/svg-tag-with-cache)))
+      (setq tab-bar-tab-name-format-function #'eli/tab-bar-tab-name-with-svg))
+
+  (setq tab-bar-tab-name-format-function #'eli/tab-bar-tab-name-with-svg)
+  (advice-add #'svg-tag-make :around #'eli/svg-tag-with-cache)
 
   ;; 隐藏 org roam 文件的前缀
   ;; ( tab-bar-tab-name-function )
@@ -332,12 +350,12 @@
   :config
   (setq beacon-mode t))
 
-(use-package highlight-indent-guides
-  :straight t
-  :hook
-  (prog-mode . highlight-indent-guides-mode)
-  :config
-  (setq highlight-indent-guides-method 'character))
+;; (use-package highlight-indent-guides
+;;   :straight t
+;;   :hook
+;;   (prog-mode . highlight-indent-guides-mode)
+;;   :config
+;;   (setq highlight-indent-guides-method 'character))
 
 (provide 'init-themes)
 ;;;init-themes.el ends here

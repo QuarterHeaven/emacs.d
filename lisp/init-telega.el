@@ -87,6 +87,8 @@
   (advice-add #'telega-msg-goto :after #'(lambda () (recenter)
 					   (pulse-momentary-highlight-one-line (point))))
 
-  )
+  (setq telega-msg-heading-with-date-and-status t)
+  (require 'telega-mnz)
+  (add-hook 'telega-load-hook 'global-telega-mnz-mode))
 
 (provide 'init-telega)

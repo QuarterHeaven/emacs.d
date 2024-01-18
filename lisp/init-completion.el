@@ -90,7 +90,8 @@
 
 (use-package kind-icon
   :straight t
-  :after (corfu svg-lib)
+  :after corfu
+  :demand t
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 

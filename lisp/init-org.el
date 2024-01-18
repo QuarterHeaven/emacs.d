@@ -40,6 +40,8 @@
   :bind ("C-c <backspace>" . org-mark-ring-goto)
   :init (require 'tex-mode)
   :config
+  (setq org-startup-with-inline-images t)
+
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
@@ -175,9 +177,9 @@
 
 
 ;; prettify-symbols-mode
-(global-prettify-symbols-mode)
-(setq org-startup-with-inline-images t)
-(setq prettify-symbols-alist
+;; (global-prettify-symbols-mode +1)
+(add-hook 'org-mode-hook 'prettify-symbols-mode)
+(setq-default prettify-symbols-alist
       '(("lambda"  . ?λ)
 	(":PROPERTIES:" . ?)
 	(":ID:" . ?)
@@ -185,6 +187,7 @@
 	("#+TITLE:" . ?)
 	("#+AUTHOR:" . ?)
 	("#+RESULTS:" . ?)
+	("#+filetags:" . ?🏷)
 	(":properties:" . ?)
 	(":id:" . ?)
 	(":end:" . ?)
@@ -212,6 +215,7 @@
 	("#+ATTR_LATEX"    . "🄛")
 	("#+ATTR_HTML"     . "🄗")
 	("#+ATTR_ORG"      . "⒪")))
+
 
 
 (use-package org-remoteimg
@@ -309,6 +313,13 @@
 			     #(" " 0 2 (face (font-lock-comment-face bold)))))))
 
 (use-package valign
+  :if (daemonp)
+  :straight t
+  :hook
+  (server-after-make-frame . valign-mode))
+
+(use-package valign
+  :if (not (daemonp))
   :straight t
   :hook
   (org-mode . valign-mode))
@@ -358,7 +369,6 @@
 (use-package writeroom-mode
   :straight t
   :hook
-  ;; (after-init . global-writeroom-mode)
   ((c-ts-mode c++-ts-mode rust-ts-mode python-ts-mode haskell-ts-mode clojure-ts-mode typst-ts-mode) . writeroom-mode)
   ((prog-mode conf-mode yaml-mode shell-mode eshell-mode) . writeroom-mode)
   (org-mode . writeroom-mode)
@@ -378,7 +388,9 @@
         writeroom-major-modes-exceptions '(process-menu-mode proced-mode)
         writeroom-maximize-window nil
         writeroom-mode-line t
-        writeroom-mode-line-toggle-position 'mode-line-format))
+        writeroom-mode-line-toggle-position 'mode-line-format)
+  (when (daemonp)
+      (add-hook 'server-after-make-frame-hook 'global-writeroom-mode)))
 
 (setq org-ellipsis "⤵")
 
