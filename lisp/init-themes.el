@@ -262,6 +262,9 @@
     (tab-bar--update-tab-bar-lines))
   (+show-tab-bar)
 
+  ;; 隐藏 org roam 文件的前缀
+  ;; ( tab-bar-tab-name-function )
+
   ;; tab bar svg from @Eli
   (defface tab-bar-svg-active
     '((t (:family "BlexMono Nerd Font Mono" :foreground "#a1aeb5"
@@ -324,7 +327,7 @@
 	 (svg-tag-make
           name
           :face 'tab-bar-svg-active
-          :inverse (eq (car tab) 'current-tab) :margin 0 :radius 6 :padding padding)))))
+          :inverse (eq (car tab) 'current-tab) :margin 1 :radius 6 :padding padding)))))
 
   ;;; 给 svg-tag-mode 添加缓存，对于同样的参数使用缓存中的图片
   (defvar eli/svg-tag-cache nil)
@@ -339,11 +342,7 @@
       (setq tab-bar-tab-name-format-function #'eli/tab-bar-tab-name-with-svg))
 
   (setq tab-bar-tab-name-format-function #'eli/tab-bar-tab-name-with-svg)
-  (advice-add #'svg-tag-make :around #'eli/svg-tag-with-cache)
-
-  ;; 隐藏 org roam 文件的前缀
-  ;; ( tab-bar-tab-name-function )
-  )
+  (advice-add #'svg-tag-make :around #'eli/svg-tag-with-cache))
 
 (use-package beacon
   :straight t
@@ -356,6 +355,17 @@
 ;;   (prog-mode . highlight-indent-guides-mode)
 ;;   :config
 ;;   (setq highlight-indent-guides-method 'character))
+
+;;; 连续调整透明度
+(use-package transwin
+  :straight t
+  :config
+  (setq transwin-delta-alpha 5)
+  (setq transwin-parameter-alpha 'alpha-background)
+  :bind
+  ("C-M-=" . transwin-inc)
+  ("C-M--" . transwin-dec)
+  ("C-M-0" . transwin-toggle))
 
 (provide 'init-themes)
 ;;;init-themes.el ends here

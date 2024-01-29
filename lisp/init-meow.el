@@ -1,3 +1,4 @@
+;;; meow
 (use-package meow
   :straight t
   :hook (after-init . meow-global-mode)
@@ -150,5 +151,81 @@
 ;;     (meow--two-char-exit-insert-state meow-two-char-escape-sequence)
 ;;     (define-key meow-insert-state-keymap (substring meow-two-char-escape-sequence 0 1)
 ;; 	      #'meow-two-char-exit-insert-state))
+
+;;; meow select same indent
+(use-package meow
+  :config
+  (defun mag/meow-thing-same-indent-lines ()
+    (let ((first-line)
+          (last-line)
+          (start-indent (current-indentation)))
+      (save-excursion
+	(setq first-line (line-number-at-pos))
+	(while (and (not (bobp))
+                    (zerop (forward-line -1))
+                    (= (current-indentation) start-indent))
+          (message "[back] line: %i " (line-number-at-pos))
+          (setq first-line (line-number-at-pos))))
+
+      (save-excursion
+	(setq last-line (line-number-at-pos))
+	(while (and (not (eobp))
+                    (zerop (forward-line 1))
+                    (= (current-indentation) start-indent))
+          (message "[fwd] line: %i " (line-number-at-pos))
+          (setq last-line (line-number-at-pos))))
+
+      (message "fl: %i; ll: %i" first-line last-line)
+      (cons first-line last-line)))
+
+  (defun mag/pos-at-line (line-number beginning &optional offset)
+    (let ((pos))
+      (save-excursion
+	(forward-line (1- (- line-number (current-line))))
+	(when offset
+          (forward-line offset))
+	(if beginning
+            (beginning-of-line)
+          (end-of-line))
+	(setq pos (point)))
+      pos))
+
+  (defun mag/meow-thing-same-indent (beginning-offset end-offset)
+    (let ((line-nums)
+          (first-line)
+          (last-line))
+      (setq line-nums (mag/meow-thing-same-indent-lines))
+      (setq first-line (car line-nums))
+      (setq last-line (cdr line-nums))
+      (cons (mag/pos-at-line first-line t beginning-offset)
+            (mag/pos-at-line last-line nil end-offset))))
+
+
+  (defun mag/meow-thing-same-indent-inner ()
+    (mag/meow-thing-same-indent 0 0))
+
+  (defun mag/meow-thing-same-indent-bounds ()
+    (mag/meow-thing-same-indent -1 1))
+
+  (meow-thing-register 'same-indent
+                       'mag/meow-thing-same-indent-inner
+                       'mag/meow-thing-same-indent-bounds)
+
+  (setq meow-char-thing-table
+	'((?r . round)
+          (?q . square)
+          (?c . curly)
+          (?a . angle)
+          (?s . string)
+          (?p . paragraph)
+          (?l . line)
+          (?f . defun)
+          (?d . do/end)
+          (?y . symbol)
+          (?. . sentence)
+          (?w . window)
+          (?u . url)
+          (?i . same-indent)
+          (?b . buffer))))
 
 (provide 'init-meow)

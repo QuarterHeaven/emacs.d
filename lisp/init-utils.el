@@ -4,8 +4,7 @@
 
 (define-obsolete-function-alias 'after-load 'with-eval-after-load "")
 
-
-;; Handier way to add modes to auto-mode-alist
+;;; Handier way to add modes to auto-mode-alist
 (defun add-auto-mode (mode &rest patterns)
   "Add entries to `auto-mode-alist' to use `MODE' for all given file `PATTERNS'."
   (dolist (pattern patterns)
@@ -20,8 +19,7 @@
   (add-hook (derived-mode-hook-name mode)
             (apply-partially 'sanityinc/set-major-mode-name name)))
 
-
-;; String utilities missing from core emacs
+;;; String utilities missing from core emacs
 
 (defun sanityinc/string-all-matches (regex str &optional group)
   "Find all matches for `REGEX' within `STR', returning the full match string or group `GROUP'."
@@ -33,8 +31,7 @@
       (setq pos (match-end group)))
     result))
 
-
-;; Delete the current file
+;;; Delete the current file
 
 (defun delete-this-file ()
   "Delete the current file, and kill the buffer."
@@ -47,8 +44,7 @@
     (kill-this-buffer)))
 
 
-
-;; Rename the current file
+;;; Rename the current file
 
 (defun rename-this-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
@@ -63,9 +59,7 @@
       (set-visited-file-name new-name)
       (rename-buffer new-name))))
 
-
-;; Browse current HTML file
-
+;;; Browse current HTML file
 (defun browse-current-file ()
   "Open the current file as a URL using `browse-url'."
   (interactive)
@@ -75,9 +69,7 @@
         (error "Cannot open tramp file")
       (browse-url (concat "file://" file-name)))))
 
-
-;; insert image from clipboard; from https://emacs-china.org/t/topic/6601/3
-
+;;; insert image from clipboard; from https://emacs-china.org/t/topic/6601/3
 (defun org-insert-image ()
   "insert a image from clipboard"
   (interactive)
@@ -116,8 +108,7 @@
     ;; (org-display-inline-images) ;; inline显示图片
      )))
 
-
-;; insert image under wsl2, from https://emacs-china.org/t/wsl-org/14100/2
+;;; insert image under wsl2, from https://emacs-china.org/t/wsl-org/14100/2
 (defun my-yank-image-from-win-clipboard-through-powershell()
   "to simplify the logic, use c:/Users/Public as temporary directoy, then move it into current directoy
 
@@ -147,7 +138,7 @@ otherwise this function don't work and don't know the reason
     (org-insert-link nil file-link "")
     ))
 
-
+;;; keymap for resize window
 (defvar resize-window-repeat-map
     (let ((map (make-sparse-keymap)))
       (define-key map "^" 'enlarge-window)
@@ -161,8 +152,7 @@ otherwise this function don't work and don't know the reason
 (put 'shrink-window-horizontally 'repeat-map 'resize-window-repeat-map)
 (put 'shrink-window 'repeat-map 'resize-window-repeat-map)
 
-
-;; fonts set copy from centaur
+;;; fonts set copy from centaur
 (defun font-installed-p (font-name)
   "Check if font with FONT-NAME is available."
   (find-font (font-spec :name font-name)))
@@ -172,7 +162,7 @@ otherwise this function don't work and don't know the reason
   (when (display-graphic-p)
     ;; Set default font
     (cl-loop for font in '("BlexMono Nerd Font Mono" "Jetbrains Mono"
-                           "SF Mono" "SF Pro Display" "Hack" "Source Code Pro" "Menlo"
+                           "SF Mono" "SF Pro Display"
                            "Monaco" "DejaVu Sans Mono" "Consolas")
              when (font-installed-p font)
              return (set-face-attribute 'default nil
@@ -257,7 +247,7 @@ otherwise this function don't work and don't know the reason
 										      (t 110))))))
     ))
 
-
+;;; lsp-bridge set path
 (defun lsp-bridge-set-project-path ()
 	(interactive)
 	(setq lsp-bridge-get-project-path-by-filepath
@@ -266,7 +256,7 @@ otherwise this function don't work and don't know the reason
 			  (and (string-match default-directory filepath)
 				   (match-string 0 filepath))))))
 
-
+;;; Define an advice called SYMBOL and add it to PLACES.
 (defmacro defadvice! (symbol arglist &rest body)
   "Define an advice called SYMBOL and add it to PLACES.
 
@@ -286,7 +276,7 @@ DOCSTRING and BODY are as in `defun'.
          (dolist (target (cdr targets))
            (advice-add target (car targets) #',symbol))))))
 
-
+;;; emacs-q test
 (defun z/emacs-Q-test ()
   "Run emacs -Q async for packages you choose."
   (interactive)
