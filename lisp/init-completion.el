@@ -14,7 +14,7 @@
   )
 
 (use-package eglot
-  :hook ((c-ts-mode c++-ts-mode rust-ts-mode python-ts-mode haskell-ts-mode clojure-ts-mode) . eglot-ensure)
+  :hook ((c-ts-mode c++-ts-mode rust-ts-mode python-ts-mode haskell-ts-mode clojure-ts-mode java-ts-mode) . eglot-ensure)
   (eglot-managed-mode . eglot-inlay-hints-mode)
   :config
   (setq eglot-events-buffer-size 0

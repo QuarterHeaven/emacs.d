@@ -2,6 +2,7 @@
 ;;;Commentary:
 ;;;Code:
 
+;;; common theme settings
 (use-package all-the-icons
   :straight t)
 
@@ -18,6 +19,7 @@
   :config
   (setq highlight-indent-guides-method 'character))
 
+;;; doom themes
 ;;If you don't customize it, this is the theme you get.
 ;; (setq-default custom-enabled-themes '(doom-city-light))
 (use-package doom-themes
@@ -56,7 +58,7 @@
 ;; (load-theme 'doom-ayu-light t)
 ;; (load-theme 'doom-tomorrow-day t)
 
-;;Ensure that themes will be applied even if they have not been customized
+;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
   "Forcibly load the themes listed in `custom-enabled-themes'."
   (dolist (theme custom-enabled-themes)
@@ -66,18 +68,18 @@
 
 ;; Toggle between light and dark
 
-;; icons
+;;; icons
 (defconst sys/win32p
   (eq system-type 'windows-nt)
   "Are we running on a WinTel system?")
 
-;; Show line numbers
+;;; Show line numbers
 (use-package display-line-numbers
   :straight t
   :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
   :init (setq display-line-numbers-width-start t))
 
-;; Suppress GUI features
+;;; Suppress GUI features
 (setq use-file-dialog nil
       use-dialog-box nil
       inhibit-startup-screen t
@@ -93,28 +95,28 @@
       window-divider-default-right-width 1)
 (add-hook 'window-setup-hook #'window-divider-mode)
 
-;; Smooth scrolling over images
+;;; Smooth scrolling over images
 (use-package iscroll
   :straight t
   :diminish
   :hook (image-mode . iscroll-mode))
 
-;; Use fixed pitch where it's sensible
+;;; Use fixed pitch where it's sensible
 (use-package mixed-pitch
   :straight t
   :diminish)
 
-;; Display ugly ^L page breaks as tidy horizontal lines
+;;; Display ugly ^L page breaks as tidy horizontal lines
 (use-package page-break-lines
   :straight t
   :diminish
   :hook (after-init . global-page-break-lines-mode))
 
-;; Don't use GTK+ tooltip
+;;; Don't use GTK+ tooltip
 (when (boundp 'x-gtk-use-system-tooltips)
   (setq x-gtk-use-system-tooltips nil))
 
-;; Mode line
+;;; Mode line
 (use-package doom-modeline
   :straight t
   :hook (after-init . doom-modeline-mode)
@@ -158,6 +160,7 @@
   :straight t
   :hook (doom-modeline-mode . minions-mode))
 
+;;; tab bar
 (use-package svg-lib
   :straight t
   )
@@ -359,13 +362,13 @@
 ;;; 连续调整透明度
 (use-package transwin
   :straight t
-  :config
+  :init
   (setq transwin-delta-alpha 5)
   (setq transwin-parameter-alpha 'alpha-background)
   :bind
-  ("C-M-=" . transwin-inc)
-  ("C-M--" . transwin-dec)
-  ("C-M-0" . transwin-toggle))
+  ("C-c C-=" . transwin-inc)
+  ("C-c C--" . transwin-dec)
+  ("C-c C-0" . transwin-toggle))
 
 (provide 'init-themes)
 ;;;init-themes.el ends here

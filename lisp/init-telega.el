@@ -36,7 +36,7 @@
   (setq telega-root-default-view-function 'telega-view-folders
 	telega-root-keep-cursor 'track
 	;; telega-root-fill-column 70
-	;; telega-chat-fill-column 70
+	telega-chat-fill-column 90
 	telega-chat-show-avatars t
 	telega-user-show-avatars t
 	telega-root-show-avatars t
@@ -87,7 +87,7 @@
   (advice-add #'telega-msg-goto :after #'(lambda () (recenter)
 					   (pulse-momentary-highlight-one-line (point))))
 
-  (setq telega-msg-heading-with-date-and-status t)
+  (setq telega-msg-heading-with-date-and-status nil)
   (require 'telega-mnz)
   (add-hook 'telega-load-hook 'global-telega-mnz-mode))
 
