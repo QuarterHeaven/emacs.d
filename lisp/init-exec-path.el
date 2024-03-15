@@ -27,6 +27,8 @@
 ;;         (setenv "PATH" path-from-shell)
 ;;         (setq exec-path (split-string path-from-shell
 ;; 				      path-separator))))
+
+;; sh -c 'printf "%s" "$PATH"' > ~/.path
 (if sys/macp
     (condition-case err
 	(let ((path (with-temp-buffer

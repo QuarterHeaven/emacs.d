@@ -3,6 +3,8 @@
 (setq auto-save-default nil)
 (setq create-lockfiles nil)
 
+(setq global-auto-revert-mode t)
+
 (setq url-gateway-method 'socks)
 (setq socks-server '("Default server" "127.0.0.1" 1081 5))
 

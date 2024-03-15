@@ -191,7 +191,7 @@ otherwise this function don't work and don't know the reason
 											     (t 110)))))
 
     ;; Specify font for all unicode characters
-    (cl-loop for font in '("Symbola" "Unifont Upper" "Segoe UI Symbol")
+    (cl-loop for font in '("Segoe UI Symbol" "Symbola" "Unifont Upper" "Segoe UI Symbol")
              when (font-installed-p font)
              return (if (< emacs-major-version 27)
                         (set-fontset-font "fontset-default" 'unicode font nil 'prepend)
@@ -226,7 +226,7 @@ otherwise this function don't work and don't know the reason
 									  (t 110)))))))
 
     ;; Specify font for Chinese characters
-    (cl-loop for font in '("TsangerJinKai02" "LXGW WenKai Mono" "WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei" "STFangsong")
+    (cl-loop for font in '("FZLiuGongQuanKaiShuS" "TsangerJinKai02" "LXGW WenKai Mono" "WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei" "STFangsong")
              when (font-installed-p font)
              return (progn
                       (setq face-font-rescale-alist `((,font . 1.0)))

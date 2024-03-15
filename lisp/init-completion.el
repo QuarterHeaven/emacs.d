@@ -14,9 +14,23 @@
   )
 
 (use-package eglot
-  :hook ((c-ts-mode c++-ts-mode rust-ts-mode python-ts-mode haskell-ts-mode clojure-ts-mode java-ts-mode) . eglot-ensure)
+  :straight t
+  :hook ((c-ts-mode
+	  c++-ts-mode
+	  rust-ts-mode
+	  python-ts-mode
+	  haskell-ts-mode
+	  clojure-ts-mode
+	  java-ts-mode
+	  typst-ts-mode) . eglot-ensure)
   (eglot-managed-mode . eglot-inlay-hints-mode)
+  :init
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs '(typst-ts-mode . ("tinymist")))
+    ;;delance 現在已經發佈到 npm 了哦，npm i -g @delance/runtime 就可以直接用 delance-langserver --stdio
+    (add-to-list 'eglot-server-programs '((python-mode python-ts-mode) . ("delance-langserver" "--stdio"))))
   :config
+  (require 'clangd-inactive-regions)
   (setq eglot-events-buffer-size 0
         eglot-connect-timeout 10
         eglot-autoshutdown t
@@ -40,12 +54,14 @@
   :bind (:map corfu-map
               ("s-m" . corfu-move-to-minibuffer)
               ("RET" . corfu-complete)
-	      ("SPC" . corfu-insert-separator))
+	      ;; ("SPC" . corfu-insert-separator)
+	      )
 
   :config
   (setq corfu-cycle t                ;; Enable cycling for `corfu-next/previous'
         corfu-auto t                 ;; Enable auto completion
-	corfu-separator ?\s
+	;; corfu-separator ?\s
+	corfu-separator ?&
 	corfu-auto-prefix 2          ;; minimun prefix to enable completion
         corfu-preview-current nil
         corfu-auto-delay 0.1

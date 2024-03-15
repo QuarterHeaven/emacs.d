@@ -42,13 +42,23 @@
   :straight t
   :bind ("C-h D" . devdocs-lookup))
 
+(unless (package-installed-p 'clangd-inactive-regions)
+  (package-vc-install "https://github.com/fargiolas/clangd-inactive-regions.el"))
+
 (use-package clangd-inactive-regions
-  :straight (:type git :host github :repo "fargiolas/clangd-inactive-regions.el")
-  :hook
-  (eglot-managed-mode . clangd-inactive-regions)
+  :init
+  (add-hook 'eglot-managed-mode-hook #'clangd-inactive-regions-mode)
   :config
   (clangd-inactive-regions-set-method "darken-foreground")
   (clangd-inactive-regions-set-opacity 0.55))
+
+;; (use-package clangd-inactive-regions
+;;   :straight (:type git :host github :repo "fargiolas/clangd-inactive-regions.el")
+;;   :hook
+;;   (eglot-managed-mode . clangd-inactive-regions)
+;;   :config
+;;   (clangd-inactive-regions-set-method "darken-foreground")
+;;   (clangd-inactive-regions-set-opacity 0.55))
 
 
 (provide 'init-languages)

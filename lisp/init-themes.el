@@ -26,8 +26,10 @@
   :straight t
   :init
   (load-theme 'doom-bluloco-light t)
+  ;; (load-theme 'doom-one)
   :hook
   (highlight-indent-guides-mode . (lambda () (load-theme 'doom-bluloco-light t)))
+  ;; (highlight-indent-guides-mode . (lambda () (load-theme 'doom-one t)))
   ;; (load-theme 'doom-ayu-light t)
   :config
   ;; Global settings (defaults)
@@ -41,19 +43,26 @@
   ;; or for treemacs users
   (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
   ;; (doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
+ ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config)
 
   (custom-set-faces
-   '(font-lock-comment-face ((t (:slant italic :family "Victor Mono")))))
+   '(font-lock-comment-face ((t (:slant italic :family "Victor Mono"))))
+   '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+   '(org-block ((t (:inherit fixed-pitch))))
+   '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
   (defun my-load-doom-theme (frame)
     (select-frame frame)
-    (load-theme 'doom-bluloco-light t))
+    (load-theme 'doom-bluloco-light t)
+    ;; (load-theme 'doom-one t)
+    )
 
   (if (daemonp)
       (add-hook 'after-make-frame-functions #'my-load-doom-theme)
-    (load-theme 'doom-bluloco-light t)))
+    (load-theme 'doom-bluloco-light t)
+    ;; (load-theme 'doom-one t)
+    ))
 
 ;; (load-theme 'doom-ayu-light t)
 ;; (load-theme 'doom-tomorrow-day t)
@@ -260,7 +269,7 @@
   (defun +show-tab-bar ()
     (interactive)
     (setq tab-bar-format '(+tab-bar-telega-icon
-			   meow-indicator
+			   ;; meow-indicator
 			   tab-bar-format-tabs tab-bar-separator))
     (tab-bar--update-tab-bar-lines))
   (+show-tab-bar)

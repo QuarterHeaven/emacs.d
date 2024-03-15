@@ -31,6 +31,7 @@
   ;; Calls (package-initialize)
   ;; (require 'init-elpa)      ;; Machinery for installing required packages
   (require 'init-straight)
+  (straight-use-package 'project)
 
   (require 'init-exec-path)   ;; Set up $PATH
   (require 'bind-key)
@@ -50,6 +51,7 @@
   (require 'init-dashboard)
   (require 'init-yasnippet)
   (require 'init-completion)
+  ;; (require 'init-lspmode)
   (require 'init-magit)
   (require 'init-vertico)
   (require 'init-blink)
@@ -79,6 +81,8 @@
   (require 'init-tokenizer)
   (require 'init-fileinfo)
   (require 'init-gptel)
+  (require 'init-translate)
 
   (require 'init-secrets)
+  (require 'init-keybinding)
   )
