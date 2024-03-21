@@ -3,7 +3,7 @@
   :bind (("C-x g" . magit))
   :config
   (setq auth-sources '("~/.authinfo.gpg"))
-  (magit-auto-revert-mode -1)
+  (magit-auto-revert-mode t)
   (defun magit-submodule-remove+ ()
     (interactive)
     (magit-submodule-remove (list (magit-read-module-path "Remove module")) "--force" nil)))

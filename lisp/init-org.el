@@ -598,4 +598,10 @@ With a prefix ARG, remove start location."
 			    (sequence "|" "CANCELED(c@)")))
   (setq org-clock-into-drawer t))
 
+;;; org-popup-posframe
+(use-package org-popup-posframe
+  :straight (:host github :repo "A7R7/org-popup-posframe")
+  :config
+  (org-popup-posframe-mode 1))
+
 (provide 'init-org)
