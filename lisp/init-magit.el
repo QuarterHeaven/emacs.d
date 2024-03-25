@@ -4,6 +4,7 @@
   :config
   (setq auth-sources '("~/.authinfo.gpg"))
   (magit-auto-revert-mode t)
+  (setq auto-revert-use-notify nil)
   (defun magit-submodule-remove+ ()
     (interactive)
     (magit-submodule-remove (list (magit-read-module-path "Remove module")) "--force" nil)))
