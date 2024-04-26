@@ -170,7 +170,7 @@ otherwise this function don't work and don't know the reason
                                         :height (cond (sys/macp 130)
                                                       (sys/win32p 110)
 						      (sys/WSL 200)
-                                                      (t 110))))
+                                                      (t 130))))
 
     ;; Set mode-line font
     (cl-loop for font in '("BlexMono Nerd Font Mono" "Unifont Upper" "Noto Color Emoji" "SF Pro Display" "Helvetica")
@@ -179,16 +179,16 @@ otherwise this function don't work and don't know the reason
                       (set-face-attribute 'mode-line nil :family font :height (cond (sys/macp 130)
 										    (sys/win32p 110)
 										    (sys/WSL 200)
-										    (t 110)))
+										    (t 130)))
                       (when (facep 'mode-line-active)
                         (set-face-attribute 'mode-line-active nil :family font :height (cond (sys/macp 130)
 											     (sys/win32p 110)
 											     (sys/WSL 200)
-											     (t 110))))
+											     (t 130))))
                       (set-face-attribute 'mode-line-inactive nil :family font :height (cond (sys/macp 130)
 											     (sys/win32p 110)
 											     (sys/WSL 200)
-											     (t 110)))))
+											     (t 130)))))
 
     ;; Specify font for all unicode characters
     (cl-loop for font in '("Segoe UI Symbol" "Symbola" "Unifont Upper" "Segoe UI Symbol")
@@ -200,7 +200,7 @@ otherwise this function don't work and don't know the reason
 							      :height (cond (sys/macp 130)
 									    (sys/win32p 110)
 									    (sys/WSL 200)
-									    (t 110))))))
+									    (t 130))))))
 		      ;; (set-fontset-font t 'unicode (font-spec :family font
 		      ;; 					      :height (cond (sys/macp 130)
     ;; 							    (sys/win32p 110)
@@ -217,13 +217,13 @@ otherwise this function don't work and don't know the reason
 							      :height (cond (sys/macp 130)
 									    (sys/win32p 110)
 									    (sys/WSL 200)
-									    (t 110))) nil 'prepend))
+									    (t 130))) nil 'prepend))
                      (t
                       (set-fontset-font t 'emoji (font-spec :family font
 							    :height (cond (sys/macp 130)
 									  (sys/win32p 110)
 									  (sys/WSL 200)
-									  (t 110)))))))
+									  (t 130)))))))
 
     ;; Specify font for Chinese characters
     (cl-loop for font in '("FZLiuGongQuanKaiShuS" "TsangerJinKai02" "LXGW WenKai Mono" "WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei" "STFangsong")
@@ -234,17 +234,17 @@ otherwise this function don't work and don't know the reason
 									:height (cond (sys/macp 130)
 										      (sys/win32p 110)
 										      (sys/WSL 200)
-										      (t 110))))
+										      (t 130))))
 		      (set-fontset-font t '(#xff00 . #xffef) (font-spec :family font
 									:height (cond (sys/macp 130)
 										      (sys/win32p 110)
 										      (sys/WSL 200)
-										      (t 110))))
+										      (t 130))))
 		      (set-fontset-font t '(#x3000 . #x303f) (font-spec :family font
 									:height (cond (sys/macp 130)
 										      (sys/win32p 110)
 										      (sys/WSL 200)
-										      (t 110))))))
+										      (t 130))))))
     ))
 
 ;;; lsp-bridge set path

@@ -5,11 +5,17 @@
 
 (setq global-auto-revert-mode t)
 
-(setq url-gateway-method 'socks)
-(setq socks-server '("Default server" "127.0.0.1" 1081 5))
+;; (setq url-gateway-method 'socks)
+;; (setq socks-server '("Default server" "127.0.0.1" 1081 5))
 
-(setq url-gateway-local-host-regexp
-      (concat "\\`" (regexp-opt '("localhost" "127.0.0.1")) "\\'"))
+;; (setq url-gateway-local-host-regexp
+;;       (concat "\\`" (regexp-opt '("localhost" "127.0.0.1")) "\\'"))
+
+(setq url-proxy-services
+      '(("no_proxy" . "^\\(localhost\\|10\\..*\\|192\\.168\\..*\\)")
+	("socks5" . "127.0.0.1:1081")
+        ("http" . "127.0.0.1:1080")
+        ("https" . "127.0.0.1:1080")))
 
 (setq truncate-lines t)
 
@@ -17,14 +23,11 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 ; 默认窗口最大化
-(setq initial-frame-alist (quote ((fullscreen . maximize))))
-(setq default-frame-alist (quote ((fullscreen . maximize))))
-(add-hook 'window-setup-hook #'toggle-frame-maximized)
-(when (daemonp)
-    (add-hook 'server-after-make-frame-hook #'toggle-frame-maximized))
-
-; 隐藏开始界面
-(setq inhibit-startup-message t)
+;; (setq initial-frame-alist (quote ((fullscreen . maximize))))
+;; (setq default-frame-alist (quote ((fullscreen . maximize))))
+;; (add-hook 'window-setup-hook #'toggle-frame-maximized)
+;; (when (daemonp)
+;;   (add-hook 'server-after-make-frame-hook #'toggle-frame-maximized))
 
 ; 关闭提示音
 (setq ring-bell-function 'ignore)
@@ -88,6 +91,8 @@
 ;; disable title-bar; emacs >= 29 only
 (cond (sys/macp
        (add-to-list 'default-frame-alist '(undecorated-round . t))))
+(cond (sys/linuxp
+       (add-to-list 'default-frame-alist '(undecorated . t))))
 
 (setq-default bidi-display-reordering nil)
 (setq bidi-inhibit-bpa t

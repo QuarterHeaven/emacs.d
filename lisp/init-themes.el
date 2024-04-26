@@ -19,16 +19,31 @@
   :config
   (setq highlight-indent-guides-method 'character))
 
+;;; catppuccin
+(use-package catppuccin-theme
+  :straight t
+  :init
+  (load-theme 'catppuccin :no-confirm)
+  (setq catppuccin-flavor 'macchiato)
+  (catppuccin-reload)
+  :config
+  (custom-set-faces
+   '(font-lock-comment-face ((t (:slant italic :family "Victor Mono"))))
+   '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+   '(org-block ((t (:inherit fixed-pitch))))
+   '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))))
+
 ;;; doom themes
 ;;If you don't customize it, this is the theme you get.
 ;; (setq-default custom-enabled-themes '(doom-city-light))
 (use-package doom-themes
+  :disabled t
   :straight t
   :init
-  (load-theme 'doom-bluloco-light t)
+  (load-theme 'doom-bluloco-dark t)
   ;; (load-theme 'doom-one)
   :hook
-  (highlight-indent-guides-mode . (lambda () (load-theme 'doom-bluloco-light t)))
+  (highlight-indent-guides-mode . (lambda () (load-theme 'doom-bluloco-dark t)))
   ;; (highlight-indent-guides-mode . (lambda () (load-theme 'doom-one t)))
   ;; (load-theme 'doom-ayu-light t)
   :config
@@ -54,13 +69,13 @@
 
   (defun my-load-doom-theme (frame)
     (select-frame frame)
-    (load-theme 'doom-bluloco-light t)
+    (load-theme 'doom-bluloco-dark t)
     ;; (load-theme 'doom-one t)
     )
 
   (if (daemonp)
       (add-hook 'after-make-frame-functions #'my-load-doom-theme)
-    (load-theme 'doom-bluloco-light t)
+    (load-theme 'doom-bluloco-dark t)
     ;; (load-theme 'doom-one t)
     ))
 
@@ -90,11 +105,11 @@
 
 ;;; Suppress GUI features
 (setq use-file-dialog nil
-      use-dialog-box nil
-      inhibit-startup-screen t
-      inhibit-startup-echo-area-message user-login-name
-      inhibit-default-init t
-      initial-scratch-message nil)
+       use-dialog-box nil
+       inhibit-startup-screen t
+       inhibit-startup-echo-area-message user-login-name
+       inhibit-default-init t
+       initial-scratch-message nil)
 (unless (daemonp)
   (advice-add #'display-startup-echo-area-message :override #'ignore))
 
@@ -127,6 +142,7 @@
 
 ;;; Mode line
 (use-package doom-modeline
+	     :disabled t
   :straight t
   :hook (after-init . doom-modeline-mode)
   :config
@@ -152,6 +168,9 @@
      (when (eq major-mode 'image-mode)
        ;; Needs imagemagick installed.
        (process-lines "identify" "-format" "[%m %wx%h %b]" (buffer-file-name))))))
+
+(use-package doom-modeline
+     :straight t)
 
 (use-package hide-mode-line
   :straight t

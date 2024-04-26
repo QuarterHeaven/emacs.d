@@ -9,6 +9,7 @@
 	(sys/linuxp (setq rime-librime-root (substring (shell-command-to-string "nix eval nixpkgs#librime.outPath") 1 -2)
 			  rime-emacs-module-header-root (file-truename (concat (file-name-directory (directory-file-name (file-truename invocation-directory))) "include")))))
   (setq rime-user-data-dir "~/Library/Rime/")
+  (setq rime-share-data-dir "/etc/profiles/per-user/takaobsid/share/rime-data")
   (setq rime-cursor "˰")
   ;; (setq rime-show-candidate 'minibuffer)
   (setq rime-show-candidate 'posframe)

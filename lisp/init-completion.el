@@ -22,13 +22,15 @@
 	  haskell-ts-mode
 	  clojure-ts-mode
 	  java-ts-mode
-	  typst-ts-mode) . eglot-ensure)
+	  typst-ts-mode
+	  nix-ts-mode) . eglot-ensure)
   (eglot-managed-mode . eglot-inlay-hints-mode)
   :init
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs '(typst-ts-mode . ("tinymist")))
     ;;delance 現在已經發佈到 npm 了哦，npm i -g @delance/runtime 就可以直接用 delance-langserver --stdio
-    (add-to-list 'eglot-server-programs '((python-mode python-ts-mode) . ("delance-langserver" "--stdio"))))
+    (add-to-list 'eglot-server-programs '((python-mode python-ts-mode) . ("delance-langserver" "--stdio")))
+    (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nil"))))
   :config
   (require 'clangd-inactive-regions)
   (setq eglot-events-buffer-size 0
