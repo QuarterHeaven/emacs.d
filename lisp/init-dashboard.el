@@ -1,11 +1,12 @@
 (use-package dashboard
+  :disabled t
   :straight t
   :after (page-break-lines)
   :init
-  (dashboard-setup-startup-hook)
+  ;; (dashboard-setup-startup-hook)
   :hook (server-after-make-frame . dashboard-refresh-buffer)
   :config
-  (run-with-idle-timer 0.1 nil 'toggle-frame-maximized)
+  ;; (run-with-idle-timer 0.1 nil 'toggle-frame-maximized)
   (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 
   ;; Set the title
@@ -46,5 +47,24 @@
       (setq rd (random))
       (setq dashboard-startup-banner (nth (mod rd (length banner)) banner))))
   (dashboard-set-random-banner))
+
+(use-package welcome-dashboard
+  :straight (welcome-dashboard :host github :repo "konrad1977/welcome-dashboard")
+  :init
+  (welcome-dashboard-create-welcome-hook)
+  :config
+  (setq welcome-dashboard-latitude 30.659462
+        welcome-dashboard-longitude 104.065735 ;; latitude and longitude must be set to show weather information
+        welcome-dashboard-use-nerd-icons t ;; Use nerd icons instead of all-the-icons
+        welcome-dashboard-path-max-length 75
+        welcome-dashboard-use-fahrenheit nil ;; show in celcius or fahrenheit.
+        welcome-dashboard-min-left-padding 10
+        welcome-dashboard-image-file "~/.emacs.d/Kalan.png"
+        welcome-dashboard-image-width 408
+	welcome-dashboard-image-height 289
+	;; welcome-dashboard-image-height (/ (window-pixel-height) 2)
+        welcome-dashboard-max-number-of-todos 5
+        ;; welcome-dashboard-image-height 169
+        welcome-dashboard-title "Welcome Taka. Have a great day!"))
 
 (provide 'init-dashboard)

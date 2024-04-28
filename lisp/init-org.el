@@ -1,5 +1,20 @@
 (use-package visual-fill-column
-  :straight t)
+  :straight t
+  :hook
+  ((c-ts-mode c++-ts-mode rust-ts-mode python-ts-mode haskell-ts-mode clojure-ts-mode typst-ts-mode) . visual-fill-column-mode)
+  ((prog-mode conf-mode yaml-mode shell-mode eshell-mode) . visual-fill-column-mode)
+  (org-mode . visual-fill-column-mode)
+  (dashboard-mode . visual-fill-column-mode)
+  (welcome-dashboard-mode . visual-fill-column-mode)
+  (org-mode . variable-pitch-mode)
+  (org-mode . visual-line-mode)
+  (visual-line-mode . visual-fill-column-mode)
+
+  :config
+  (setq-default visual-fill-column-center-text t
+		visual-fill-column-width 80
+		visual-fill-column-fringes-outside-margins nil)
+  (setq split-width-threshold 120))
 
 (use-package ob-rust
   :straight t
@@ -348,15 +363,20 @@
   (add-to-list 'whitespace-display-mappings '(space-mark #x200b [?▾])))
 
 (use-package writeroom-mode
+  :disabled t
   :straight t
   :hook
   ((c-ts-mode c++-ts-mode rust-ts-mode python-ts-mode haskell-ts-mode clojure-ts-mode typst-ts-mode) . writeroom-mode)
   ((prog-mode conf-mode yaml-mode shell-mode eshell-mode) . writeroom-mode)
   (org-mode . writeroom-mode)
   (dashboard-mode . writeroom-mode)
+  (welcome-dashboard-mode . writeroom-mode)
   (org-mode . variable-pitch-mode)
   (org-mode . visual-line-mode)
   (visual-line-mode . visual-fill-column-mode)
+
+  :init
+  (setq writeroom-maximize-window nil)
 
   :config
   (setq split-width-threshold 120
@@ -370,8 +390,10 @@
         writeroom-maximize-window nil
         writeroom-mode-line t
         writeroom-mode-line-toggle-position 'mode-line-format)
-  (when (daemonp)
-      (add-hook 'server-after-make-frame-hook 'global-writeroom-mode)))
+
+  ;; (when (daemonp)
+  ;;     (add-hook 'server-after-make-frame-hook 'global-writeroom-mode))
+  )
 
 (setq org-ellipsis "⤵")
 

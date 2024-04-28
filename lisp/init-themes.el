@@ -212,7 +212,7 @@
   (require 'svg-lib)
   (require 'svg-tag-mode)
   (setq tab-bar-separator ""
-        ;; tab-bar-new-tab-choice "*dashboard*"
+        tab-bar-new-tab-choice "*welcome*"
         tab-bar-tab-name-truncated-max 20
         tab-bar-auto-width nil
         tab-bar-close-button-show nil
@@ -297,83 +297,62 @@
   ;; ( tab-bar-tab-name-function )
 
   ;; tab bar svg from @Eli
+  ;; (defface tab-bar-svg-active
+  ;;   '((t (:family "BlexMono Nerd Font Mono" :foreground "#a1aeb5"
+  ;;                 :box (:line-width (4 . 5)
+  ;;                                   :color "#a1aeb5"
+  ;;                                   :style flat-button))))
+  ;;   "Tab bar face for selected tab.")
+
   (defface tab-bar-svg-active
-    '((t (:family "BlexMono Nerd Font Mono" :foreground "#a1aeb5"
-                  :box (:line-width (4 . 5)
-                                    :color "#a1aeb5"
-                                    :style flat-button))))
+    '((t (:family "BlexMono Nerd Font Mono" :foreground "#a1aeb5")))
     "Tab bar face for selected tab.")
 
-  (defvar eli/tab-bar-svg-padding-cache nil)
+  (defface tab-bar-svg-inactive
+    '((t (:family "BlexMono Nerd Font Mono" :foreground "#cad7de")))
+    "Tab bar face for inactive tabs.")
 
   (defun eli/tab-bar-svg-padding (width string)
-    (unless eli/tab-bar-svg-padding-cache
-      (setq eli/tab-bar-svg-padding-cache (make-hash-table :test #'equal)))
-    (with-memoization (gethash (list width string)
-                               eli/tab-bar-svg-padding-cache)
-      (let* ((margin (plist-get svg-lib-style-default :margin))
-             (txt-char-width  (window-font-width nil 'fixed-pitch))
-             (tag-width (- width (* margin txt-char-width)))
-             (padding (- (/ tag-width txt-char-width) (length string))))
-	padding)))
+    (let* ((style svg-lib-style-default)
+           (margin      (plist-get style :margin))
+           (txt-char-width  (window-font-width nil 'fixed-pitch))
+           (tag-width (- width (* margin txt-char-width)))
+           (padding (- (/ tag-width txt-char-width) (length string))))
+      padding))
 
   (defun eli/tab-bar-tab-name-with-svg (tab i)
     (let* ((current-p (eq (car tab) 'current-tab))
-           (width (/ (frame-inner-width)
-                     (length (funcall #'tab-bar-tabs))))
            (name (concat (if tab-bar-tab-hints (format "%d " i) "")
 			 (alist-get 'name tab)
 			 (or (and tab-bar-close-button-show
                                   (not (eq tab-bar-close-button-show
                                            (if current-p 'non-selected 'selected)))
                                   tab-bar-close-button)
-                             ""))))
-      (when tab-bar-auto-width-min
-	(setq width (max width (if (window-system)
-                                   (nth 0 tab-bar-auto-width-min)
-				 (nth 1 tab-bar-auto-width-min)))))
-      (when tab-bar-auto-width-max
-	(setq width (min width (if (window-system)
-                                   (nth 0 tab-bar-auto-width-max)
-				 (nth 1 tab-bar-auto-width-max)))))
-      (let ((continue t)
-            (prev-width (string-pixel-width name))
-            (padding (plist-get svg-lib-style-default :padding))
-            curr-width)
-	(cond
-	 ((< prev-width width)
-          (setq padding (eli/tab-bar-svg-padding width name)))
-	 ((> prev-width width)
-          (while continue
-            (setf (substring name -1) "")
-            (setq curr-width (string-pixel-width name))
-            (if (and (> curr-width width)
-                     (< curr-width prev-width))
-		(setq prev-width curr-width)
-              (setq continue nil)))))
-	(propertize
-	 name
-	 'face 'tab-bar-tab-inactive
-	 'display
-	 (svg-tag-make
-          name
-          :face 'tab-bar-svg-active
-          :inverse (eq (car tab) 'current-tab) :margin 1 :radius 6 :padding padding)))))
-
-  ;;; 给 svg-tag-mode 添加缓存，对于同样的参数使用缓存中的图片
-  (defvar eli/svg-tag-cache nil)
-
-  (defun eli/svg-tag-with-cache (orig &rest args)
-    (unless eli/svg-tag-cache
-      (setq eli/svg-tag-cache (make-hash-table :test 'equal)))
-    (with-memoization (gethash args eli/svg-tag-cache)
-      (apply orig args)))
-
-  (if (not (daemonp))
-      (setq tab-bar-tab-name-format-function #'eli/tab-bar-tab-name-with-svg))
+                             "")))
+           (padding (plist-get svg-lib-style-default :padding))
+           (width))
+      (when tab-bar-auto-width
+	(setq width (/ (frame-inner-width)
+                       (length (funcall tab-bar-tabs-function))))
+	(when tab-bar-auto-width-min
+          (setq width (max width (if (window-system)
+                                     (nth 0 tab-bar-auto-width-min)
+                                   (nth 1 tab-bar-auto-width-min)))))
+	(when tab-bar-auto-width-max
+          (setq width (min width (if (window-system)
+                                     (nth 0 tab-bar-auto-width-max)
+                                   (nth 1 tab-bar-auto-width-max)))))
+	(setq padding (eli/tab-bar-svg-padding width name)))
+      (propertize
+       name
+       'display
+       (svg-tag-make
+	name
+	:face (if (eq (car tab) 'current-tab) 'tab-bar-svg-active 'tab-bar-svg-inactive)
+	:inverse t :margin 1 :radius 6 :padding padding))))
 
   (setq tab-bar-tab-name-format-function #'eli/tab-bar-tab-name-with-svg)
-  (advice-add #'svg-tag-make :around #'eli/svg-tag-with-cache))
+  )
 
 (use-package beacon
   :straight t
