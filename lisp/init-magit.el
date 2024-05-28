@@ -29,4 +29,21 @@
   :init
   (global-diff-hl-mode))
 
+(use-package blamer
+  :straight (:host github :repo "artawower/blamer.el" :branch "feature/margin-overlays")
+  :bind (("s-i" . blamer-show-commit-info)
+	 ("C-c i" . blamer-show-posframe-commit-info))
+  :custom
+  (blamer-idle-time 0.3)
+  (blamer-min-offset 0)
+  (blamer-entire-formatter "%s")
+  :custom-face
+  (blamer-face ((t :foreground "#7a88cf"
+                   :background nil
+                   :height 0.9
+                   :italic t)))
+  :init
+  (global-blamer-mode 1)
+  :config  (setq blamer-type 'margin-overlay))
+
 (provide 'init-magit)

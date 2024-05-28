@@ -142,7 +142,7 @@
 
 ;;; Mode line
 (use-package doom-modeline
-	     :disabled t
+	     ;; :disabled t
   :straight t
   :hook (after-init . doom-modeline-mode)
   :config
@@ -305,11 +305,11 @@
   ;;   "Tab bar face for selected tab.")
 
   (defface tab-bar-svg-active
-    '((t (:family "BlexMono Nerd Font Mono" :foreground "#a1aeb5")))
+    '((t (:family "BlexMono Nerd Font Mono" :foreground "#cad7de")))
     "Tab bar face for selected tab.")
 
   (defface tab-bar-svg-inactive
-    '((t (:family "BlexMono Nerd Font Mono" :foreground "#cad7de")))
+    '((t (:family "BlexMono Nerd Font Mono" :foreground "#a1aeb5")))
     "Tab bar face for inactive tabs.")
 
   (defun eli/tab-bar-svg-padding (width string)
@@ -370,12 +370,26 @@
 (use-package transwin
   :straight t
   :init
-  (setq transwin-delta-alpha 5)
+  (setq transwin-delta-alpha 15)
   (setq transwin-parameter-alpha 'alpha-background)
   :bind
   ("C-c C-=" . transwin-inc)
   ("C-c C--" . transwin-dec)
   ("C-c C-0" . transwin-toggle))
+
+(use-package beacon
+  :disabled t
+  :straight t
+  :demand t
+  :config
+  ; https://github.com/Malabarba/beacon/issues/46
+  ; the value is compared with >, not >=
+  (setq beacon-blink-when-point-moves-vertically 1)
+  ; disable beacon for horizontal movement
+  (setq beacon-blink-when-point-moves-horizontally 1)
+  ; remove specific symbols from the variable 'beacon-dont-blink-commands
+  (setq beacon-dont-blink-commands '(forward-char backward-char meow-right meow-left))
+  (beacon-mode 1))
 
 (provide 'init-themes)
 ;;;init-themes.el ends here

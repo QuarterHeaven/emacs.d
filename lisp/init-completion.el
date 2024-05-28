@@ -17,20 +17,57 @@
   :straight t
   :hook ((c-ts-mode
 	  c++-ts-mode
-	  rust-ts-mode
-	  python-ts-mode
-	  haskell-ts-mode
 	  clojure-ts-mode
-	  java-ts-mode
+	  haskell-ts-mode
+	  python-ts-mode
+	  rust-ts-mode
+	  ;; java-ts-mode
 	  typst-ts-mode
+	  typescript-ts-mode
 	  nix-ts-mode) . eglot-ensure)
   (eglot-managed-mode . eglot-inlay-hints-mode)
   :init
+    ;;   (defun jdtls-initialization-options ()
+    ;;   (let ((setting-json-file ;; (file-name-concat user-emacs-directory "lsp-config" "jdtls.json")
+    ;; 			       "/home/takaobsid/.emacs.d/lsp-config/jdtls.json"))
+    ;; 	(with-temp-buffer
+    ;; 	  (insert-file-contents setting-json-file)
+    ;; 	  (json-parse-buffer :object-type 'plist :false-object :json-false))))
+
+    ;; (cl-defmethod eglot-initialization-options (server &context (major-mode java-mode))
+    ;;   (jdtls-initialization-options))
+
+    ;; (cl-defmethod eglot-initialization-options (server &context (major-mode java-ts-mode))
+    ;;   (jdtls-initialization-options))
+
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs '(typst-ts-mode . ("tinymist")))
     ;;delance 現在已經發佈到 npm 了哦，npm i -g @delance/runtime 就可以直接用 delance-langserver --stdio
     (add-to-list 'eglot-server-programs '((python-mode python-ts-mode) . ("delance-langserver" "--stdio")))
-    (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nil"))))
+    (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nil")))
+    ;; (add-to-list 'eglot-server-programs
+    ;; 		 `((java-mode java-ts-mode) .
+    ;; 		   ("jdtls"
+    ;;                 :initializationOptions
+    ;;                 (:bundles ["/home/takaobsid/.emacs.d/adapter/com.microsoft.java.debug.plugin-0.52.0.jar"]))))
+
+    (add-to-list 'eglot-server-programs
+		 `((java-mode java-ts-mode) "jdtls"
+                   "-configuration" ,(expand-file-name "cache/language-server/java/jdtls/config_linux" user-emacs-directory)
+                   "-data" ,(expand-file-name "cache/java-workspace" user-emacs-directory)
+                   ,(concat "--jvm-arg=-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar"))
+		   :initializationOptions
+		   (:bundles ["/home/takaobsid/.emacs.d/adapter/com.microsoft.java.debug.plugin-0.52.0.jar"]
+			     :settings
+			     (:java
+			      (:configuration
+			       (:runtimes [
+					   (:name "JavaSE-1.8"
+						  :path "/nix/store/mrspaijbsp1gi69l45ifnqaa3wigjl6d-openjdk-8u362-ga/jre/"
+						  :default t)
+					   (:name "JavaSE-17"
+						  :path "/nix/store/n7ckcm50qcfnb4m81y8xl0vhzcbnaidg-openjdk-17.0.7+7/")])))))))
+
   :config
   (require 'clangd-inactive-regions)
   (setq eglot-events-buffer-size 0
@@ -39,6 +76,11 @@
         ;; use global completion styles
         completion-category-defaults nil)
   )
+
+(use-package eglot-booster
+  :straight (:host github :repo "jdtsmith/eglot-booster")
+	:after eglot
+	:config	(eglot-booster-mode))
 
 (use-package consult-eglot
   :after consult eglot
@@ -55,7 +97,7 @@
          (minibuffer-setup . corfu-enable-in-minibuffer))
   :bind (:map corfu-map
               ("s-m" . corfu-move-to-minibuffer)
-              ("RET" . corfu-complete)
+              ("RET" . newline)
 	      ;; ("SPC" . corfu-insert-separator)
 	      )
 

@@ -56,7 +56,7 @@
   (setq welcome-dashboard-latitude 30.659462
         welcome-dashboard-longitude 104.065735 ;; latitude and longitude must be set to show weather information
         welcome-dashboard-use-nerd-icons t ;; Use nerd icons instead of all-the-icons
-        welcome-dashboard-path-max-length 75
+        welcome-dashboard-path-max-length 120
         welcome-dashboard-use-fahrenheit nil ;; show in celcius or fahrenheit.
         welcome-dashboard-min-left-padding 10
         welcome-dashboard-image-file "~/.emacs.d/Kalan.png"

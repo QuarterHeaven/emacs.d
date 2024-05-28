@@ -60,5 +60,75 @@
 ;;   (clangd-inactive-regions-set-method "darken-foreground")
 ;;   (clangd-inactive-regions-set-opacity 0.55))
 
+(use-package eglot-java
+  :disabled t
+  :straight (:host github :repo "yveszoundi/eglot-java")
+  :hook
+  ((java-mode java-ts-mode) . eglot-java-mode)
+  :config
+  (setq eglot-java-java-home "/nix/store/mrspaijbsp1gi69l45ifnqaa3wigjl6d-openjdk-8u362-ga/lib/openjdk")
+  ;; (setq eglot-java-java-program "/etc/profiles/per-user/takaobsid/bin/java")
+  (setq eglot-java-java-program "/nix/store/n7ckcm50qcfnb4m81y8xl0vhzcbnaidg-openjdk-17.0.7+7/bin/java")
+  (setq eglot-java-user-init-opts-fn 'custom-eglot-java-init-opts)
+  (defun custom-eglot-java-init-opts (server eglot-java-eclipse-jdt)
+    "Custom options that will be merged with any default settings."
+    '(:bundles ["/home/takaobsid/.emacs.d/adapter/com.microsoft.java.debug.plugin-0.52.0.jar"]
+	       :settings
+	       (:java
+		(:configuration
+		 (:runtimes [
+			     (:name "JavaSE-1.8"
+				    :path "/nix/store/mrspaijbsp1gi69l45ifnqaa3wigjl6d-openjdk-8u362-ga/bin/"
+				    :default t)
+			     (:name "JavaSE-17"
+				    :path "/nix/store/n7ckcm50qcfnb4m81y8xl0vhzcbnaidg-openjdk-17.0.7+7/bin/")])))))
+(add-to-list 'eglot-java-eclipse-jdt-args "-javaagent:/home/takaobsid/.m2/repository/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar")
+  )
+
+(use-package dape
+  :straight (:host github :repo "svaante/dape")
+  :preface
+  :hook
+  ;; Save breakpoints on quit
+  ((kill-emacs . dape-breakpoint-save)
+  ;; Load breakpoints on startup
+   (after-init . dape-breakpoint-load))
+  :init
+  ;; (setq dape-buffer-window-arrangement 'gud)
+  :config
+   ;; Info buffers to the right
+  (setq dape-buffer-window-arrangement 'right)
+
+  ;; Global bindings for setting breakpoints with mouse
+  (dape-breakpoint-global-mode)
+
+  ;; To not display info and/or buffers on startup
+  ;; (remove-hook 'dape-on-start-hooks 'dape-info)
+  ;; (remove-hook 'dape-on-start-hooks 'dape-repl)
+
+  ;; To display info and/or repl buffers on stopped
+  (add-hook 'dape-on-stopped-hooks 'dape-info)
+  (add-hook 'dape-on-stopped-hooks 'dape-repl)
+
+  ;; Kill compile buffer on build success
+  (add-hook 'dape-compile-compile-hooks 'kill-buffer)
+
+  ;; Save buffers on startup, useful for interpreted languages
+  (add-hook 'dape-on-start-hooks (lambda () (save-some-buffers t t)))
+
+  ;; Projectile users
+  ;; (setq dape-cwd-fn 'projectile-project-root)
+  )
+
+(use-package mvn-el
+  :straight (:type git :host github :repo "apg/mvn-el"))
+
+(use-package yaml-mode
+  :straight t
+  :hook
+  (yaml-mode . (lambda ()
+        (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+  :config
+  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 
 (provide 'init-languages)

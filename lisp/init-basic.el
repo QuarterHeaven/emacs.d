@@ -5,6 +5,8 @@
 
 (setq global-auto-revert-mode t)
 
+(scroll-bar-mode -1)
+
 ;; (setq url-gateway-method 'socks)
 ;; (setq socks-server '("Default server" "127.0.0.1" 1081 5))
 
@@ -99,5 +101,7 @@
       long-line-threshold 1000
       large-hscroll-threshold 1000
       syntax-wholeline-max 1000)
+
+(setq display-line-numbers-width 5)
 
 (provide 'init-basic)

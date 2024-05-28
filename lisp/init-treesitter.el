@@ -53,6 +53,7 @@
         (cmake-mode      . cmake-ts-mode)
         (conf-toml-mode  . toml-ts-mode)
         (css-mode        . css-ts-mode)
+	(java-mode       . java-ts-mode)
         (js-mode         . js-ts-mode)
         (js-json-mode    . json-ts-mode)
         (python-mode     . python-ts-mode)

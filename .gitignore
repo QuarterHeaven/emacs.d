@@ -13,6 +13,7 @@ Emacs.icns
 transient/
 blink-search/
 .cache/
+cache/
 .cask/
 .dap-*
 .extension/
@@ -55,9 +56,11 @@ README.html
 anaconda-mode/
 auto-save-list/
 cnfonts/
+dape-breakpoints
 devdocs-browser/
 devdocs/
 eclipse.jdt.ls/
+eglot-java-eclipse-jdt-cache/
 eln-cache/
 elpa-devel/
 elpa/
@@ -89,6 +92,7 @@ straight/
 thumbs/
 tldr/
 tmp*
+tree-sitter/
 tutorial/
 url/
 var/

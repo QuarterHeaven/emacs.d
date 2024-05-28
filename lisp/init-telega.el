@@ -2,23 +2,28 @@
   :straight t
   :defer t
   :commands (telega)
+  :hook
+  (telega-load . telega-appindicator-mode)
   :init
-  (setq telega-chat-folder-format nil)
-  (add-hook 'telega-load-hook #'(lambda ()
-                              (set-face-attribute 'telega-msg-heading nil
-                                                  :background nil
-                                                  :underline 't
-                                                  :height 1.2
-                                                  )
-                              (set-face-attribute 'telega-msg-inline-forward nil
-                                                  ;; :background "light gray"
-                                                  :underline nil
-                                                  :height 0.84)
-                              (set-face-attribute 'telega-msg-inline-reply nil
-                                                  ;; :background "light gray"
-                                                  :underline nil
-                                                  :height 0.84)
-                              ))
+  (setq ;; telega-chat-folders-insexp nil
+   telega-docker-volumes '("/run/current-system/sw/share/X11/xkb")
+   telega-debug t)
+  (add-hook 'telega-load-hook
+	    #'(lambda ()
+		(set-face-attribute 'telega-msg-heading nil
+				    :background nil
+                                    :underline 't
+                                    :height 1.2
+                                    )
+		(set-face-attribute 'telega-msg-inline-forward nil
+                                    ;; :background "light gray"
+                                    :underline nil
+                                    :height 0.84)
+		(set-face-attribute 'telega-msg-inline-reply nil
+                                    ;; :background "light gray"
+                                    :underline nil
+                                    :height 0.84)
+		))
   :hook
   (telega-root-mode . (lambda() (setq bidi-display-reordering t)))
   (telega-chat-mode . (lambda() (setq bidi-display-reordering t)))

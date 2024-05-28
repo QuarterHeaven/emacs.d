@@ -48,5 +48,7 @@
     :config
     (exec-path-from-shell-initialize)))
 
+(add-to-list 'exec-path "/home/takaobsid/bin/")
+
 (provide 'init-exec-path)
 ;;; init-exec-path.el ends here

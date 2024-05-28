@@ -68,7 +68,6 @@
      (shell . t)
      (latex . t)
      (rust . t)
-     ;; (yaml . t)
      ))
   (when (executable-find "jupyter")
     (add-to-list 'org-babel-load-languages '(jupyter . t) t))
@@ -260,7 +259,7 @@
       (set-face-attribute 'org-level-2 nil :family "Linux Biolinum O" :height 210)
       (set-face-attribute 'org-level-3 nil :family "Linux Biolinum O" :height 190)
       (set-face-attribute 'org-level-4 nil :family "Linux Biolinum O" :height 160)))
-  (set-face-attribute 'fixed-pitch nil :family "FiraCode Nerd Font Mono")
+  (set-face-attribute 'fixed-pitch nil :family "FiraCode Nerd Font Mono" :height 110)
   (set-face-attribute 'org-block nil :family "FiraCode Nerd Font Mono")
   (set-face-attribute 'org-block-begin-line nil :family "FiraCode Nerd Font Mono"))
 
