@@ -245,6 +245,7 @@ otherwise this function don't work and don't know the reason
 										      (sys/win32p 110)
 										      (sys/WSL 200)
 										      (t 110))))))
+    (set-fontset-font t '(880 . 1023) (font-spec :family "azukifontL"))
     ))
 
 ;;; lsp-bridge set path

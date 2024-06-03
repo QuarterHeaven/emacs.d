@@ -72,6 +72,7 @@
 
   (require 'init-languages)
   (require 'init-clojure)
+  (require 'init-ejc-sql)
   (require 'init-web)
   (require 'init-wolfram)
   (require 'init-typst)

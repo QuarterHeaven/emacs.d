@@ -24,6 +24,12 @@
 	("~" org-code verbatim)
 	("+"
 	 (:strike-through t)))
-)
+      )
+
+(use-package unicad
+  ;; auto detect file coding-system
+  :straight t
+  :init
+  (setq unicad-mode 1))
 
 (provide 'init-fonts)
