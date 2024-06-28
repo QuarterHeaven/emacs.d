@@ -21,6 +21,7 @@
 
 ;;; catppuccin
 (use-package catppuccin-theme
+  :disabled t
   :straight t
   :init
   (load-theme 'catppuccin :no-confirm)
@@ -37,7 +38,7 @@
 ;;If you don't customize it, this is the theme you get.
 ;; (setq-default custom-enabled-themes '(doom-city-light))
 (use-package doom-themes
-  :disabled t
+  ;; :disabled t
   :straight t
   :init
   (load-theme 'doom-bluloco-dark t)
@@ -91,6 +92,13 @@
   (custom-set-variables `(custom-enabled-themes (quote ,custom-enabled-themes))))
 
 ;; Toggle between light and dark
+
+;;; sanityinc tomorrow theme
+(use-package color-theme-sanityinc-tomorrow
+  :disabled t
+  :straight t
+  :init
+  (load-theme 'sanityinc-tomorrow-night t))
 
 ;;; icons
 (defconst sys/win32p
@@ -353,6 +361,10 @@
 
   (setq tab-bar-tab-name-format-function #'eli/tab-bar-tab-name-with-svg)
   )
+
+(use-package tab-line-mode
+  :init
+  (global-tab-line-mode 1))
 
 (use-package beacon
   :straight t

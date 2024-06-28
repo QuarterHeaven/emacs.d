@@ -15,7 +15,8 @@
   :commands lsp
   :config
   (setq lsp-rust-analyzer-inlay-hints-mode t)
-  (setq lsp-rust-analyzer-server-display-inlay-hints t))
+  (setq lsp-rust-analyzer-server-display-inlay-hints t)
+  (setq lsp-completion-enable-additional-text-edit t))
 
 ;; optionally
 (use-package lsp-ui
@@ -37,7 +38,9 @@
 					  ;; 	 )
     			                  (:name "JavaSE-1.8"
 						 :path "/nix/store/mrspaijbsp1gi69l45ifnqaa3wigjl6d-openjdk-8u362-ga/"
-						 :default t)]))
+						 :default t)])
+  (advice-add 'lsp :before (lambda (&rest _args) (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht))))))
+
 
 ;; optionally if you want to use debugger
 (use-package dap-mode)

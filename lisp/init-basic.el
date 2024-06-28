@@ -48,30 +48,6 @@
 
 (setq use-short-answers t)
 
-(use-package pixel-scroll
-  ;; :disabled
-  :config
-  ;; (setq make-it-local t)
-  ;; (add-hook 'org-mode-hook 'pixel-scroll-precision-mode-hook nil 'make-it-local)
-  (add-hook 'org-mode-hook 'pixel-scroll-precision-mode-hook nil t)
-  ;; (pixel-scroll-precision-mode 1)
-  (setq pixel-scroll-precision-interpolate-page t)
-  (defun +pixel-scroll-interpolate-down (&optional lines)
-    (interactive)
-    (if lines
-	(pixel-scroll-precision-interpolate (* -1 lines (pixel-line-height)))
-      (pixel-scroll-interpolate-down)))
-
-  (defun +pixel-scroll-interpolate-up (&optional lines)
-    (interactive)
-    (if lines
-	(pixel-scroll-precision-interpolate (* lines (pixel-line-height))))
-    (pixel-scroll-interpolate-up))
-
-  (defalias 'scroll-up-command '+pixel-scroll-interpolate-down)
-  (defalias 'scroll-down-command '+pixel-scroll-interpolate-up)
-  )
-
 ; 编码设置
 (set-language-info
  "UTF-8"

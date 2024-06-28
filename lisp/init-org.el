@@ -12,7 +12,7 @@
 
   :config
   (setq-default visual-fill-column-center-text t
-		visual-fill-column-width 80
+		visual-fill-column-width 120
 		visual-fill-column-fringes-outside-margins nil)
   (setq split-width-threshold 120))
 

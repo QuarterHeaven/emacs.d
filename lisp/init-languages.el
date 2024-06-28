@@ -129,6 +129,11 @@
   (yaml-mode . (lambda ()
         (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
   :config
-  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+  (add-to-list 'auto-mode-alist '("\\.\\(.yml\\|yaml\\)\\'" . yaml-mode)))
+
+(use-package json-mode
+  :straight t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.json\\'" . json-mode)))
 
 (provide 'init-languages)

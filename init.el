@@ -42,6 +42,7 @@
 
   (require 'init-osx-keys)
   (require 'init-gui-frames)
+  (require 'init-pixel-scroll)
   (require 'init-window)
   (require 'init-popper)
   (require 'init-fonts)
