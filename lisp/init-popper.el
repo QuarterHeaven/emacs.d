@@ -43,6 +43,7 @@
           "^\\*eldoc.*\\*.*$" eldoc-mode
 
           "\\*Flycheck errors\\*$" " \\*Flycheck checker\\*$"
+          "^\\*aider:.*\\*$"
           "\\*Paradox Report\\*$" "\\*package update results\\*$" "\\*Package-Lint\\*$"
           "\\*[Wo]*Man.*\\*$"
           "\\*ert\\*$" overseer-buffer-mode
