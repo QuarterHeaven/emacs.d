@@ -48,6 +48,7 @@
   (require 'init-fonts)
   (require 'init-themes)
   (require 'init-meow)
+  (require 'init-dogears)
   (require 'init-ibuffer)
   (require 'init-dashboard)
   (require 'init-yasnippet)
@@ -83,8 +84,9 @@
   (require 'init-emms)
   (require 'init-tokenizer)
   (require 'init-fileinfo)
-  (require 'init-gptel)
+  (require 'init-ai)
   (require 'init-translate)
+  (require 'init-dictionary)
 
   (require 'init-secrets)
   (require 'init-keybinding)

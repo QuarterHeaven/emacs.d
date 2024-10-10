@@ -47,6 +47,10 @@
   :straight t
   :mode "\\.nix\\'")
 
+(use-package vue-ts-mode
+  :straight (:host github :repo "8uff3r/vue-ts-mode")
+  :mode "\\.vue\\'")
+
 (setq major-mode-remap-alist
       '((c-mode          . c-ts-mode)
         (c++-mode        . c++-ts-mode)
@@ -56,6 +60,7 @@
 	(java-mode       . java-ts-mode)
         (js-mode         . js-ts-mode)
         (js-json-mode    . json-ts-mode)
+	(lua-mode        . lua-ts-mode)
         (python-mode     . python-ts-mode)
         (sh-mode         . bash-ts-mode)
         (typescript-mode . typescript-ts-mode)))
@@ -66,6 +71,8 @@
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
 
 (setq org-src-lang-modes
 	     '(("python" . python-ts)

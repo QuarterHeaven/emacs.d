@@ -23,8 +23,7 @@
 	("=" org-verbatim verbatim)
 	("~" org-code verbatim)
 	("+"
-	 (:strike-through t)))
-      )
+	 (:strike-through t))))
 
 (use-package unicad
   ;; auto detect file coding-system

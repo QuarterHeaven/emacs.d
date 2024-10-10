@@ -49,9 +49,10 @@
   (dashboard-set-random-banner))
 
 (use-package welcome-dashboard
+  ;; :disabled t
   :straight (welcome-dashboard :host github :repo "konrad1977/welcome-dashboard")
-  :init
-  (welcome-dashboard-create-welcome-hook)
+  :hook
+  (after-init . welcome-dashboard-create-welcome-hook)
   :config
   (setq welcome-dashboard-latitude 30.659462
         welcome-dashboard-longitude 104.065735 ;; latitude and longitude must be set to show weather information
@@ -65,6 +66,7 @@
 	;; welcome-dashboard-image-height (/ (window-pixel-height) 2)
         welcome-dashboard-max-number-of-todos 5
         ;; welcome-dashboard-image-height 169
-        welcome-dashboard-title "Welcome Taka. Have a great day!"))
+        welcome-dashboard-title "Welcome Taka. Have a great day!")
+  )
 
 (provide 'init-dashboard)

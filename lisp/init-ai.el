@@ -25,7 +25,7 @@
 (use-package aider
   :straight (:host github :repo "tninja/aider.el" :files ("aider.el"))
   :config
-  (setq aider-args '("--model" "azure/gpt-4o-mini"))
+  (setq aider-args '("--no-auto-commits" "--model" "azure/gpt-4o-mini"))
   (setenv "AZURE_API_BASE" "https://models.inference.ai.azure.com")
   (setenv "AZURE_API_KEY" my-github-token)
   ;; Optional: Set a key binding for the transient menu

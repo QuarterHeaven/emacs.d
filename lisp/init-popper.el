@@ -23,7 +23,7 @@
 	  "\\*Org Agenda\\*"
 
           bookmark-bmenu-mode
-          comint-mode
+          ;; comint-mode
           compilation-mode
           help-mode helpful-mode
           tabulated-list-mode
@@ -43,7 +43,6 @@
           "^\\*eldoc.*\\*.*$" eldoc-mode
 
           "\\*Flycheck errors\\*$" " \\*Flycheck checker\\*$"
-          "^\\*aider:.*\\*$"
           "\\*Paradox Report\\*$" "\\*package update results\\*$" "\\*Package-Lint\\*$"
           "\\*[Wo]*Man.*\\*$"
           "\\*ert\\*$" overseer-buffer-mode

@@ -13,44 +13,61 @@
     (xref-push-marker-stack (point-marker)))
   )
 
+(use-package flymake
+  :straight t
+  :config
+  (setq flymake-start-on-flymake-mode nil
+        flymake-no-changes-timeout nil
+        flymake-start-on-save-buffer t
+	flymake-indicator-type 'margins
+	flymake-margin-indicators-string
+	`((error "" compilation-error)
+	  (warning "" compilation-warning)
+	  (note "" compilation-info))))
+
 (use-package eglot
   :straight t
+  :after flymake
   :hook ((c-ts-mode
 	  c++-ts-mode
 	  clojure-ts-mode
 	  haskell-ts-mode
 	  python-ts-mode
 	  rust-ts-mode
+	  lua-ts-mode
 	  ;; java-ts-mode
 	  typst-ts-mode
 	  typescript-ts-mode
+	  vue-ts-mode
 	  nix-ts-mode) . eglot-ensure)
   (eglot-managed-mode . eglot-inlay-hints-mode)
   :init
-    ;;   (defun jdtls-initialization-options ()
-    ;;   (let ((setting-json-file ;; (file-name-concat user-emacs-directory "lsp-config" "jdtls.json")
-    ;; 			       "/home/takaobsid/.emacs.d/lsp-config/jdtls.json"))
-    ;; 	(with-temp-buffer
-    ;; 	  (insert-file-contents setting-json-file)
-    ;; 	  (json-parse-buffer :object-type 'plist :false-object :json-false))))
-
-    ;; (cl-defmethod eglot-initialization-options (server &context (major-mode java-mode))
-    ;;   (jdtls-initialization-options))
-
-    ;; (cl-defmethod eglot-initialization-options (server &context (major-mode java-ts-mode))
-    ;;   (jdtls-initialization-options))
-
+  
+  (defun vue-eglot-init-options ()
+    (let ((tsdk-path (expand-file-name
+                      "lib"
+                      ;; (shell-command-to-string "npm list --global --parseable typescript | head -n1 | tr -d \"\n\"")
+		      ;; for mac
+		      (string-trim-right (shell-command-to-string "npm list --global --parseable typescript | head -n1")))))
+      `(:typescript (:tsdk ,tsdk-path
+                           :languageFeatures (:completion
+                                              (:defaultTagNameCase "both"
+                                                                   :defaultAttrNameCase "kebabCase"
+                                                                   :getDocumentNameCasesRequest nil
+                                                                   :getDocumentSelectionRequest nil)
+                                              :diagnostics
+                                              (:getDocumentVersionRequest nil))
+                           :documentFeatures (:documentFormatting
+                                              (:defaultPrintWidth 100
+                                                                  :getDocumentPrintWidthRequest nil)
+                                              :documentSymbol t
+                                              :documentColor t)))))
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs '(typst-ts-mode . ("tinymist")))
     ;;delance 現在已經發佈到 npm 了哦，npm i -g @delance/runtime 就可以直接用 delance-langserver --stdio
     (add-to-list 'eglot-server-programs '((python-mode python-ts-mode) . ("delance-langserver" "--stdio")))
     (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nil")))
-    ;; (add-to-list 'eglot-server-programs
-    ;; 		 `((java-mode java-ts-mode) .
-    ;; 		   ("jdtls"
-    ;;                 :initializationOptions
-    ;;                 (:bundles ["/home/takaobsid/.emacs.d/adapter/com.microsoft.java.debug.plugin-0.52.0.jar"]))))
-
+    
     (add-to-list 'eglot-server-programs
 		 `((java-mode java-ts-mode) "jdtls"
                    "-configuration" ,(expand-file-name "cache/language-server/java/jdtls/config_linux" user-emacs-directory)
@@ -66,7 +83,9 @@
 						  :path "/nix/store/mrspaijbsp1gi69l45ifnqaa3wigjl6d-openjdk-8u362-ga/jre/"
 						  :default t)
 					   (:name "JavaSE-17"
-						  :path "/nix/store/n7ckcm50qcfnb4m81y8xl0vhzcbnaidg-openjdk-17.0.7+7/")])))))))
+						  :path "/nix/store/n7ckcm50qcfnb4m81y8xl0vhzcbnaidg-openjdk-17.0.7+7/")]))))))
+    (add-to-list 'eglot-server-programs
+		 `((vue-mode vue-ts-mode) . ("vue-language-server" "--stdio" :initializationOptions ,(vue-eglot-init-options)))))
 
   :config
   (require 'clangd-inactive-regions)
@@ -98,6 +117,7 @@
   :bind (:map corfu-map
               ("s-m" . corfu-move-to-minibuffer)
               ("RET" . newline)
+	      ;; ("RET" . corfu-complete)
 	      ;; ("SPC" . corfu-insert-separator)
 	      )
 

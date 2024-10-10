@@ -1,0 +1,3 @@
+[submodule "submodules/vscode_english_chinese_dictionary"]
+	path = submodules/vscode_english_chinese_dictionary
+	url = https://github.com/program-in-chinese/vscode_english_chinese_dictionary.git

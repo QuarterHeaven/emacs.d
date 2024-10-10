@@ -332,5 +332,17 @@ DOCSTRING and BODY are as in `defun'.
   (interactive)
   (if (eolp) (let (parens-require-spaces) (insert-pair)) (self-insert-command 1)))
 
+
+;;; org mode insert file as base64
+;; from https://mbork.pl/2017-12-04_Embedding_files_in_Org-mode
+(defun org-insert-file-as-base64 (filename)
+  "Insert Elisp code block recreating file named FILENAME."
+  (interactive "f")
+  (let ((base64-string
+	 (with-temp-buffer
+	   (insert-file-contents-literally filename)
+	   (base64-encode-region (point-min) (point-max))
+	   (buffer-string))))
+	(insert (format "#+BEGIN_SRC emacs-lisp :results output silent\n  (with-temp-file %S\n    (insert (base64-decode-string\n      %S)))\n#+END_SRC" filename base64-string))))
 
 (provide 'init-utils)

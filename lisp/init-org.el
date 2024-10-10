@@ -68,6 +68,7 @@
      (shell . t)
      (latex . t)
      (rust . t)
+     (scheme . t)
      ))
   (when (executable-find "jupyter")
     (add-to-list 'org-babel-load-languages '(jupyter . t) t))
@@ -624,5 +625,23 @@ With a prefix ARG, remove start location."
   :straight (:host github :repo "A7R7/org-popup-posframe")
   :config
   (org-popup-posframe-mode 1))
+
+;;; export image as base64 so can selfcontained in html
+(use-package org
+  :config
+  (defun replace-in-string (what with in)
+    (replace-regexp-in-string (regexp-quote what) with in nil 'literal))
+
+  (defun org-html--format-image (source attributes info)
+    (progn
+      (setq source (replace-in-string "%20" " " source))
+      (format "<img src=\"data:image/%s;base64,%s\"%s />"
+              (or (file-name-extension source) "")
+              (base64-encode-string
+               (with-temp-buffer
+		 (insert-file-contents-literally source)
+		 (buffer-string)))
+              (file-name-nondirectory source))
+      )))
 
 (provide 'init-org)

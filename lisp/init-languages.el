@@ -136,4 +136,8 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.json\\'" . json-mode)))
 
+(use-package geiser-mit
+  :straight t
+  )
+
 (provide 'init-languages)

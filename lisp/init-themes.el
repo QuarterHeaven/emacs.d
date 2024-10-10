@@ -41,10 +41,10 @@
   ;; :disabled t
   :straight t
   :init
-  (load-theme 'doom-bluloco-dark t)
+  (load-theme 'doom-bluloco-light t)
   ;; (load-theme 'doom-one)
   :hook
-  (highlight-indent-guides-mode . (lambda () (load-theme 'doom-bluloco-dark t)))
+  (highlight-indent-guides-mode . (lambda () (load-theme 'doom-bluloco-light t)))
   ;; (highlight-indent-guides-mode . (lambda () (load-theme 'doom-one t)))
   ;; (load-theme 'doom-ayu-light t)
   :config
@@ -70,13 +70,13 @@
 
   (defun my-load-doom-theme (frame)
     (select-frame frame)
-    (load-theme 'doom-bluloco-dark t)
+    (load-theme 'doom-bluloco-light t)
     ;; (load-theme 'doom-one t)
     )
 
   (if (daemonp)
       (add-hook 'after-make-frame-functions #'my-load-doom-theme)
-    (load-theme 'doom-bluloco-dark t)
+    (load-theme 'doom-bluloco-light t)
     ;; (load-theme 'doom-one t)
     ))
 
@@ -363,6 +363,7 @@
   )
 
 (use-package tab-line-mode
+  :disabled t
   :init
   (global-tab-line-mode 1))
 
