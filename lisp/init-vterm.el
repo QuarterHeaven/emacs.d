@@ -1,4 +1,6 @@
+;;; vterm
 (use-package vterm
+  :disabled
   :straight t
   :bind ("C-t" . vterm-toggle)
   :config
@@ -36,9 +38,25 @@
                  (window-height . 0.3))))
 
 (use-package vterm-toggle
+  :disabled
   :straight t
   :after (vterm)
   :config
   (setq vterm-toggle-hide-method 'delete-window))
+
+;;; eat + eshell
+(use-package eat
+  :straight (:type git
+		   :host codeberg
+		   :repo "akib/emacs-eat"
+		   :files ("*.el" ("term" "term/*.el") "*.texi"
+			   "*.ti" ("terminfo/e" "terminfo/e/*")
+			   ("terminfo/65" "terminfo/65/*")
+			   ("integration" "integration/*")
+			   (:exclude ".dir-locals.el" "*-tests.el"))))
+
+(use-package eshell
+  :hook (eshell-load . eat-eshell-mode)
+  :bind ("C-t" . eshell))
 
 (provide 'init-vterm)

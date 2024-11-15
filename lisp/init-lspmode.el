@@ -1,22 +1,48 @@
 (use-package lsp-mode
+  :disabled
   :straight t
+  :diminish "LSP"
+  :custom
+  (lsp-completion-provider :none)
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
   ;; :hook ;; (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-	;;  ((c-mode c-ts-mode) . lsp)
-        ;;  ((c++-mode c++-ts-mode) . lsp)
-	;;  ((python-mode python-ts-mode) . lsp)
-	;;  ((rust-mode rust-ts-mode) . lsp)
-	;;  ((clojure-mode clojure-ts-mode) . lsp)
-	;;  ;; if you want which-key integration
-        ;;  ;; (lsp-mode . lsp-enable-which-key-integration)
+  ;;  ((c-mode c-ts-mode) . lsp)
+  ;;  ((c++-mode c++-ts-mode) . lsp)
+  ;;  ((python-mode python-ts-mode) . lsp)
+  ;;  ((rust-mode rust-ts-mode) . lsp)
+  ;;  ((clojure-mode clojure-ts-mode) . lsp)
+  ;;  ;; if you want which-key integration
+  ;;  ;; (lsp-mode . lsp-enable-which-key-integration)
   ;;  )
+  (defun my/lsp-mode-setup-completion ()
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+          '(orderless))) ;; Configure orderless
+  :hook ((lsp-mode . lsp-diagnostics-mode)
+         (lsp-mode . lsp-enable-which-key-integration)
+	 ((web-mode
+	   tsx-ts-mode
+           typescript-ts-mode
+           js-ts-mode) . lsp-deferred)
+	 (lsp-completion-mode . my/lsp-mode-setup-completion))
   :commands lsp
   :config
-  (setq lsp-rust-analyzer-inlay-hints-mode t)
-  (setq lsp-rust-analyzer-server-display-inlay-hints t)
-  (setq lsp-completion-enable-additional-text-edit t))
+  (setq lsp-rust-analyzer-inlay-hints-mode t
+	lsp-rust-analyzer-server-display-inlay-hints t
+	;; core
+	lsp-enable-xref t                   ; Use xref to find references
+	lsp-auto-configure t
+	lsp-enable-xref t
+	lsp-enable-imenu t
+	;; completion
+	lsp-completion-enable t
+	lsp-completion-enable-additional-text-edit t
+	lsp-completion-show-kind t
+	;; headerline
+	)
+  )
+                         
 
 ;; optionally
 (use-package lsp-ui
@@ -25,6 +51,7 @@
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
 (use-package lsp-java
+  :disabled
   :straight t
   :hook
   ((java-mode java-ts-mode) . lsp)
@@ -55,6 +82,7 @@
 ;;     (which-key-mode))
 
 (use-package lsp-java-boot
+  :disabled
   :hook
   (lsp-mode . lsp-lens-mode)
   ((java-mode java-ts-mode) . lsp-java-boot-lens-mode))

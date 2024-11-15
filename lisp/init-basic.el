@@ -3,8 +3,6 @@
 (setq auto-save-default nil)
 (setq create-lockfiles nil)
 
-(setq global-auto-revert-mode t)
-
 (scroll-bar-mode -1)
 
 ;; (setq url-gateway-method 'socks)
@@ -16,8 +14,8 @@
 (setq url-proxy-services
       '(("no_proxy" . "^\\(localhost\\|10\\..*\\|192\\.168\\..*\\)")
 	("socks5" . "127.0.0.1:1081")
-        ("http" . "127.0.0.1:1080")
-        ("https" . "127.0.0.1:1080")))
+        ("http" . "127.0.0.1:1081")
+        ("https" . "127.0.0.1:1081")))
 
 (setq truncate-lines t)
 
@@ -72,12 +70,16 @@
 (cond (sys/linuxp
        (add-to-list 'default-frame-alist '(undecorated . t))))
 
+(add-hook 'window-setup-hook (lambda ()
+			       (tool-bar-mode -1)
+			       (setq inhibit-startup-message t)
+			       (toggle-frame-maximized)
+			       ))
+
 (setq-default bidi-display-reordering nil)
 (setq bidi-inhibit-bpa t
       long-line-threshold 1000
       large-hscroll-threshold 1000
       syntax-wholeline-max 1000)
-
-(setq display-line-numbers-width 5)
 
 (provide 'init-basic)

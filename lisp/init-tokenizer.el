@@ -1,4 +1,4 @@
-(when *is-a-mac*
+(when sys/macp
   (use-package emt
     :straight (:host github :repo "roife/emt")
     :hook (after-init . emt-mode)

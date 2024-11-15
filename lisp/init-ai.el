@@ -6,13 +6,13 @@
   :config
   ;; (setq gptel-proxy "127.0.0.1:1081")
 
-  (setq-default Gptel-model "gpt-4o-mini" ;Pick your default model
+  (setq-default gptel-model "gpt-4o" ;Pick your default model
 		gptel-backend (gptel-make-openai "indrin"
 				:protocol "https"
 				:host "llm.indrin.cn"
 				:stream t
 				:key #'gptel-api-key
-				:models '("o1-mini" "o1-preview" "gpt-4o-mini" "gpt-4o"))
+				:models '("gpt-4o" "o1-mini" "o1-preview" "gpt-4o-mini"))
 		)
   ;; Github Models offers an OpenAI compatible API
   (gptel-make-openai "Github Models" ;Any name you want
@@ -30,5 +30,11 @@
   (setenv "AZURE_API_KEY" my-github-token)
   ;; Optional: Set a key binding for the transient menu
   (global-set-key (kbd "C-c a") 'aider-transient-menu))
+
+(use-package copilot-chat
+  :straight (:host github :repo "chep/copilot-chat.el" :files ("*.el"))
+  :after (request org markdown-mode shell-maker)
+  :config
+  (setq copilot-chat-frontend 'org))
 
 (provide 'init-ai)

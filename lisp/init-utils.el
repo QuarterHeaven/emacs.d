@@ -343,6 +343,21 @@ DOCSTRING and BODY are as in `defun'.
 	   (insert-file-contents-literally filename)
 	   (base64-encode-region (point-min) (point-max))
 	   (buffer-string))))
-	(insert (format "#+BEGIN_SRC emacs-lisp :results output silent\n  (with-temp-file %S\n    (insert (base64-decode-string\n      %S)))\n#+END_SRC" filename base64-string))))
+    (insert (format "#+BEGIN_SRC emacs-lisp :results output silent\n  (with-temp-file %S\n    (insert (base64-decode-string\n      %S)))\n#+END_SRC" filename base64-string))))
+
+;;; download file from url
+(defun download-file-from-internet (file url)
+  "Get a `FILE' from the internet at some `URL'."
+  (when (not (file-exists-p file))
+    (make-directory (file-name-directory file) t)
+    (url-copy-file url file)
+    (message "Dependency %s was installed from %s" file url)))
+
+;;; tab for company and copilot
+(defun my-tab ()
+  (interactive)
+  (or (copilot-accept-completion)
+      (company-indent-or-complete-common nil)))
+
 
 (provide 'init-utils)

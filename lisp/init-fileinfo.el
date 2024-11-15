@@ -1,6 +1,8 @@
 (use-package file-info
   :straight (:host github :repo "artawower/file-info.el")
-  :bind (("C-c C-d" . 'file-info-show))
+  :commands file-info-show
+  :init
+  (global-set-key (kbd "C-c C-d") 'file-info-show)
   :config
   (setq hydra-hint-display-type 'posframe)
   (setq hydra-posframe-show-params `(:poshandler posframe-poshandler-frame-center

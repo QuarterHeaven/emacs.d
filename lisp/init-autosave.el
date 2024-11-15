@@ -22,4 +22,10 @@
   :init
   (focus-autosave-mode 1))
 
+(use-package autorevert
+  :hook (after-init . global-auto-revert-mode))
+
+(use-package saveplace
+  :hook (after-init . save-place-mode))
+
 (provide 'init-autosave)

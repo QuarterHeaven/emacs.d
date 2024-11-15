@@ -13,8 +13,15 @@
   :config
   (setq-default visual-fill-column-center-text t
 		visual-fill-column-width 120
-		visual-fill-column-fringes-outside-margins nil)
+		visual-fill-column-fringes-outside-margins nil
+		visual-fill-column-enable-sensible-window-split t
+		visual-fill-column-extra-text-width '(0 . 0))
   (setq split-width-threshold 120))
+
+(use-package adaptive-wrap
+  :straight t
+  :hook
+  (visual-fill-column-mode . adaptive-wrap-prefix-mode))
 
 (use-package ob-rust
   :straight t
@@ -194,28 +201,64 @@
 ;;; prettify-symbols-mode
 ;; (global-prettify-symbols-mode +1)
 (add-hook 'org-mode-hook 'prettify-symbols-mode)
+;; (setq-default prettify-symbols-alist
+;;       '(("lambda"  . ?λ)
+;; 	(":PROPERTIES:" . ?)
+;; 	(":ID:" . ?)
+;; 	(":END:" . ?)
+;; 	("#+TITLE:" . ?)
+;; 	("#+AUTHOR:" . ?)
+;; 	("#+RESULTS:" . ?)
+;; 	("#+filetags:" . ?🏷)
+;; 	(":properties:" . ?)
+;; 	(":id:" . ?)
+;; 	(":end:" . ?)
+;; 	("#+title:" . ?)
+;; 	("#+author:" . ?)
+;; 	("#+results:" . ?)
+;; 	("- [ ]" . ?)
+;; 	("- [-]" . ?)
+;; 	("- [X]" . ?)
+;; 	("- [x]" . ?)
+;; 	("[#A]" . ?🅐)
+;; 	("[#B]" . ?🅑)
+;; 	("[#C]" . ?🅒)
+;; 	("#+BEGIN_SRC" . "λ")  ; previously ✎
+;; 	("#+END_SRC" . "□")
+;; 	("#+begin_src" . "λ")
+;; 	("#+end_src" . "□")
+;; 	("#+begin_quote"   . "❝")
+;; 	("#+end_quote"     . "❞")
+;; 	("#+BEGIN_QUOTE"   . "❝")
+;; 	("#+END_QUOTE"     . "❞")
+;; 	("#+attr_latex"    . "🄛")
+;; 	("#+attr_html"     . "🄗")
+;; 	("#+attr_org"      . "⒪")
+;; 	("#+ATTR_LATEX"    . "🄛")
+;; 	("#+ATTR_HTML"     . "🄗")
+;; 	("#+ATTR_ORG"      . "⒪")))
 (setq-default prettify-symbols-alist
-      '(("lambda"  . ?λ)
-	(":PROPERTIES:" . ?)
-	(":ID:" . ?)
-	(":END:" . ?)
-	("#+TITLE:" . ?)
-	("#+AUTHOR:" . ?)
-	("#+RESULTS:" . ?)
-	("#+filetags:" . ?🏷)
-	(":properties:" . ?)
-	(":id:" . ?)
-	(":end:" . ?)
-	("#+title:" . ?)
-	("#+author:" . ?)
-	("#+results:" . ?)
-	("- [ ]" . ?)
-	("- [-]" . ?)
-	("- [X]" . ?)
-	("- [x]" . ?)
-	("[#A]" . ?🅐)
-	("[#B]" . ?🅑)
-	("[#C]" . ?🅒)
+      '(("lambda"  . "λ")
+	(":PROPERTIES:" . "")
+	(":ID:" . "")
+	(":END:" . "")
+	("#+TITLE:" . "")
+	("#+AUTHOR:" . "")
+	("#+RESULTS:" . "")
+	("#+filetags:" . "🏷")
+	(":properties:" . "")
+	(":id:" . "")
+	(":end:" . "")
+	("#+title:" . "")
+	("#+author:" . "")
+	("#+results:" . "")
+	("- [ ]" . "")
+	("- [-]" . "")
+	("- [X]" . "")
+	("- [x]" . "")
+	("[#A]" . "🅐")
+	("[#B]" . "🅑")
+	("[#C]" . "🅒")
 	("#+BEGIN_SRC" . "λ")  ; previously ✎
 	("#+END_SRC" . "□")
 	("#+begin_src" . "λ")
@@ -625,6 +668,15 @@ With a prefix ARG, remove start location."
   :straight (:host github :repo "A7R7/org-popup-posframe")
   :config
   (org-popup-posframe-mode 1))
+
+;;; org open file with external apps
+(use-package org
+  :config
+  (add-to-list 'org-file-apps '("\\.ppt\\'" . "open %s"))
+  (add-to-list 'org-file-apps '("\\.pptx\\'" . "open %s"))
+  (add-to-list 'org-file-apps '("\\.doc\\'" . "open %s"))
+  (add-to-list 'org-file-apps '("\\.docx\\'" . "open %s"))
+  )
 
 ;;; export image as base64 so can selfcontained in html
 (use-package org

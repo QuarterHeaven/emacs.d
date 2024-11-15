@@ -12,12 +12,31 @@
 ;;first-time startup on Emacs > 26.3.
 (setq custom-safe-themes t)
 
-(use-package highlight-indent-guides
-  :straight t
-  :hook
-  (prog-mode . highlight-indent-guides-mode)
-  :config
-  (setq highlight-indent-guides-method 'character))
+;; (use-package highlight-indent-guides
+;;   :straight t
+;;   :hook
+;;   (prog-mode . highlight-indent-guides-mode)
+;;   :config
+;;   (setq highlight-indent-guides-method 'fill))
+(use-package indent-bars
+  :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
+  :hook (prog-mode . indent-bars-mode)
+  :custom-face
+  (indent-bars-face ((t (:height 1))))
+  :custom
+  (indent-bars-treesit-support t)
+  (indent-bars-no-descend-string t)
+  (indent-bars-width-frac 0.1)
+  (indent-bars-pad-frac 0.1)
+  (indent-bars-color '(highlight :face-bg t :blend 0.2))
+  (indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 1))
+  (indent-bars-highlight-current-depth '(:blend 0.5))
+  (indent-bars-zigzag nil)
+  ;; (indent-bars-highlight-current-depth nil) 
+  (indent-bars-pattern "|")
+  (indent-bars-no-stipple-char ?\⎸)
+  (indent-bars-prefer-character t)
+  (indent-bars-display-on-blank-lines t))
 
 ;;; catppuccin
 (use-package catppuccin-theme
@@ -41,10 +60,12 @@
   ;; :disabled t
   :straight t
   :init
-  (load-theme 'doom-bluloco-light t)
+  ;; (load-theme 'doom-bluloco-light t)
+  (load-theme 'doom-nord-light t)
   ;; (load-theme 'doom-one)
   :hook
-  (highlight-indent-guides-mode . (lambda () (load-theme 'doom-bluloco-light t)))
+  ;; (highlight-indent-guides-mode . (lambda () (load-theme 'doom-bluloco-light t)))
+  (highlight-indent-guides-mode . (lambda () (load-theme 'doom-nord-light t)))
   ;; (highlight-indent-guides-mode . (lambda () (load-theme 'doom-one t)))
   ;; (load-theme 'doom-ayu-light t)
   :config
@@ -70,13 +91,15 @@
 
   (defun my-load-doom-theme (frame)
     (select-frame frame)
-    (load-theme 'doom-bluloco-light t)
+    ;; (load-theme 'doom-bluloco-light t)
+    (load-theme 'doom-nord-light t)
     ;; (load-theme 'doom-one t)
     )
 
   (if (daemonp)
       (add-hook 'after-make-frame-functions #'my-load-doom-theme)
-    (load-theme 'doom-bluloco-light t)
+    ;; (load-theme 'doom-bluloco-light t)
+    (load-theme 'doom-nord-light t)
     ;; (load-theme 'doom-one t)
     ))
 
@@ -107,9 +130,12 @@
 
 ;;; Show line numbers
 (use-package display-line-numbers
+  :disabled
   :straight t
   :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
-  :init (setq display-line-numbers-width-start t))
+  :init (custom-set-variables '(display-line-numbers-width-start t)
+			      '(display-line-numbers-grow-only t)
+			      '(display-line-numbers-width 5)))
 
 ;;; Suppress GUI features
 (setq use-file-dialog nil
@@ -150,7 +176,6 @@
 
 ;;; Mode line
 (use-package doom-modeline
-	     ;; :disabled t
   :straight t
   :hook (after-init . doom-modeline-mode)
   :config
@@ -196,6 +221,34 @@
   :straight t
   :hook (doom-modeline-mode . minions-mode))
 
+;;; punch line
+;; 替换 doom-modeline
+(use-package punch-line
+  :disabled
+  :straight (:host github :repo "konrad1977/punch-line")
+  :hook
+  (after-init . punch-line-mode)
+  :custom
+  (punch-weather-update) ;; Use weather service
+  :config
+  (setq
+   punch-line-separator "  "
+   punch-show-project-info t					;; Show project info
+   punch-show-git-info t						;; Show git info
+   punch-show-lsp-info t						;; Show eglot info
+   punch-show-copilot-info t					;; Show copilot
+   punch-show-battery-info t					;; Show battery status
+   punch-show-weather-info t					;; Weather info
+   punch-weather-latitude "30.659462"				;; Weather latitude
+   punch-weather-longitude "104.065735"			;; Weather longitude
+   punch-line-music-info '(:service apple))		;; Music service
+  (punch-line-mode 1))
+
+(use-package flycheck
+  :straight t
+  :after punch-line)
+
+
 ;;; tab bar
 (use-package svg-lib
   :straight t
@@ -215,6 +268,16 @@
   ("C-c n p" . tab-bar-switch-to-prev-tab)
   ("C-c n t" . tab-bar-new-tab)
   ("C-c n w" . tab-bar-close-tab)
+  ("C-c n 1" . (lambda() (interactive) (tab-bar-select-tab 1)))
+  ("C-c n 2" . (lambda() (interactive) (tab-bar-select-tab 2)))
+  ("C-c n 3" . (lambda() (interactive) (tab-bar-select-tab 3)))
+  ("C-c n 4" . (lambda() (interactive) (tab-bar-select-tab 4)))
+  ("C-c n 5" . (lambda() (interactive) (tab-bar-select-tab 5)))
+  ("C-c n 6" . (lambda() (interactive) (tab-bar-select-tab 6)))
+  ("C-c n 7" . (lambda() (interactive) (tab-bar-select-tab 7)))
+  ("C-c n 8" . (lambda() (interactive) (tab-bar-select-tab 8)))
+  ("C-c n 9" . (lambda() (interactive) (tab-bar-select-tab 9)))
+  ("C-c n 0" . (lambda() (interactive) (tab-bar-select-tab 10)))
 
   :config
   (require 'svg-lib)
@@ -225,7 +288,8 @@
         tab-bar-auto-width nil
         tab-bar-close-button-show nil
         tab-bar-tab-hints t
-	tab-bar-mode t)
+	tab-bar-mode t
+	tab-bar-new-tab-to 'rightmost)
   (setq tab-bar-select-tab-modifiers '(hyper))
 
   ;; [telega]
@@ -313,11 +377,11 @@
   ;;   "Tab bar face for selected tab.")
 
   (defface tab-bar-svg-active
-    '((t (:family "BlexMono Nerd Font Mono" :foreground "#cad7de")))
+    '((t (:family "BlexMono Nerd Font Mono" :foreground "#a1aeb5")))
     "Tab bar face for selected tab.")
 
   (defface tab-bar-svg-inactive
-    '((t (:family "BlexMono Nerd Font Mono" :foreground "#a1aeb5")))
+    '((t (:family "BlexMono Nerd Font Mono" :foreground "#cad7de")))
     "Tab bar face for inactive tabs.")
 
   (defun eli/tab-bar-svg-padding (width string)
@@ -403,6 +467,21 @@
   ; remove specific symbols from the variable 'beacon-dont-blink-commands
   (setq beacon-dont-blink-commands '(forward-char backward-char meow-right meow-left))
   (beacon-mode 1))
+
+;;; 果冻光标
+(use-package EmacsMacPluginModule
+  :disabled
+  :straight (:host github :repo "happyo/EmacsMacPluginModule")
+  :init
+  (require 'mac-plugin)
+  (setq macos-project-root "~/.emacs.d/straight/repos/EmacsMacPluginModule/")
+  ;; macos-module-build-release
+  :config
+  (mac-plugin-load-release)
+  (atmosphere-enable)
+  (mac-plugin-set-cursor-color "#fcc800")
+  (mac-plugin-set-shadow-opacity 0.5)
+  )
 
 (provide 'init-themes)
 ;;;init-themes.el ends here

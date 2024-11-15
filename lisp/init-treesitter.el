@@ -23,7 +23,7 @@
         (org . ("https://github.com/milisims/tree-sitter-org"))
         (python . ("https://github.com/tree-sitter/tree-sitter-python"))
         (php . ("https://github.com/tree-sitter/tree-sitter-php"))
-        (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src"))
+        ;; (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src"))
         (typst . ("https://github.com/uben0/tree-sitter-typst.git"))
 	(tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src"))
         (ruby . ("https://github.com/tree-sitter/tree-sitter-ruby"))
@@ -48,6 +48,7 @@
   :mode "\\.nix\\'")
 
 (use-package vue-ts-mode
+  :disabled
   :straight (:host github :repo "8uff3r/vue-ts-mode")
   :mode "\\.vue\\'")
 
@@ -69,10 +70,11 @@
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
 (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+
 
 (setq org-src-lang-modes
 	     '(("python" . python-ts)

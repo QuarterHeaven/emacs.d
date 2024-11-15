@@ -23,4 +23,6 @@
   :straight t
   :hook (markdown-mode . grip-mode))
 
+(use-package browse-url)
+
 (provide 'init-web)

@@ -283,4 +283,10 @@
       '((left-fringe . 8)
         (right-fringe . 8))))
 
+;;; deadgrep
+(use-package deadgrep
+  :straight t
+  :bind
+  ("C-c d d"                             . deadgrep))
+
 (provide 'init-vertico)

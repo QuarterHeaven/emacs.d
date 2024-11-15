@@ -40,12 +40,10 @@
   :config
   (setq telega-root-default-view-function 'telega-view-folders
 	telega-root-keep-cursor 'track
-	;; telega-root-fill-column 70
-	telega-chat-fill-column 90
 	telega-chat-show-avatars t
 	telega-user-show-avatars t
 	telega-root-show-avatars t
-	telega-chat-show-deleted-messages-for t
+	telega-chat-show-deleted-messages-for nil
         telega-filters-custom nil
 	telega-emoji-use-images nil
         telega-filter-custom-show-folders nil
@@ -58,9 +56,9 @@
 	telega-avatar-workaround-gaps-for '(return t)
 	)
 
-  (if sys/macp (setq telega-use-docker nil)
-    (setq telega-use-docker t)
-    )
+  ;; (if sys/macp (setq telega-use-docker nil)
+  ;;   (setq telega-use-docker t))
+  (setq telega-use-docker t)
 
   ;; src: https://emacs-china.org/t/telega/25759/16 by #1ab, double checkmark
   (setq telega-symbols-emojify (assq-delete-all 'checkmark telega-symbols-emojify))
@@ -94,6 +92,10 @@
 
   (setq telega-msg-heading-with-date-and-status nil)
   (require 'telega-mnz)
-  (add-hook 'telega-load-hook 'global-telega-mnz-mode))
+  (add-hook 'telega-load-hook 'global-telega-mnz-mode)
+  (cond (sys/macp
+	 (setq telega-use-svg-base-uri nil)))
+  (setq telega-symbols-emojify (assq-delete-all 'horizontal-bar telega-symbols-emojify))
+  )
 
 (provide 'init-telega)
