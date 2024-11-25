@@ -25,22 +25,23 @@
 	  (note "" compilation-info))))
 
 (use-package eglot
+  ;; :disabled
   :straight t
   :after flymake
-  :hook ((c-ts-mode
-	  c++-ts-mode
-	  clojure-ts-mode
-	  haskell-ts-mode
-	  python-ts-mode
-	  rust-ts-mode
-	  lua-ts-mode
-	  ;; java-ts-mode
-	  typst-ts-mode
-	  typescript-ts-mode
-	  ;; vue-ts-mode
-	  nix-ts-mode
-	  web-mode
-	  ) . eglot-ensure)
+  :hook ;; ((c-ts-mode
+  ;; 	  c++-ts-mode
+  ;; 	  clojure-ts-mode
+  ;; 	  haskell-ts-mode
+  ;; 	  python-ts-mode
+  ;; 	  rust-ts-mode
+  ;; 	  lua-ts-mode
+  ;; 	  ;; java-ts-mode
+  ;; 	  typst-ts-mode
+  ;; 	  typescript-ts-mode
+  ;; 	  ;; vue-ts-mode
+  ;; 	  nix-ts-mode
+  ;; 	  web-mode
+  ;; 	  ) . eglot-ensure)
   
   (eglot-managed-mode . eglot-inlay-hints-mode)
   :init
@@ -93,9 +94,15 @@
 	(if (and (eq nil flymake-no-changes-timeout)
 		 (not (buffer-modified-p)))
             (flymake-start t)))))
+
+  (defvar jsonrpc-log-event-p nil)
+  (defun jsonrpc--log-event-advice (f &rest args)
+    (if jsonrpc-log-event-p (apply f args)))
+  (advice-add #'jsonrpc--log-event :around #'jsonrpc--log-event-advice)
   )
 
 (use-package eglot-java
+  :disabled
   :straight (:host github :repo "yveszoundi/eglot-java")
   :hook		       
   ((java-mode java-ts-mode) . eglot-java-mode)
@@ -162,8 +169,11 @@
 
 (use-package eglot-booster
   :straight (:host github :repo "jdtsmith/eglot-booster")
-	:after eglot
-	:config	(eglot-booster-mode))
+  :after eglot
+  :config
+  (eglot-booster-mode)
+  (setq eglot-booster-io-only t)
+  )
 
 (use-package consult-eglot
   :after consult eglot
@@ -254,7 +264,9 @@
                           company-sort-by-backend-importance))
   :config
   ;; (add-to-list 'company-frontends #'company-preview-frontend)
-  (setq company-minimum-prefix-length 2)
+  (setq company-minimum-prefix-length 2
+	company-idle-delay 0
+	company-tooltip-idle-delay 0)
   )
 
 (use-package company-quickhelp
@@ -265,6 +277,15 @@
 (use-package company-box
   :straight t
   :hook (company-mode . company-box-mode)
+  :config
+  (defun company-box-icons--lsp-copilot (candidate)
+    (-when-let* ((copilot-item (get-text-property 0 'lsp-copilot--item candidate))
+                 (lsp-item (plist-get copilot-item :item))
+                 (kind-num (plist-get lsp-item :kind)))
+      (alist-get kind-num company-box-icons--lsp-alist)))
+
+  (setq company-box-icons-functions
+	   (cons #'company-box-icons--lsp-copilot company-box-icons-functions))
   )
 
 (use-package kind-icon
@@ -322,5 +343,28 @@
   (add-to-list 'copilot-indentation-alist '(closure-mode 2))
   (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2))
   (setq copilot-network-proxy '(:host "127.0.0.1" :port 1081)))
+
+;;; lsp-copilot
+(use-package lsp-copilot
+  :straight (:host github :repo "jadestrong/lsp-copilot"
+		   :files ("lsp-copilot.el" "lsp-copilot")
+                   :pre-build (("cargo" "build" "--release") ("cp" "./target/release/lsp-copilot" "./")))
+  :hook
+  ((c-ts-mode
+    c++-ts-mode
+    clojure-ts-mode
+    haskell-ts-mode
+    python-ts-mode
+    rust-ts-mode
+    lua-ts-mode
+    java-ts-mode
+    typst-ts-mode
+    typescript-ts-mode
+    vue-ts-mode
+    nix-ts-mode
+    web-mode
+    ) . lsp-copilot-mode)
+  ;; (lsp-copilot-mode . lsp-copilot-inlay-hints-mode)
+  )
 
 (provide 'init-completion)

@@ -1,7 +1,7 @@
 (use-package visual-fill-column
   :straight t
   :hook
-  ((c-ts-mode c++-ts-mode rust-ts-mode python-ts-mode haskell-ts-mode clojure-ts-mode typst-ts-mode) . visual-fill-column-mode)
+  ((c-ts-mode c++-ts-mode rust-ts-mode python-ts-mode haskell-ts-mode clojure-ts-mode typst-ts-mode toml-ts-mode) . visual-fill-column-mode)
   ((prog-mode conf-mode yaml-mode shell-mode eshell-mode) . visual-fill-column-mode)
   (org-mode . visual-fill-column-mode)
   (dashboard-mode . visual-fill-column-mode)
