@@ -87,6 +87,14 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
 	(meow-insert-exit)
 	(sis-set-other))))
 
+  (defun sis-meow-reverse ()
+    "Just exchange point and mark.
+     This command supports `meow-selection-command-fallback'."
+    (interactive)
+    (sis-global-respect-mode 0)
+    (meow-reverse)
+    (sis-global-respect-mode t))
+
   (add-function :after after-focus-change-function '+meow-focus-change-function)
   :config
   (sis-global-cursor-color-mode t)

@@ -178,6 +178,8 @@
 (use-package doom-modeline
   :straight t
   :hook (after-init . doom-modeline-mode)
+  :init
+  (doom-modeline-mode)
   :config
   (setq doom-modeline-support-imenu t
 	doom-modeline-icon t
