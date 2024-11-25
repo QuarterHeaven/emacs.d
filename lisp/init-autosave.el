@@ -18,6 +18,7 @@
 	     (file-name-extension (buffer-name)) t)))))
 
 (use-package focus-autosave-mode
+  :disabled
   :straight (:host github :repo "vifon/focus-autosave-mode.el")
   :init
   (focus-autosave-mode 1))

@@ -82,4 +82,6 @@
       large-hscroll-threshold 1000
       syntax-wholeline-max 1000)
 
+(pixel-scroll-precision-mode)
+
 (provide 'init-basic)
