@@ -327,12 +327,17 @@
              (true-unmuted-count (- unmuted-count (length mentioned-unmuted-chats)))
              (text (propertize (concat " " telega-symbol-telegram " "
                                        (when (> true-unmuted-count 0)
-                                         (concat "●" (number-to-string true-unmuted-count) " "))
+                                         (propertize (concat "●" (number-to-string true-unmuted-count) " ")
+						     'face 'telega-unmuted-count))
                                        (when (> mentioned-count 0)
-                                         (concat "@" (number-to-string mentioned-count) " "))
+                                         (propertize (concat "@" (number-to-string mentioned-count) " ")
+						     'face 'telega-mention-count))
                                        (when (> reactions-count 0)
-                                         (concat "❤" (number-to-string reactions-count) " ")))
-                               'face `(:inherit font-lock-keyword-face :inverse-video ,online-p)))
+                                         (propertize (concat "❤" (number-to-string reactions-count) " ")
+						     'face 'telega-mention-count)))
+                               ;; 'face `(:inherit font-lock-keyword-face :inverse-video ,online-p
+			       ;; 			:foreground ,(face-background 'default))))
+			       ))
              (first-name (plist-get me-user :first_name))
              (last-name (plist-get me-user :last_name))
              (help-echo (concat "Current User: " first-name " " last-name "\n"

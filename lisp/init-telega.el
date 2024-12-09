@@ -6,8 +6,12 @@
   (telega-load . telega-appindicator-mode)
   :init
   (setq ;; telega-chat-folders-insexp nil
-   telega-docker-volumes '("/run/current-system/sw/share/X11/xkb")
-   telega-debug t)
+   ;; telega-docker-volumes '("/run/current-system/sw/share/X11/xkb")
+   telega-use-docker nil
+   telega-server-libs-prefix "~/.tdlib/"
+   telega-debug t
+   telega-chat-fill-column 120
+   telega-chat-auto-fill-mode nil)
   (add-hook 'telega-load-hook
 	    #'(lambda ()
 		(set-face-attribute 'telega-msg-heading nil
@@ -24,6 +28,7 @@
                                     :underline nil
                                     :height 0.84)
 		))
+  
   :hook
   (telega-root-mode . (lambda() (setq bidi-display-reordering t)))
   (telega-chat-mode . (lambda() (setq bidi-display-reordering t)))
@@ -38,6 +43,7 @@
   ;; 			(display-buffer (current-buffer) '((display-buffer-in-side-window)))))
 
   :config
+  (remove-hook 'telega-chat-mode-hook 'telega-chat-auto-fill-mode)
   (setq telega-root-default-view-function 'telega-view-folders
 	telega-root-keep-cursor 'track
 	telega-chat-show-avatars t
@@ -55,10 +61,6 @@
 	telega-proxies (list '(:server "127.0.0.1" :port 1081 :enable t :type (:@type "proxyTypeSocks5")))
 	telega-avatar-workaround-gaps-for '(return t)
 	)
-
-  ;; (if sys/macp (setq telega-use-docker nil)
-  ;;   (setq telega-use-docker t))
-  (setq telega-use-docker t)
 
   ;; src: https://emacs-china.org/t/telega/25759/16 by #1ab, double checkmark
   (setq telega-symbols-emojify (assq-delete-all 'checkmark telega-symbols-emojify))
