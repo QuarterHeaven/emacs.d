@@ -102,7 +102,7 @@
   )
 
 (use-package eglot-java
-  :disabled
+  ;; :disabled
   :straight (:host github :repo "yveszoundi/eglot-java")
   :hook		       
   ((java-mode java-ts-mode) . eglot-java-mode)
@@ -337,6 +337,7 @@
 	      ("<end>" . #'copilot-accept-completion-by-line)
 	      ("C-g" . #'copilot-clear-overlay))
   :config
+  (setq copilot-max-char -1)
   (add-to-list 'copilot-indentation-alist '(prog-mode 2))
   (add-to-list 'copilot-indentation-alist '(org-mode 2))
   (add-to-list 'copilot-indentation-alist '(text-mode 2))
@@ -357,7 +358,7 @@
     python-ts-mode
     rust-ts-mode
     lua-ts-mode
-    java-ts-mode
+    ;; java-ts-mode
     typst-ts-mode
     typescript-ts-mode
     vue-ts-mode

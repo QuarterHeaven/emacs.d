@@ -657,6 +657,7 @@ With a prefix ARG, remove start location."
 
 ;;; LOGBOOK settings
 (use-package org
+  :defer t
   :config
   (setq org-todo-keywords '((sequence "TODO(t)" "|" "DONE(d!)")
 			    (sequence "REPORT(r)" "BUG(b@/!)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
@@ -671,6 +672,7 @@ With a prefix ARG, remove start location."
 
 ;;; org open file with external apps
 (use-package org
+  :defer t
   :config
   (add-to-list 'org-file-apps '("\\.ppt\\'" . "open %s"))
   (add-to-list 'org-file-apps '("\\.pptx\\'" . "open %s"))
@@ -695,5 +697,11 @@ With a prefix ARG, remove start location."
 		 (buffer-string)))
               (file-name-nondirectory source))
       )))
+
+;;; org timestamp settings
+(use-package org
+  :defer t
+  :config
+  (setq org-read-date-prefer-future nil))
 
 (provide 'init-org)

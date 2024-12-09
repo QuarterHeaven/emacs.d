@@ -64,6 +64,7 @@
   (require 'init-rime)
   (require 'init-vterm)
   (require 'init-terminal-here)
+  (require 'init-direnv)
   (require 'init-rg)
   (require 'init-projectile)
   (require 'init-treemacs)
