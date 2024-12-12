@@ -11,8 +11,12 @@
 
 (use-package auto-dim-other-buffers
   :straight t
-  :hook
-  (after-init . auto-dim-other-buffers-mode))
+  :hook ((after-init . auto-dim-other-buffers-mode)
+         (auto-dim-other-buffers-mode . +auto-dim-other-buffers-auto-set-face))
+  :config
+  (setq auto-dim-other-buffers-dim-on-focus-out nil
+        auto-dim-other-buffers-dim-on-switch-to-minibuffer nil)
+  )
 
 ;; (eyebrowse-mode t)
 ;; (eyebrowse-setup-opinionated-keys)

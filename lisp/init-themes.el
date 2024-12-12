@@ -490,5 +490,91 @@
   (mac-plugin-set-shadow-opacity 0.5)
   )
 
+;;; 跳转后闪烁光标
+(use-package pulse
+  :custom-face
+  (pulse-highlight-start-face ((t (:inherit region :background unspecified))))
+  (pulse-highlight-face ((t (:inherit region :background unspecified :extend t))))
+  :hook (((dumb-jump-after-jump imenu-after-jump) . +recenter-and-pulse)
+         ((bookmark-after-jump magit-diff-visit-file next-error) . +recenter-and-pulse-line))
+  :init
+  (setq pulse-delay 0.1
+        pulse-iterations 2)
+
+  (defun +pulse-momentary-line (&rest _)
+    "Pulse the current line."
+    (pulse-momentary-highlight-one-line (point)))
+
+  (defun +pulse-momentary (&rest _)
+    "Pulse the region or the current line."
+    (if (fboundp 'xref-pulse-momentarily)
+        (xref-pulse-momentarily)
+      (+pulse-momentary-line)))
+
+  (defun +recenter-and-pulse(&rest _)
+    "Recenter and pulse the region or the current line."
+    (recenter)
+    (+pulse-momentary))
+
+  (defun +recenter-and-pulse-line (&rest _)
+    "Recenter and pulse the current line."
+    (recenter)
+    (+pulse-momentary-line))
+
+  (dolist (cmd '(recenter-top-bottom
+                 other-window switch-to-buffer
+                 aw-select toggle-window-split
+                 windmove-do-window-select
+                 pager-page-down pager-page-up
+                 treemacs-select-window
+                 tab-bar-select-tab))
+    (advice-add cmd :after #'+pulse-momentary-line))
+
+  (dolist (cmd '(pop-to-mark-command
+                 pop-global-mark
+                 goto-last-change))
+    (advice-add cmd :after #'+recenter-and-pulse))
+
+  (dolist (cmd '(symbol-overlay-basic-jump
+                 compile-goto-error))
+    (advice-add cmd :after #'+recenter-and-pulse-line))
+  )
+
+;;; 高亮上次编辑的位置
+(use-package goggles
+  :straight t
+  :hook ((prog-mode text-mode) . goggles-mode)
+  :config
+  (setq-default goggles-pulse nil)
+  )
+
+;;; 光标所在括号高亮
+(use-package paren
+  :custom-face (show-paren-match ((t (:foreground "SpringGreen3" :underline t :weight bold))))
+  :config
+  (setq show-paren-when-point-inside-paren t
+        show-paren-when-point-in-periphery t
+        show-paren-context-when-offscreen t
+        show-paren-delay 0.2)
+  )
+
+(use-package highlight-parentheses
+  :straight t
+  :hook ((minibuffer-setup . highlight-parentheses-minibuffer-setup)
+         (prog-mode . highlight-parentheses-mode))
+  :config
+  (setq highlight-parentheses-colors '("firebrick1" "firebrick3" "orange1" "orange3")
+        highlight-parentheses-attributes '((:underline t) (:underline t) (:underline t))
+        highlight-parentheses-delay 0.2)
+  )
+
+;;; 彩虹括号
+;; [rainbow-delimiters] Highlight brackets according to their depth
+(use-package rainbow-delimiters
+  :straight t
+  :hook ((prog-mode conf-mode yaml-mode) . rainbow-delimiters-mode)
+  :config
+  (setq rainbow-delimiters-max-face-count 5))
+
 (provide 'init-themes)
 ;;;init-themes.el ends here

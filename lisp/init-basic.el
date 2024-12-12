@@ -36,7 +36,13 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 ; 当前行高亮
-(global-hl-line-mode)
+(use-package hl-line
+  :hook (after-init . global-hl-line-mode)
+  :config
+  (setq hl-line-sticky-flag nil)
+  ;; Highlight starts from EOL, to avoid conflicts with other overlays
+  (setq hl-line-range-function (lambda () (cons (line-end-position)
+                                           (line-beginning-position 2)))))
 
 ; gpg
 (setq epa-pinentry-mode 'loopback)
