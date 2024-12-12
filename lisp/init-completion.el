@@ -1,5 +1,6 @@
 (setq read-process-output-max (* 1024 1024))
 
+;;; xref
 (use-package xref
   :config
   (setq
@@ -12,6 +13,7 @@
     :before '(find-function consult-imenu consult-ripgrep citre-jump)
     (xref-push-marker-stack (point-marker))))
 
+;;; flymake
 (use-package flymake
   :straight t
   :config
@@ -24,6 +26,7 @@
 	  (warning "" compilation-warning)
 	  (note "" compilation-info))))
 
+;;; eglot
 (use-package eglot
   ;; :disabled
   :straight t
@@ -101,6 +104,7 @@
   (advice-add #'jsonrpc--log-event :around #'jsonrpc--log-event-advice)
   )
 
+;;; eglot-java
 (use-package eglot-java
   ;; :disabled
   :straight (:host github :repo "yveszoundi/eglot-java")
@@ -181,7 +185,7 @@
   :bind (:map eglot-mode-map
               ([remap xref-find-apropos] . consult-eglot-symbols)))
 
-;; [corfu] compleletion frontend
+;;; [corfu] compleletion frontend :disabled
 (use-package corfu
   :disabled
   :straight (:files (:defaults "extensions/*.el"))
@@ -241,6 +245,7 @@
 (use-package corfu-popupinfo
   :after corfu)
 
+;;; cape
 (use-package cape
   :straight t
   :init
@@ -252,6 +257,7 @@
   (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
   (add-to-list 'completion-at-point-functions #'cape-tex))
 
+;;; company
 (use-package company
   :straight t
   :hook ((after-init . global-company-mode))
@@ -367,5 +373,41 @@
     ) . lsp-copilot-mode)
   ;; (lsp-copilot-mode . lsp-copilot-inlay-hints-mode)
   )
+
+;;; auto insert
+(use-package auto-insert
+  :after (projectile)
+  :init
+  (auto-insert-mode 1)
+  (setq auto-insert-query nil)
+  (defun taka/java-auto-insert ()
+    "Auto insert java template while creating new java file."
+    (let* ((project-root (projectile-project-root))
+           (file-path (file-truename (file-name-directory (buffer-file-name))))
+	   (src-path "src/main/java/")
+           ;; 查找 src/main/java/ 在文件路径中的位置
+           (src-pos (string-match (concat "/" (regexp-quote src-path)) file-path))
+           ;; 提取 src/main/java/ 之后的相对路径
+           (relative-path (if src-pos
+                              (substring file-path (+ src-pos (length src-path) 1))
+                            ""))
+           (package-name
+            (if (not (string-empty-p relative-path))
+		(replace-regexp-in-string "/" "." (file-name-directory relative-path))
+              ""))
+           (package-name-clean
+            (if (and package-name (not (string-empty-p package-name)))
+		(replace-regexp-in-string "\\.$" "" package-name)  ;; 去掉末尾的点
+              ""))
+           (class-name (file-name-base (buffer-file-name))))
+      (insert
+       (if (not (string-empty-p package-name-clean))
+	   (format "package %s;\n\npublic class %s {\n\n}\n" package-name-clean class-name)
+	 (format "public class %s {\n\n}\n" class-name))
+       )))
+
+  ;; 将 Java 文件与模板关联
+  (define-auto-insert '("\\.java\\'" . "Java class")
+    'taka/java-auto-insert))
 
 (provide 'init-completion)
