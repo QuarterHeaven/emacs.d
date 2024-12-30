@@ -203,12 +203,26 @@ language-id = "less"
 file-types = ["less"]
 language-servers = ["css-ls"]
 
+[language-server.delance]
+command = "delance-langserver"
+args = ["--stdio"]
+
+[language-server.delance.config]
+remortMissingTypeStubs = true
+
+[language-server.delance.config.python.analysis]
+typeCheckingMode = "basic"
+autoImportCompletions = true
+autoFormatStrings = true
+
 [[language]]
 name = "python"
 file-types = ["py", "pyi", "py3", "pyw", "ptl", "rpy", "cpy", "ipy", "pyt", { glob = ".python_history" }, { glob = ".pythonstartup" }, { glob = ".pythonrc" }, { glob = "SConstruct" }, { glob = "SConscript" }]
 roots = ["pyproject.toml", "setup.py", "poetry.lock", "pyrightconfig.json"]
-language-servers = [ "basedpyright" ]
-
+language-servers = [ "delance" ]
+# not support
+# indent = { tab-width = 4, unit = "    " }
+# formatter = { command = "black", args = ["--line-length", "120", "--quiet", "-"] }
 
 [[language]]
 name = "rust"
@@ -301,7 +315,6 @@ file-types = [
 
 [language-server.jdtls]
 command = "/Users/takaobsid/.jdks/jdtls/bin/jdtls"
-# env.JAVA_TOOL_OPTIONS = "-javaagent:/Users/takaobsid/.jdks/lombok/share/java/lombok.jar -Xmx1G --add-modules=ALL-SYSTEM --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED --add-opens java.base/com.sun.crypto.provider=ALL-UNNAMED"
 args = ["java",
   "--jvm-arg=-javaagent:/Users/takaobsid/.jdks/lombok/share/java/lombok.jar",
   "-configuration", "/Users/takaobsid/.emacs.d/eglot-java-eclipse-jdt/config",
@@ -321,6 +334,7 @@ bundles = [
 
 [language-server.jdtls.config.initializationOptions.settings.java.format]
 settings = {url = "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"}
+insertSpaces = true
 enabled = true
 
 [language-server.jdtls.config.initializationOptions.settings.java.inlayhints.parameterNames]

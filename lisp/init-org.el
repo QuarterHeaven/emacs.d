@@ -65,34 +65,34 @@
   :config
   (setq org-startup-with-inline-images t)
 
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (C . t)
-     (java . t)
-     (js . t)
-     (python . t)
-     (shell . t)
-     (latex . t)
-     (rust . t)
-     (scheme . t)
-     ))
-  (when (executable-find "jupyter")
-    (add-to-list 'org-babel-load-languages '(jupyter . t) t))
-  (setq word-wrap-by-category t
-	org-babel-python-command "python3.10"
-	org-image-actual-width nil)
+  ;; (org-babel-do-load-languages
+  ;;  'org-babel-load-languages
+  ;;  '((emacs-lisp . t)
+  ;;    (C . t)
+  ;;    (java . t)
+  ;;    (js . t)
+  ;;    (python . t)
+  ;;    (shell . t)
+  ;;    (latex . t)
+  ;;    (rust . t)
+  ;;    (scheme . t)
+  ;;    ))
+  ;; (when (executable-find "jupyter")
+  ;;   (add-to-list 'org-babel-load-languages '(jupyter . t) t))
+  ;; (setq word-wrap-by-category t
+  ;; 	org-babel-python-command "python3.10"
+  ;; 	org-image-actual-width nil)
 
-  (defun my/org-raise-scripts-no-braces (_)
-    (when (and (eq (char-after (match-beginning 3)) ?{)
-               (eq (char-before (match-end 3)) ?}))
-      (remove-text-properties (match-beginning 3) (1+ (match-beginning 3))
-			      (list 'invisible nil))
-      (remove-text-properties (1- (match-end 3)) (match-end 3)
-			      (list 'invisible nil))))
+  ;; (defun my/org-raise-scripts-no-braces (_)
+  ;;   (when (and (eq (char-after (match-beginning 3)) ?{)
+  ;;              (eq (char-before (match-end 3)) ?}))
+  ;;     (remove-text-properties (match-beginning 3) (1+ (match-beginning 3))
+  ;; 			      (list 'invisible nil))
+  ;;     (remove-text-properties (1- (match-end 3)) (match-end 3)
+  ;; 			      (list 'invisible nil))))
 
-  (advice-add 'org-raise-scripts :after #'my/org-raise-scripts-no-braces)
-
+  ;; (advice-add 'org-raise-scripts :after #'my/org-raise-scripts-no-braces)
+  
   (setq org-latex-compiler "pdflatex"
 	org-latex-preview-process-alist '((dvipng :programs ("latex" "dvipng") :description "dvi > png"
 						  :message
@@ -474,6 +474,7 @@
 ;;; org-xlatex (only on mac)
 (if sys/macp
     (use-package org-xlatex
+      :disabled ;; need xwidget support
       :straight t
       :after (org)
       :hook (org-mode . org-xlatex-mode)
@@ -703,5 +704,43 @@ With a prefix ARG, remove start location."
   :defer t
   :config
   (setq org-read-date-prefer-future nil))
+
+;;; org-supertag
+(use-package org-supertag
+  :straight (:host github :repo "yibie/org-supertag")
+  :after org
+  :config
+  (org-supertag-setup))
+
+;;; org-babel
+(use-package org
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (C . t)
+     (java . t)
+     (js . t)
+     (python . t)
+     (shell . t)
+     (latex . t)
+     (rust . t)
+     (scheme . t)
+     ))
+  (when (executable-find "jupyter")
+    (add-to-list 'org-babel-load-languages '(jupyter . t) t))
+  (setq word-wrap-by-category t
+	org-babel-python-command "python3.10"
+	org-image-actual-width nil)
+
+  (defun my/org-raise-scripts-no-braces (_)
+    (when (and (eq (char-after (match-beginning 3)) ?{)
+               (eq (char-before (match-end 3)) ?}))
+      (remove-text-properties (match-beginning 3) (1+ (match-beginning 3))
+			      (list 'invisible nil))
+      (remove-text-properties (1- (match-end 3)) (match-end 3)
+			      (list 'invisible nil))))
+
+  (advice-add 'org-raise-scripts :after #'my/org-raise-scripts-no-braces))
 
 (provide 'init-org)

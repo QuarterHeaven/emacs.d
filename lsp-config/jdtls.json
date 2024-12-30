@@ -1,65 +1,67 @@
 {
-  "settings": {
-    "java": {
-      "maxConcurrentBuilds": 1,
-      "autobuild": {
-        "enabled": false
-      },
-      "import": {
-        "maven": {
-          "enabled": true
-        },
-        "exclusions": [
-          "**/node_modules/**",
-          "**/.metadata/**",
-          "**/archetype-resources/**",
-          "**/META-INF/maven/**"
-        ]
-      },
-      "configuration": {
-        "updateBuildConfiguration": "automatic",
-        "checkProjectSettingsExclusions": true,
-        "runtimes": [
-          {
-            "name": "JavaSE-1.8",
-            "path": "/nix/store/mrspaijbsp1gi69l45ifnqaa3wigjl6d-openjdk-8u362-ga/jre/"
-          },
-          {
-            "name": "JavaSE-17",
-            "path": "/nix/store/n7ckcm50qcfnb4m81y8xl0vhzcbnaidg-openjdk-17.0.7+7/"
-          }
-        ]
-      },
-      "project": {
-        "importHint": true,
-        "importOnFirstTimeStartup": "automatic",
-        "referencedLibraries": [
-          "lib/**"
-        ],
-        "resourceFilters": [
-          "node_modules",
-          "\\.git",
-          ".metadata",
-          "archetype-resources",
-          "META-INF/maven"
-        ]
-      },
-      "server": {
-        "launchMode": "Hybrid"
-      },
-      "format": {
-        "settings": {
-          "url": "/home/takaobsid/.emacs.d/cache/eclipse-java-google-style.xml",
-          "profile": "GoogleStyle"
-        }
-      }
-    }
-  },
-  "extendedClientCapabilities": {
-    "classFileContentsSupport": true,
-    "overrideMethodsPromptSupport": true
-  },
-  "bundles": [
-    "/home/takaobsid/.emacs.d/adapter/com.microsoft.java.debug.plugin-0.52.0.jar"
-  ]
+    "settings": {
+	"java": {
+	    "maxConcurrentBuilds": 1,
+	    "autobuild": {
+		"enabled": false
+	    },
+	    "import": {
+		"maven": {
+		    "enabled": true
+		},
+		"exclusions": [
+		    "**/node_modules/**",
+		    "**/.metadata/**",
+		    "**/archetype-resources/**",
+		    "**/META-INF/maven/**"
+		]
+	    },
+	    "configuration": {
+		"updateBuildConfiguration": "automatic",
+		"checkProjectSettingsExclusions": true,
+		"runtimes": [
+		    {
+			"name": "JavaSE-1.8",
+			"path": "/nix/store/mrspaijbsp1gi69l45ifnqaa3wigjl6d-openjdk-8u362-ga/jre/"
+		    },
+		    {
+			"name": "JavaSE-17",
+			"path": "/nix/store/n7ckcm50qcfnb4m81y8xl0vhzcbnaidg-openjdk-17.0.7+7/"
+		    }
+		]
+	    },
+	    "project": {
+		"importHint": true,
+		"importOnFirstTimeStartup": "automatic",
+		"referencedLibraries": [
+		    "lib/**"
+		],
+		"resourceFilters": [
+		    "node_modules",
+		    "\\.git",
+		    ".metadata",
+		    "archetype-resources",
+		    "META-INF/maven"
+		]
+	    },
+	    "server": {
+		"launchMode": "Hybrid"
+	    },
+	    "format": {
+		"settings": {
+		    "url": "/home/takaobsid/.emacs.d/cache/eclipse-java-google-style.xml",
+		    "profile": "GoogleStyle"
+		},
+		"insertSpaces": true,
+		"enabled" = true
+	    }
+	}
+    },
+    "extendedClientCapabilities": {
+	"classFileContentsSupport": true,
+	"overrideMethodsPromptSupport": true
+    },
+    "bundles": [
+	"/home/takaobsid/.emacs.d/adapter/com.microsoft.java.debug.plugin-0.52.0.jar"
+    ]
 }

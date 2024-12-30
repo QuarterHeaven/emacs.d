@@ -31,22 +31,25 @@
   ;; :disabled
   :straight t
   :after flymake
-  :hook ;; ((c-ts-mode
-  ;; 	  c++-ts-mode
-  ;; 	  clojure-ts-mode
-  ;; 	  haskell-ts-mode
-  ;; 	  python-ts-mode
-  ;; 	  rust-ts-mode
-  ;; 	  lua-ts-mode
-  ;; 	  ;; java-ts-mode
-  ;; 	  typst-ts-mode
-  ;; 	  typescript-ts-mode
-  ;; 	  ;; vue-ts-mode
-  ;; 	  nix-ts-mode
-  ;; 	  web-mode
-  ;; 	  ) . eglot-ensure)
+  :hook ((c-ts-mode
+	  c++-ts-mode
+	  clojure-ts-mode
+	  haskell-ts-mode
+	  python-ts-mode
+	  rust-ts-mode
+	  lua-ts-mode
+	  ;; java-ts-mode
+	  typst-ts-mode
+	  typescript-ts-mode
+	  ;; vue-ts-mode
+	  nix-ts-mode
+	  web-mode
+	  ) . eglot-ensure)
   
   (eglot-managed-mode . eglot-inlay-hints-mode)
+  :bind
+  (:map eglot-mode-map
+	("M-RET" . eglot-code-actions))
   :init
   
   (defun vue-eglot-init-options ()
@@ -106,7 +109,7 @@
 
 ;;; eglot-java
 (use-package eglot-java
-  ;; :disabled
+  :disabled
   :straight (:host github :repo "yveszoundi/eglot-java")
   :hook		       
   ((java-mode java-ts-mode) . eglot-java-mode)
@@ -353,9 +356,13 @@
 
 ;;; lsp-copilot
 (use-package lsp-copilot
+  :disabled
   :straight (:host github :repo "jadestrong/lsp-copilot"
 		   :files ("lsp-copilot.el" "lsp-copilot")
                    :pre-build (("cargo" "build" "--release") ("cp" "./target/release/lsp-copilot" "./")))
+  :bind
+  (:map lsp-copilot-mode-map
+	("M-RET" . lsp-copilot-execute-code-action))
   :hook
   ((c-ts-mode
     c++-ts-mode
@@ -364,14 +371,14 @@
     python-ts-mode
     rust-ts-mode
     lua-ts-mode
-    ;; java-ts-mode
+    java-ts-mode
     typst-ts-mode
     typescript-ts-mode
     vue-ts-mode
     nix-ts-mode
     web-mode
     ) . lsp-copilot-mode)
-  ;; (lsp-copilot-mode . lsp-copilot-inlay-hints-mode)
+  (lsp-copilot-mode . lsp-copilot-inlay-hints-mode)
   )
 
 ;;; auto insert
