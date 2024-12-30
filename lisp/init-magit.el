@@ -25,9 +25,10 @@
 (use-package diff-hl
   :straight t
   :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
-	 (magit-post-refresh . diff-hl-magit-post-refresh))
-  :init
-  (global-diff-hl-mode))
+	 (magit-post-refresh . diff-hl-magit-post-refresh)
+	 (after-init . global-diff-hl-mode))
+  :config
+  (setq diff-hl-update-async t))
 
 (use-package blamer
   :straight (:host github :repo "artawower/blamer.el" :branch "feature/margin-overlays")
@@ -38,13 +39,16 @@
   (blamer-min-offset 0)
   (blamer-entire-formatter "%s")
   :custom-face
-  (blamer-face ((t :foreground "#7a88cf"
+  (blamer-face ((t :family "TriplicateT4c Nerd Font"
+		   :foreground "#7a88cf"
                    :background nil
-                   :height 0.9
+                   :height 120
                    :italic t)))
   :init
   (global-blamer-mode 1)
-  :config  (setq blamer-type 'margin-overlay))
+  :config
+  (setq blamer-type 'margin-overlay)
+  )
 
 ;;; gptel auto commit message
 (defconst gptel-commit-prompt

@@ -167,7 +167,7 @@ otherwise this function don't work and don't know the reason
              when (font-installed-p font)
              return (set-face-attribute 'default nil
                                         :family font
-                                        :height (cond (sys/macp 130)
+                                        :height (cond (sys/macp 140)
                                                       (sys/win32p 110)
 						      (sys/WSL 200)
                                                       (t 110))))
@@ -176,16 +176,16 @@ otherwise this function don't work and don't know the reason
     (cl-loop for font in '("TriplicateT4c Nerd Font" "BlexMono Nerd Font Mono" "Unifont Upper" "Noto Color Emoji" "SF Pro Display" "Helvetica")
              when (font-installed-p font)
              return (progn
-                      (set-face-attribute 'mode-line nil :family font :height (cond (sys/macp 130)
+                      (set-face-attribute 'mode-line nil :family font :height (cond (sys/macp 140)
 										    (sys/win32p 110)
 										    (sys/WSL 200)
 										    (t 110)))
                       (when (facep 'mode-line-active)
-                        (set-face-attribute 'mode-line-active nil :family font :height (cond (sys/macp 130)
+                        (set-face-attribute 'mode-line-active nil :family font :height (cond (sys/macp 140)
 											     (sys/win32p 110)
 											     (sys/WSL 200)
 											     (t 110))))
-                      (set-face-attribute 'mode-line-inactive nil :family font :height (cond (sys/macp 130)
+                      (set-face-attribute 'mode-line-inactive nil :family font :height (cond (sys/macp 140)
 											     (sys/win32p 110)
 											     (sys/WSL 200)
 											     (t 110)))))
@@ -197,7 +197,7 @@ otherwise this function don't work and don't know the reason
                         (set-fontset-font "fontset-default" 'unicode font nil 'prepend)
 
 		      (set-fontset-font t 'symbol (font-spec :family font
-							      :height (cond (sys/macp 130)
+							      :height (cond (sys/macp 140)
 									    (sys/win32p 110)
 									    (sys/WSL 200)
 									    (t 110))))))
@@ -214,13 +214,13 @@ otherwise this function don't work and don't know the reason
                       (set-fontset-font "fontset-default" 'unicode font nil 'prepend))
                      ((< emacs-major-version 28)
                       (set-fontset-font t 'symbol (font-spec :family font
-							      :height (cond (sys/macp 130)
+							      :height (cond (sys/macp 140)
 									    (sys/win32p 110)
 									    (sys/WSL 200)
 									    (t 110))) nil 'prepend))
                      (t
                       (set-fontset-font t 'emoji (font-spec :family font
-							    :height (cond (sys/macp 130)
+							    :height (cond (sys/macp 140)
 									  (sys/win32p 110)
 									  (sys/WSL 200)
 									  (t 110)))))))
@@ -231,21 +231,23 @@ otherwise this function don't work and don't know the reason
              return (progn
                       (setq face-font-rescale-alist `((,font . 1.0)))
                       (set-fontset-font t '(#x4e00 . #x9fa5) (font-spec :family font
-									:height (cond (sys/macp 130)
+									:height (cond (sys/macp 140)
 										      (sys/win32p 110)
 										      (sys/WSL 200)
 										      (t 110))))
 		      (set-fontset-font t '(#xff00 . #xffef) (font-spec :family font
-									:height (cond (sys/macp 130)
+									:height (cond (sys/macp 140)
 										      (sys/win32p 110)
 										      (sys/WSL 200)
 										      (t 110))))
 		      (set-fontset-font t '(#x3000 . #x303f) (font-spec :family font
-									:height (cond (sys/macp 130)
+									:height (cond (sys/macp 140)
 										      (sys/win32p 110)
 										      (sys/WSL 200)
 										      (t 110))))))
     (set-fontset-font t '(880 . 1023) (font-spec :family "azukifontL"))
+    (setq-default face-font-rescale-alist '(("FZLiuGongQuanKaiShuS" . 1.2)))
+    (setq-default face-font-rescale-alist '(("Victor Mono" . 1.0)))
     ))
 
 ;;; lsp-bridge set path

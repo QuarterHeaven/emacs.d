@@ -48,7 +48,7 @@
   (catppuccin-reload)
   :config
   (custom-set-faces
-   '(font-lock-comment-face ((t (:slant italic :family "Victor Mono"))))
+   '(font-lock-comment-face ((t (:slant italic :family "Victor Mono" :height 140))))
    '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
    '(org-block ((t (:inherit fixed-pitch))))
    '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))))
@@ -84,7 +84,7 @@
   (doom-themes-org-config)
 
   (custom-set-faces
-   '(font-lock-comment-face ((t (:slant italic :family "Victor Mono"))))
+   '(font-lock-comment-face ((t (:slant italic :family "Victor Mono" :height 140))))
    '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
    '(org-block ((t (:inherit fixed-pitch))))
    '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))

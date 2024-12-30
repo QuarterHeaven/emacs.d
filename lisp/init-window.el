@@ -16,6 +16,10 @@
   :config
   (setq auto-dim-other-buffers-dim-on-focus-out nil
         auto-dim-other-buffers-dim-on-switch-to-minibuffer nil)
+
+  (defadvice! +auto-dim-other-buffers-auto-set-face (&rest _)
+    :after #'enable-theme
+    (set-face-background 'auto-dim-other-buffers-face (face-background 'mode-line)))
   )
 
 ;; (eyebrowse-mode t)

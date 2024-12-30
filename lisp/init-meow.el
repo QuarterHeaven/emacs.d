@@ -4,11 +4,11 @@
   :hook (after-init . meow-global-mode)
   :demand t
   :custom-face
-  (meow-normal-indicator ((t (:inherit (font-lock-function-name-face bold) :inverse-video t))))
-  (meow-insert-indicator ((t (:inherit (font-lock-keyword-face bold) :inverse-video t))))
-  (meow-keypad-indicator ((t (:inherit (font-lock-builtin-face bold) :inverse-video t))))
-  (meow-beacon-indicator ((t (:inherit (font-lock-type-face bold) :inverse-video t))))
-  (meow-motion-indicator ((t (:inherit (font-lock-doc-face bold) :inverse-video t))))
+  (meow-normal-indicator ((t (:inherit (font-lock-function-name-face bold) :inverse-video t :height 140))))
+  (meow-insert-indicator ((t (:inherit (font-lock-keyword-face bold) :inverse-video t :height 140))))
+  (meow-keypad-indicator ((t (:inherit (font-lock-builtin-face bold) :inverse-video t :height 140))))
+  (meow-beacon-indicator ((t (:inherit (font-lock-type-face bold) :inverse-video t :height 140))))
+  (meow-motion-indicator ((t (:inherit (font-lock-doc-face bold) :inverse-video t :height 140))))
   :config
   (setq-default meow-replace-state-name-list '((normal . "N")
                                                (motion . "M")
