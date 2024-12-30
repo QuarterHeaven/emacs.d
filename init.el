@@ -47,6 +47,7 @@
   (require 'init-popper)
   (require 'init-fonts)
   (require 'init-themes)
+  (require 'init-image)
   (require 'init-meow)
   (require 'init-dogears)
   (require 'init-ibuffer)

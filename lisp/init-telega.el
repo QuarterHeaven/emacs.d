@@ -98,6 +98,13 @@
   (cond (sys/macp
 	 (setq telega-use-svg-base-uri nil)))
   (setq telega-symbols-emojify (assq-delete-all 'horizontal-bar telega-symbols-emojify))
+  
+  (setq telega-msg-save-dir "~/Downloads")
+  (if sys/macp
+      (progn
+        (setcdr (assq t org-file-apps-gnu) 'browse-url-default-macosx-browser)
+        (setcdr (assq t org-file-apps-gnu) 'browse-url-xdg-open)))
+  
   )
 
 (provide 'init-telega)

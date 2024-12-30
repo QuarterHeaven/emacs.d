@@ -3,8 +3,6 @@
 (setq auto-save-default nil)
 (setq create-lockfiles nil)
 
-(scroll-bar-mode -1)
-
 ;; (setq url-gateway-method 'socks)
 ;; (setq socks-server '("Default server" "127.0.0.1" 1081 5))
 
@@ -81,6 +79,8 @@
 			       (tool-bar-mode -1)
 			       (setq inhibit-startup-message t)
 			       (toggle-frame-maximized)
+			       (scroll-bar-mode -1)
+			       (setq scroll-conservatively 1)
 			       ))
 
 (setq-default bidi-display-reordering nil)

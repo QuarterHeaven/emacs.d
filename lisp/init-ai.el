@@ -12,7 +12,7 @@
 				:host "llm.indrin.cn"
 				:stream t
 				:key #'gptel-api-key
-				:models '("gpt-4o" "o1-mini" "o1-preview" "gpt-4o-mini"))
+				:models '("gpt-4o" "o1-mini" "o1-preview" "gpt-4o-mini" "deepseek-chat"))
 		)
   ;; Github Models offers an OpenAI compatible API
   (gptel-make-openai "Github Models" ;Any name you want
