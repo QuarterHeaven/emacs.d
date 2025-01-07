@@ -109,7 +109,6 @@
 
 ;;; eglot-java
 (use-package eglot-java
-  :disabled
   :straight (:host github :repo "yveszoundi/eglot-java")
   :hook		       
   ((java-mode java-ts-mode) . eglot-java-mode)
