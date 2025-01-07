@@ -37,4 +37,10 @@
   :config
   (setq copilot-chat-frontend 'org))
 
+(use-package gptel-quick
+  :straight (:host github :repo "karthink/gptel-quick")
+  :after gptel
+  :commands (gptel-quick)
+  )
+
 (provide 'init-ai)
