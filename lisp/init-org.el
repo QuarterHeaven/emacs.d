@@ -15,7 +15,9 @@
 		visual-fill-column-width 120
 		visual-fill-column-fringes-outside-margins nil
 		visual-fill-column-enable-sensible-window-split t
-		visual-fill-column-extra-text-width '(0 . 0))
+		visual-fill-column-extra-text-width '(0 . 0)
+		visual-fill-column-enable-sensible-window-split nil
+		split-window-preferred-function #'taka/visual-fill-column-split-window-sensibly-aspect)
   (setq split-width-threshold 120))
 
 (use-package adaptive-wrap
@@ -275,9 +277,13 @@
       (set-face-attribute 'org-level-2 nil :family "Linux Biolinum O" :height 210)
       (set-face-attribute 'org-level-3 nil :family "Linux Biolinum O" :height 190)
       (set-face-attribute 'org-level-4 nil :family "Linux Biolinum O" :height 160)))
-  (set-face-attribute 'fixed-pitch nil :family "FiraCode Nerd Font Mono" :height 110)
-  (set-face-attribute 'org-block nil :family "FiraCode Nerd Font Mono")
-  (set-face-attribute 'org-block-begin-line nil :family "FiraCode Nerd Font Mono"))
+  ;; (set-face-attribute 'fixed-pitch nil :family "FiraCode Nerd Font Mono" :height 110)
+  ;; (set-face-attribute 'org-block nil :family "FiraCode Nerd Font Mono")
+  ;; (set-face-attribute 'org-block-begin-line nil :family "FiraCode Nerd Font Mono")
+  (set-face-attribute 'fixed-pitch nil :family "TriplicateT4c Nerd Font" :height 1.0)
+  (set-face-attribute 'org-block nil :family "TriplicateT4c Nerd Font" :height 140)
+  (set-face-attribute 'org-block-begin-line nil :family "TriplicateT4c Nerd Font")
+  )
 
 (use-package org-appear
   :straight t
@@ -310,6 +316,15 @@
 
   :config
   ;; (setq line-spacing 0.2)
+  )
+
+(use-package org-modern-indent
+  ;; :load-path "~/code/emacs/org-modern-indent/"
+					; or
+  :straight (org-modern-indent :type git :host github :repo "jdtsmith/org-modern-indent")
+  :hook (org-mode . org-modern-indent-mode)
+  :config ; add late to hook
+  ;; (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
   )
 
 (use-package org-margin
@@ -681,8 +696,21 @@ With a prefix ARG, remove start location."
 (use-package org-supertag
   :straight (:host github :repo "yibie/org-supertag")
   :after org
+  :init
+  (org-supertag-setup)
   :config
-  (org-supertag-setup))
+  (add-to-list 'org-supertag-preset-tags
+	       '(("book" . ((:name "status"
+				   :type options 
+				   :options ("reading" "completed" "want-to-read")
+				   :description "阅读状态")
+			    (:name "rating"
+			       :type number
+			       :description "评分")
+			    (:name "author"
+			       :type string
+			       :description "作者")))
+		 )))
 
 ;;; org-babel
 (use-package org

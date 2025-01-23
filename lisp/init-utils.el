@@ -361,5 +361,42 @@ DOCSTRING and BODY are as in `defun'.
   (or (copilot-accept-completion)
       (company-indent-or-complete-common nil)))
 
+;;; bsp split
+(defun taka/get-split-direction-based-on-aspect (&optional window)
+  "Get the split direction of target window."
+  (let ((window (or window (selected-window)))
+	(width (window-pixel-width window))
+	(height (window-pixel-height window)))
+    (if (>= width height)
+	'vertical
+      'horizontal)))
+
+(defun taka/aspect-based-split-window-sensibly (&optional window)
+  "Split the window by aspect ratio."
+  (let* ((window (or window (selected-window)))
+	 (current-direction (taka/get-split-direction-based-on-aspect window)))
+    (pcase current-direction
+      ('vertical (split-window-right))
+      ('horizontal (split-window-below)))))
+
+(defun taka/visual-fill-column-split-window-sensibly-aspect (&optional window)
+  "Split WINDOW sensibly, unsetting its margins first.
+This function unsets the window margins and calls
+`taka/aspect-based-split-window-sensibly'.
+
+By default, `taka/aspect-based-split-window-sensibly' does not split a window in
+two side-by-side windows if it has wide margins, even if there is
+enough space for a vertical split.  This function is used as the
+value of `taka/aspect-based-split-window-sensibly' to allow
+`display-buffer' to split such windows."
+  (let ((margins (window-margins window))
+        new)
+    ;; unset the margins and try to split the window
+    (when (buffer-local-value 'visual-fill-column-mode (window-buffer window))
+      (set-window-margins window nil))
+    (unwind-protect
+        (setq new (taka/aspect-based-split-window-sensibly window))
+      (when (not new)
+        (set-window-margins window (car margins) (cdr margins))))))
 
 (provide 'init-utils)

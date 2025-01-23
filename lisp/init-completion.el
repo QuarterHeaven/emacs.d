@@ -109,6 +109,7 @@
 
 ;;; eglot-java
 (use-package eglot-java
+  ;; :disabled t
   :straight (:host github :repo "yveszoundi/eglot-java")
   :hook		       
   ((java-mode java-ts-mode) . eglot-java-mode)
@@ -147,7 +148,9 @@
 	       (:java
 		(:format (:settings
 			  (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
-			  :enabled t)
+			  :enabled t
+			  :insertSpaces t
+			  :tabSize 4)
 			 :inlayHints (:parameterNames (:enabled "all")))))))
 
 ;; (use-package dape-jdtls
@@ -187,9 +190,9 @@
   :bind (:map eglot-mode-map
               ([remap xref-find-apropos] . consult-eglot-symbols)))
 
-;;; [corfu] compleletion frontend :disabled
+;;; [corfu] compleletion frontend 
 (use-package corfu
-  :disabled
+  ;; :disabled
   :straight (:files (:defaults "extensions/*.el"))
   :hook (;; ((prog-mode conf-mode yaml-mode shell-mode eshell-mode) . corfu-mode)
 	 (after-init . global-corfu-mode)
@@ -198,8 +201,8 @@
          (minibuffer-setup . corfu-enable-in-minibuffer))
   :bind (:map corfu-map
               ("s-m" . corfu-move-to-minibuffer)
-              ("RET" . newline)
-	      ;; ("RET" . corfu-complete)
+              ;; ("RET" . newline)
+	      ("RET" . corfu-complete)
 	      ;; ("SPC" . corfu-insert-separator)
 	      )
 
@@ -261,6 +264,7 @@
 
 ;;; company
 (use-package company
+  :disabled
   :straight t
   :hook ((after-init . global-company-mode))
   :bind (:map company-active-map
@@ -297,7 +301,6 @@
   )
 
 (use-package kind-icon
-  :disabled
   :straight t
   :after corfu
   :demand t

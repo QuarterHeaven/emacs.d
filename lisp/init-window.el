@@ -1,3 +1,4 @@
+;;; ace-window to jump to other window
 (use-package ace-window
   :disabled
   :straight t
@@ -30,6 +31,7 @@
 ;;       desktop-minor-mode-table)
 ;; (run-with-idle-timer 30 t (lambda () (desktop-save "~/.emacs.d")))
 
+;;; transpose-frame
 (use-package transpose-frame
   :straight t
   :hook (meow-insert-exit . sis-set-english)
@@ -64,5 +66,23 @@
        "im.rime.inputmethod.Squirrel.Hans"))
   
   )
+;;; zoom
+(use-package zoom
+  :straight t
+  ;; :hook (after-init . zoom-mode)
+  :bind
+  ("C-=" . zoom)
+  :config
+  (setq zoom-size '(0.618 . 0.618)
+	zoom-ignored-major-modes '(dired-mode
+				   vterm-mode
+				   dape-repl-mode
+				   dape-info-breakpoint-mode
+				   dape-info-scope-mode
+				   dape-info-stack-mode)
+	zoom-ignored-buffer-names '("*scratch*")
+	zoom-ignored-buffer-name-regexps '("^\\*calc" "\\*vterm" "\\*doom:scratch*")
+	zoom-ignored-buffer-name-prefixes '("magit-" "*dape")))
+  
 
 (provide 'init-window)

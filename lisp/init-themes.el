@@ -21,8 +21,9 @@
 (use-package indent-bars
   :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
   :hook (prog-mode . indent-bars-mode)
-  :custom-face
-  (indent-bars-face ((t (:height 1))))
+  :config
+  (custom-set-faces
+      '(indent-bars-face ((t (:height 120)))))
   :custom
   (indent-bars-treesit-support t)
   (indent-bars-no-descend-string t)

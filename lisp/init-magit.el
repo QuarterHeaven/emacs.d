@@ -1,5 +1,10 @@
 (use-package magit
-  :straight t
+  :straight (:repo "magit/magit"
+		   :files ("lisp/magit*.el" "lisp/git-rebase.el" "lisp/git-commit.el"
+			   "docs/magit.texi" "docs/AUTHORS.md"
+			   "LICENSE" "Documentation/magit.texi" "Documentation/AUTHORS.md"
+			   (:exclude "lisp/magit-libgit.el" "lisp/magit-libgit-pkg.el" "lisp/magit-section.el" "lisp/magit-section-pkg.el")
+			   "magit-pkg.el"))
   :bind (("C-x g" . magit))
   :config
   (setq auth-sources '("~/.authinfo.gpg"))

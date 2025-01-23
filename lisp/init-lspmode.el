@@ -21,10 +21,10 @@
           '(orderless))) ;; Configure orderless
   :hook ((lsp-mode . lsp-diagnostics-mode)
          (lsp-mode . lsp-enable-which-key-integration)
-	 ((web-mode
-	   tsx-ts-mode
-           typescript-ts-mode
-           js-ts-mode) . lsp-deferred)
+	 ;; ((web-mode
+	 ;;   tsx-ts-mode
+         ;;   typescript-ts-mode
+         ;;   js-ts-mode) . lsp-deferred)
 	 (lsp-completion-mode . my/lsp-mode-setup-completion))
   :commands lsp
   :config
@@ -56,16 +56,17 @@
   :hook
   ((java-mode java-ts-mode) . lsp)
   :init
-  (setq lsp-java-vmargs '("-noverify" "-Xmx1G" "-XX:+UseG1GC" "-XX:+UseStringDeduplication" "-javaagent:/home/takaobsid/.m2/repository/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar"))
-  (setq lsp-java-java-path "/nix/store/zmj3m7wrgqf340vqd4v90w8dw371vhjg-openjdk-17.0.7+7/lib/openjdk/bin/java")
+  (setq lsp-java-vmargs '("-noverify" "-Xmx1G" "-XX:+UseG1GC" "-XX:+UseStringDeduplication" "-javaagent:/Users/takaobsid/.jdks/lombok/share/java/lombok.jar" "--add-opens" "java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED" "--add-opens" "java.base/com.sun.crypto.provider=ALL-UNNAMED"))
+  ;; (setq lsp-java-java-path "/nix/store/zmj3m7wrgqf340vqd4v90w8dw371vhjg-openjdk-17.0.7+7/lib/openjdk/bin/java")
   ;; (setq lsp-java-java-path "/nix/store/n7ckcm50qcfnb4m81y8xl0vhzcbnaidg-openjdk-17.0.7+7/bin/java")
   :config
   (setq lsp-java-configuration-runtimes '[;; (:name "JavaSE-17"
                                           ;;        :path "/nix/store/n7ckcm50qcfnb4m81y8xl0vhzcbnaidg-openjdk-17.0.7+7"
 					  ;; 	 )
     			                  (:name "JavaSE-1.8"
-						 :path "/nix/store/mrspaijbsp1gi69l45ifnqaa3wigjl6d-openjdk-8u362-ga/"
+						 :path "~/.jdks/8.0.402/"
 						 :default t)])
+  (setq lsp-java-jdt-ls-command "/Users/takaobsid/.jdks/jdtls/bin/jdtls")
   (advice-add 'lsp :before (lambda (&rest _args) (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht))))))
 
 

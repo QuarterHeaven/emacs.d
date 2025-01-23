@@ -28,9 +28,22 @@
   :bind
   ("C-c C-<backspace>" . #'puni-force-delete)
   ("C-c H-<backspace>" . #'puni-force-delete)
+  (:map puni-mode-map
+        ("DEL" . +puni-hungry-delete))
   :init
   (puni-global-mode)
-  (add-hook 'term-mode-hook #'puni-disable-puni-mode))
+  (add-hook 'term-mode-hook #'puni-disable-puni-mode)
+  :config
+  (defun +puni-hungry-delete ()
+    (interactive)
+    (if (looking-back "^[[:blank:]]+")
+        (let* ((puni-mode nil)
+               (original-func (key-binding (kbd "DEL"))))
+          ;; original-func is what `DEL' would be if puni-mode were disabled
+          (if (eq original-func 'delete-backward-char)
+              (backward-delete-char-untabify 1)
+            (call-interactively original-func)))
+      (puni-backward-delete-char))))
 
 (use-package ein
   :straight t)

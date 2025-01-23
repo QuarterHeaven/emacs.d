@@ -32,4 +32,13 @@
   (global-set-key [next] #'good-scroll-up-full-screen)
   (global-set-key [prior] #'good-scroll-down-full-screen))
 
+(use-package ultra-scroll
+					;:load-path "~/code/emacs/ultra-scroll" ; if you git clone'd instead of package-vc-install
+  :straight (:host github :repo "jdtsmith/ultra-scroll")
+  :init
+  (setq scroll-conservatively 101 ; important!
+        scroll-margin 0)
+  (ultra-scroll-mode)
+  )
+
 (provide 'init-pixel-scroll)

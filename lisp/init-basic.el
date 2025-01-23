@@ -89,6 +89,6 @@
       large-hscroll-threshold 1000
       syntax-wholeline-max 1000)
 
-(pixel-scroll-precision-mode)
+(setq-default indent-tabs-mode nil)
 
 (provide 'init-basic)

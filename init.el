@@ -50,6 +50,7 @@
   (require 'init-image)
   (require 'init-meow)
   (require 'init-dogears)
+  (require 'init-vundo)
   (require 'init-ibuffer)
   (require 'init-dashboard)
   (require 'init-yasnippet)
