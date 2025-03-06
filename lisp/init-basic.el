@@ -77,6 +77,7 @@
 
 (add-hook 'window-setup-hook (lambda ()
 			       (tool-bar-mode -1)
+                                 (menu-bar-mode 0)
 			       (setq inhibit-startup-message t)
 			       (toggle-frame-maximized)
 			       (scroll-bar-mode -1)

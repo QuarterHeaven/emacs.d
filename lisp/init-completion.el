@@ -24,7 +24,9 @@
 	flymake-margin-indicators-string
 	`((error "" compilation-error)
 	  (warning "" compilation-warning)
-	  (note "" compilation-info))))
+	  (note "" compilation-info))
+        flymake-show-diagnostics-at-end-of-line t)
+  )
 
 ;;; eglot
 (use-package eglot
@@ -306,81 +308,6 @@
   :demand t
   :config
   ;; (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
-  )
-
-;;; codeium
-(use-package codeium
-  :disabled
-  :straight '(:type git :host github :repo "Exafunction/codeium.el")
-  
-  :init
-  ;; use globally
-  (add-to-list 'completion-at-point-functions #'codeium-completion-at-point)
-
-  :config
-  (setq use-dialog-box nil)
-  (setq codeium-mode-line-enable
-        (lambda (api) (not (memq api '(CancelRequest Heartbeat AcceptCompletion)))))
-  (add-to-list 'mode-line-format '(:eval (car-safe codeium-mode-line)) t)
-  (setq codeium-api-enabled
-        (lambda (api)
-          (memq api '(GetCompletions Heartbeat CancelRequest GetAuthToken RegisterUser auth-redirect AcceptCompletion))))
-  (defun my-codeium/document/text ()
-    (buffer-substring-no-properties (max (- (point) 3000) (point-min)) (min (+ (point) 1000) (point-max))))
-  (defun my-codeium/document/cursor_offset ()
-    (codeium-utf8-byte-length
-     (buffer-substring-no-properties (max (- (point) 3000) (point-min)) (point))))
-  (setq codeium/document/text 'my-codeium/document/text)
-  (setq codeium/document/cursor_offset 'my-codeium/document/cursor_offset))
-
-;;; copilot
-(use-package copilot
-  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
-  :ensure t
-  :hook
-  (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-	      ("<right>" . #'copilot-accept-completion)
-	      ("C-f" . #'copilot-accept-completion)
-	      ("M-<right>" . #'copilot-accept-completion-by-word)
-	      ("M-f" . #'copilot-accept-completion-by-word)
-	      ("C-e" . #'copilot-accept-completion-by-line)
-	      ("<end>" . #'copilot-accept-completion-by-line)
-	      ("C-g" . #'copilot-clear-overlay))
-  :config
-  (setq copilot-max-char -1)
-  (add-to-list 'copilot-indentation-alist '(prog-mode 2))
-  (add-to-list 'copilot-indentation-alist '(org-mode 2))
-  (add-to-list 'copilot-indentation-alist '(text-mode 2))
-  (add-to-list 'copilot-indentation-alist '(closure-mode 2))
-  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2))
-  (setq copilot-network-proxy '(:host "127.0.0.1" :port 1081)))
-
-;;; lsp-copilot
-(use-package lsp-copilot
-  :disabled
-  :straight (:host github :repo "jadestrong/lsp-copilot"
-		   :files ("lsp-copilot.el" "lsp-copilot")
-                   :pre-build (("cargo" "build" "--release") ("cp" "./target/release/lsp-copilot" "./")))
-  :bind
-  (:map lsp-copilot-mode-map
-	("M-RET" . lsp-copilot-execute-code-action))
-  :hook
-  ((c-ts-mode
-    c++-ts-mode
-    clojure-ts-mode
-    haskell-ts-mode
-    python-ts-mode
-    rust-ts-mode
-    lua-ts-mode
-    java-ts-mode
-    typst-ts-mode
-    typescript-ts-mode
-    vue-ts-mode
-    nix-ts-mode
-    web-mode
-    ) . lsp-copilot-mode)
-  (lsp-copilot-mode . lsp-copilot-inlay-hints-mode)
   )
 
 ;;; auto insert

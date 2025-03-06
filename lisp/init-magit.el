@@ -106,7 +106,7 @@ A scope may be provided to a commit's type, to provide additional contextual inf
     "Generate commit message with gptel and insert it into the buffer."
     (interactive)
     (let* ((lines (magit-git-lines "diff" "--cached"))
-               (changes (string-join lines "\n")))
-          (gptel-request changes :system gptel-commit-prompt))))
+           (changes (string-join lines "\n")))
+      (gptel-request changes :system gptel-commit-prompt))))
 
 (provide 'init-magit)
