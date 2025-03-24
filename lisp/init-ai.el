@@ -128,6 +128,7 @@ Use the following guidelines:
 
 ;;; copilot
 (use-package copilot
+  :disabled
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
   :ensure t
   :hook
@@ -148,33 +149,6 @@ Use the following guidelines:
   (add-to-list 'copilot-indentation-alist '(closure-mode 2))
   (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2))
   (setq copilot-network-proxy '(:host "127.0.0.1" :port 1081)))
-
-;;; lsp-copilot
-(use-package lsp-copilot
-  :disabled
-  :straight (:host github :repo "jadestrong/lsp-copilot"
-		   :files ("lsp-copilot.el" "lsp-copilot")
-                   :pre-build (("cargo" "build" "--release") ("cp" "./target/release/lsp-copilot" "./")))
-  :bind
-  (:map lsp-copilot-mode-map
-	("M-RET" . lsp-copilot-execute-code-action))
-  :hook
-  ((c-ts-mode
-    c++-ts-mode
-    clojure-ts-mode
-    haskell-ts-mode
-    python-ts-mode
-    rust-ts-mode
-    lua-ts-mode
-    java-ts-mode
-    typst-ts-mode
-    typescript-ts-mode
-    vue-ts-mode
-    nix-ts-mode
-    web-mode
-    ) . lsp-copilot-mode)
-  (lsp-copilot-mode . lsp-copilot-inlay-hints-mode)
-  )
 
 ;;; minuet
 (use-package minuet

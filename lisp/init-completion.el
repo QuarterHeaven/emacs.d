@@ -75,6 +75,13 @@
                                               :documentColor t))
 		    :vue (:hybridMode :json-false)
 		    )))
+  (defun java-eglot-init-options ()
+    `(:bundles ["/Users/takaobsid/.jdks/java-debug/share/vscode/extensions/vscjava.vscode-java-debug/server/com.microsoft.java.debug.plugin-0.50.0.jar"
+                "/Users/takaobsid/.jdks/java-test/share/vscode/extensions/vscjava.vscode-java-test/server/com.microsoft.java.test.plugin-0.40.1.jar"]
+               :settings (:format (:settings (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
+                                             :insertSpaces t
+                                             :enabled t)
+                                  :inlayhints (:parameterNames (:enabled "all")))))
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs '(typst-ts-mode . ("tinymist")))
     ;;delance 現在已經發佈到 npm 了哦，npm i -g @delance/runtime 就可以直接用 delance-langserver --stdio
@@ -83,6 +90,18 @@
     
     (add-to-list 'eglot-server-programs
 		 `((vue-mode vue-ts-mode typescript-ts-mode typescript-mode) . ("vue-language-server" "--stdio" :initializationOptions ,(vue-eglot-init-options))))
+    ;; (add-to-list 'eglot-server-programs
+    ;;              `((java-mode java-ts-mode) . ("/Users/takaobsid/.jdks/jdtls/bin/jdtls" "java"
+    ;;                                            "--jvm-arg=-javaagent:/Users/takaobsid/.jdks/lombok/share/java/lombok.jar"
+    ;;                                            "-configuration" "/Users/takaobsid/.emacs.d/eglot-java-eclipse-jdt/config"
+    ;;                                            "-data" "/Users/takaobsid/.emacs.d/eglot-java-eclipse-jdt/workspace"
+    ;;                                            ;; "-configuration" "/Users/takaobsid/.jdks/jdtls/share/java/jdtls/config_mac/"
+    ;;                                            "-Xmx1G"
+    ;;                                            "--add-modules=ALL-SYSTEM"
+    ;;                                            "--add-opens" "java.base/java.util=ALL-UNNAMED"
+    ;;                                            "--add-opens" "java.base/java.lang=ALL-UNNAMED"
+    ;;                                            "--add-opens" "java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED"
+    ;;                                            "--add-opens" "java.base/com.sun.crypto.provider=ALL-UNNAMED" :initializationOptions ,(java-eglot-init-options))))
     )
 
   :config
@@ -130,7 +149,8 @@
     :group 'eglot-java
     :type '(string))
 
-  (defcustom dape-jdtls-java-test-plugin-jar (expand-file-name "~/.jdks/java-test/share/vscode/extensions/vscjava.vscode-java-test/server/com.microsoft.java.test.plugin-0.40.1.jar")
+  (defcustom dape-jdtls-java-test-plugin-jar (expand-file-name "~/.jdks/java-test/share/vscode/extensions/vscjava.vscode-java-test/server/com.microsoft.java.test.plugin-0.40.1.jar
+")
     "The path to java test plugin."
     :group 'eglot-java
     :type '(string))
@@ -194,7 +214,7 @@
 
 ;;; [corfu] compleletion frontend 
 (use-package corfu
-  ;; :disabled
+  :disabled
   :straight (:files (:defaults "extensions/*.el"))
   :hook (;; ((prog-mode conf-mode yaml-mode shell-mode eshell-mode) . corfu-mode)
 	 (after-init . global-corfu-mode)
@@ -266,7 +286,7 @@
 
 ;;; company
 (use-package company
-  :disabled
+  ;; :disabled
   :straight t
   :hook ((after-init . global-company-mode))
   :bind (:map company-active-map
@@ -309,6 +329,34 @@
   :config
   ;; (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
   )
+
+;;; lsp-proxy
+(use-package lsp-proxy
+  :disabled
+  :straight (:host github :repo "jadestrong/lsp-proxy"
+		   :files ("lsp-proxy.el" "lsp-proxy")
+                   :pre-build (("cargo" "build" "--release") ("cp" "./target/release/lsp-proxy" "./")))
+  :bind
+  (:map lsp-proxy-mode-map
+	("M-RET" . lsp-proxy-execute-code-action))
+  :hook
+  ((c-ts-mode
+    c++-ts-mode
+    clojure-ts-mode
+    haskell-ts-mode
+    python-ts-mode
+    rust-ts-mode
+    lua-ts-mode
+    java-ts-mode
+    typst-ts-mode
+    typescript-ts-mode
+    vue-ts-mode
+    nix-ts-mode
+    web-mode
+    ) . lsp-proxy-mode)
+  (lsp-proxy-mode . lsp-proxy-inlay-hints-mode)
+  )
+
 
 ;;; auto insert
 (use-package auto-insert

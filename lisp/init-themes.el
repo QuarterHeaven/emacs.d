@@ -57,18 +57,27 @@
 ;;; doom themes
 ;;If you don't customize it, this is the theme you get.
 ;; (setq-default custom-enabled-themes '(doom-city-light))
+(use-package autothemer :straight t)
+
+(use-package rose-pine-emacs
+  :straight (:host github
+                   :repo "thongpv87/rose-pine-emacs"
+                   :branch "master")
+  :after autothemer)
+
 (use-package doom-themes
   ;; :disabled t
   :straight t
   :init
-  ;; (load-theme 'doom-bluloco-light t)
-  (load-theme 'doom-nord-light t)
-  ;; (load-theme 'doom-one)
+  ;; (setq current-load-theme 'doom-nord-light)
+  ;; (setq current-load-theme 'doom-bluloco-light)
+  ;; (setq current-load-theme 'doom-one)
+  ;; (setq current-load-theme 'doom-ayu-light)
+  (setq current-load-theme 'doom-tomorrow-day)
+  ;; (setq current-load-theme 'rose-pine-dawn)
+  (load-theme current-load-theme t)
   :hook
-  ;; (highlight-indent-guides-mode . (lambda () (load-theme 'doom-bluloco-light t)))
-  (highlight-indent-guides-mode . (lambda () (load-theme 'doom-nord-light t)))
-  ;; (highlight-indent-guides-mode . (lambda () (load-theme 'doom-one t)))
-  ;; (load-theme 'doom-ayu-light t)
+  (highlight-indent-guides-mode . (lambda () (load-theme current-load-theme t)))
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
@@ -92,20 +101,13 @@
 
   (defun my-load-doom-theme (frame)
     (select-frame frame)
-    ;; (load-theme 'doom-bluloco-light t)
-    (load-theme 'doom-nord-light t)
-    ;; (load-theme 'doom-one t)
+    (load-theme current-load-theme t)
     )
 
   (if (daemonp)
       (add-hook 'after-make-frame-functions #'my-load-doom-theme)
-    ;; (load-theme 'doom-bluloco-light t)
-    (load-theme 'doom-nord-light t)
-    ;; (load-theme 'doom-one t)
+    (load-theme current-load-theme t)
     ))
-
-;; (load-theme 'doom-ayu-light t)
-;; (load-theme 'doom-tomorrow-day t)
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
