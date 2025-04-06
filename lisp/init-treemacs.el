@@ -3,11 +3,12 @@
   ;; :defer t
   :init
   (global-set-key (kbd "C-c t") 'treemacs-select-window)
+  (setq treemacs-python-executable "/etc/profiles/per-user/takaobsid/bin/python")
   :config
   (setq projectile-switch-project-action #'(lambda ()(progn (projectile-find-file)
 						(treemacs))))
   (progn
-    (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0)
+    (setq treemacs-collapse-dirs                   (if treemacs-python-executable 100 0)
           treemacs-deferred-git-apply-delay        0.5
           treemacs-directory-name-transformer      #'identity
           treemacs-display-in-side-window          t
@@ -25,6 +26,7 @@
           treemacs-hide-dot-git-directory          t
           treemacs-indentation                     2
           treemacs-indentation-string              " "
+          treemacs-indent-guide-style              'line
           treemacs-is-never-other-window           nil
           treemacs-max-git-entries                 5000
           treemacs-missing-project-action          'ask
@@ -63,9 +65,10 @@
     ;; using a Hi-DPI display, uncomment this to double the icon size.
     ;;(treemacs-resize-icons 44)
 
-    (treemacs-follow-mode t)
+    (treemacs-tag-follow-mode t)
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode 'always)
+    (treemacs-indent-guide-mode nil)
     (when treemacs-python-executable
       (treemacs-git-commit-diff-mode t))
 

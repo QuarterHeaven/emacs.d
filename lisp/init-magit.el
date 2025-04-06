@@ -109,4 +109,29 @@ A scope may be provided to a commit's type, to provide additional contextual inf
            (changes (string-join lines "\n")))
       (gptel-request changes :system gptel-commit-prompt))))
 
+;;; smerge accept all
+(use-package smerge
+  :config
+  (defun smerge-resolve-all-in-file-to (to-keep)
+    "Resolves all conflicts inside a file in preference of TO-KEEP
+
+TO-KEEP decides which part to keep and is one of `upper',
+`lower', `base'"
+    (interactive
+     (list (completing-read "Keeping (upper, base, lower): "
+                          '(upper base lower))))
+    (let ((resolve-func
+           (pcase to-keep
+           ("upper" 'smerge-keep-upper)
+           ("base"  'smerge-keep-base)
+           ("lower" 'smerge-keep-lower)
+           (_ (error "Unknown resolution argument!"))))
+          (num-chars-bfore (point-max)))
+      (save-excursion
+        (goto-char (point-min))
+        (while (ignore-errors (not (smerge-next)))
+          (funcall resolve-func)))
+      (when (= num-chars-bfore (point-max))
+        (message "No conflicts were found")))))
+
 (provide 'init-magit)

@@ -31,6 +31,7 @@
 
 ;; Enable orderless completion
 (use-package orderless
+  :disabled
   :straight t
   :init
   (setq completion-styles '(orderless basic)
@@ -38,6 +39,12 @@
 					(eglot (styles . (orderless flex))))
 	;; orderless-component-separator " +"
 	orderless-component-separator "[ &]"))
+
+;; hotfuzz completion
+(use-package hotfuzz
+  :straight t
+  :init
+  (setq completion-styles '(hotfuzz)))
 
 
 ;; Enable rich annotations using the Marginalia package

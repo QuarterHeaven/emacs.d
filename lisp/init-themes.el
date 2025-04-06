@@ -459,7 +459,7 @@
   :init
   (setq transwin-delta-alpha 15)
   (setq transwin-parameter-alpha 'alpha-background)
-  (transwin-ask 65)
+  (transwin-ask 80)
   :bind
   ("C-c C-=" . transwin-inc)
   ("C-c C--" . transwin-dec)

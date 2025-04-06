@@ -18,7 +18,9 @@
   ;;  )
   (defun my/lsp-mode-setup-completion ()
     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-          '(orderless))) ;; Configure orderless
+          '(;; orderless
+            hotfuzz
+            ))) ;; Configure orderless
   :hook ((lsp-mode . lsp-diagnostics-mode)
          (lsp-mode . lsp-enable-which-key-integration)
 	 ;; ((web-mode
@@ -27,6 +29,10 @@
          ;;   js-ts-mode) . lsp-deferred)
 	 (lsp-completion-mode . my/lsp-mode-setup-completion))
   :commands lsp
+  :bind
+  (:map lsp-mode-map
+	("M-RET" . lsp-execute-code-action))
+
   :config
   (setq lsp-rust-analyzer-inlay-hints-mode t
 	lsp-rust-analyzer-server-display-inlay-hints t
@@ -60,12 +66,17 @@
   ;; (setq lsp-java-java-path "/nix/store/zmj3m7wrgqf340vqd4v90w8dw371vhjg-openjdk-17.0.7+7/lib/openjdk/bin/java")
   ;; (setq lsp-java-java-path "/nix/store/n7ckcm50qcfnb4m81y8xl0vhzcbnaidg-openjdk-17.0.7+7/bin/java")
   :config
-  (setq lsp-java-configuration-runtimes '[;; (:name "JavaSE-17"
-                                          ;;        :path "/nix/store/n7ckcm50qcfnb4m81y8xl0vhzcbnaidg-openjdk-17.0.7+7"
-					  ;; 	 )
-    			                  (:name "JavaSE-1.8"
-						 :path "~/.jdks/8.0.402/"
-						 :default t)])
+  (setq lsp-java-configuration-runtimes '[(:name "JavaSE-17"
+                                                 :path "~/.jdks/17.0.12/zulu-17.jdk/Contents/Home"
+					      :default t)
+    			                  ;; (:name "JavaSE-1.8"
+					  ;;        :path "~/.jdks/8.0.402/"
+					  ;;        :default t)
+                                          ;; (:name "JavaSE-21"
+                                          ;;        :path "~/.jdks/21.0.4/zulu-21.jdk/Contents/Home"
+                                          ;;        ;; :default t
+                                          ;;        )
+                                          ])
   (setq lsp-java-jdt-ls-command "/Users/takaobsid/.jdks/jdtls/bin/jdtls")
   (advice-add 'lsp :before (lambda (&rest _args) (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht))))))
 

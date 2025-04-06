@@ -206,4 +206,20 @@ Use the following guidelines:
   
   )
 
+;;; aidermacs
+(use-package aidermacs
+  :straight (:host github :repo "MatthewZMD/aidermacs")
+  :bind (("C-c a" . aidermacs-transient-menu))
+  :config
+  (setenv "AIDER_AUTO_COMMITS" "False") ;; Disable auto commit of LLM changes
+  (setenv "AIDER_CHAT_LANGUAGE" "Chinese") ;; Specify the language to use in the chat
+
+  :custom
+  (aidermacs-use-architect-mode t)
+  (aidermacs-default-model "openai/deepseek-v3")
+  (aidermacs-architect-model "openai/claude-3-7-sonnet")
+  (aidermacs-weak-model "openai/deepseek-v3")
+  (aidermacs-backend 'comint)
+  )
+
 (provide 'init-ai)

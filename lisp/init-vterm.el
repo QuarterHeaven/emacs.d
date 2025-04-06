@@ -1,8 +1,7 @@
 ;;; vterm
 (use-package vterm
-  :disabled
   :straight t
-  :bind ("C-t" . vterm-toggle)
+  ;; :bind ("C-t" . vterm-toggle)
   :config
   (defvar vterm-compile-buffer nil)
   (defun vterm-compile ()

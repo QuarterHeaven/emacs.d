@@ -30,7 +30,7 @@
 
 ;;; eglot
 (use-package eglot
-  ;; :disabled
+  :disabled
   :straight t
   :after flymake
   :hook ((c-ts-mode
@@ -89,7 +89,7 @@
     (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nil")))
     
     (add-to-list 'eglot-server-programs
-		 `((vue-mode vue-ts-mode typescript-ts-mode typescript-mode) . ("vue-language-server" "--stdio" :initializationOptions ,(vue-eglot-init-options))))
+		 `((vue-mode vue-ts-mode typescript-ts-mode typescript-mode) . ("nix-shell" "-p" "nodejs-18_x" "--run" "vue-language-server --stdio" :initializationOptions ,(vue-eglot-init-options))))
     ;; (add-to-list 'eglot-server-programs
     ;;              `((java-mode java-ts-mode) . ("/Users/takaobsid/.jdks/jdtls/bin/jdtls" "java"
     ;;                                            "--jvm-arg=-javaagent:/Users/takaobsid/.jdks/lombok/share/java/lombok.jar"
@@ -130,7 +130,7 @@
 
 ;;; eglot-java
 (use-package eglot-java
-  ;; :disabled t
+  :disabled t
   :straight (:host github :repo "yveszoundi/eglot-java")
   :hook		       
   ((java-mode java-ts-mode) . eglot-java-mode)
@@ -332,7 +332,7 @@
 
 ;;; lsp-proxy
 (use-package lsp-proxy
-  :disabled
+  ;; :disabled
   :straight (:host github :repo "jadestrong/lsp-proxy"
 		   :files ("lsp-proxy.el" "lsp-proxy")
                    :pre-build (("cargo" "build" "--release") ("cp" "./target/release/lsp-proxy" "./")))
