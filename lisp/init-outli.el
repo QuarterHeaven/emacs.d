@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 ;;; outli
 (use-package outli
   :straight (:host github :repo "jdtsmith/outli")

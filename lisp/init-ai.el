@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 ;;; GPTEL
 (use-package gptel
   :straight t

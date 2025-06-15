@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 ;;; vterm
 (use-package vterm
   :straight t

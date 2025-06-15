@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (setq byte-compile-warnings nil)
 
 (if (eq system-type 'darwin)

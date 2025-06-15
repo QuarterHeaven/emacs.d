@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package projectile
   :straight t
   :bind ("M-p p" . projectile-switch-project)

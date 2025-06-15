@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 ;;; meow
 (use-package meow
   :straight t
@@ -10,6 +11,101 @@
   (meow-beacon-indicator ((t (:inherit (font-lock-type-face bold) :inverse-video t :height 140))))
   (meow-motion-indicator ((t (:inherit (font-lock-doc-face bold) :inverse-video t :height 140))))
   :config
+  (defun meow-mark-word-or-chinese (n)
+    "Mark current word under cursor, handling both English and Chinese text.
+
+This function uses EMT's segmentation for Chinese and default behavior for English.
+The selection will be expandable with `meow-next-word' and `meow-back-word'.
+The selected word will be added to `regexp-search-ring' and highlighted.
+
+Use a negative argument to create a backward selection."
+    (interactive "p")
+    ;; Ensure that EMT is loaded
+    (emt-ensure)
+    (let* ((direction (if (< n 0) 'backward 'forward))
+           (bounds (emt--get-bounds-at-point
+                  (emt--move-by-word-decide-bounds-direction direction)))
+           (beg (car bounds))
+           (end (cdr bounds)))
+      (if (eq beg end)
+          ;; Use default Meow for English words
+          (meow-mark-thing meow-word-thing 'word (< n 0) "\\<%s\\>")
+        ;; Use EMT segmentation for Chinese
+        (let* ((text (buffer-substring-no-properties beg end))
+               (segments (append (emt-split text) nil))
+               (pos (- (point) beg))
+               (segment-bounds (car segments)))
+          ;; Find the correct segment
+          (dolist (bound segments)
+            (when (and (>= pos (car bound)) (< pos (cdr bound)))
+              (setq segment-bounds bound)))
+          (when segment-bounds
+            (let* ((seg-beg (+ beg (car segment-bounds)))
+                   (seg-end (+ beg (cdr segment-bounds)))
+                   (segment-text (buffer-substring-no-properties seg-beg seg-end))
+                   (regexp (regexp-quote segment-text)))
+              (let ((selection (meow--make-selection (cons 'expand 'word) seg-beg seg-end)))
+                (meow--select selection (< n 0))
+                (meow--push-search regexp)
+                (meow--highlight-regexp-in-buffer regexp))))))))
+  
+  (defun meow-next-thing (thing type n &optional include-syntax)
+    "Create non-expandable selection of TYPE to the end of the next Nth THING.
+
+If N is negative, select to the beginning of the previous Nth thing instead."
+    (unless (equal type (cdr (meow--selection-type)))
+      (meow--cancel-selection))
+    (unless include-syntax
+      (setq include-syntax
+            (let ((thing-include-syntax
+                   (or (alist-get thing meow-next-thing-include-syntax)
+                       '("" ""))))
+              (if (> n 0)
+                  (car thing-include-syntax)
+                (cadr thing-include-syntax)))))
+    (let* ((expand (equal (cons 'expand type) (meow--selection-type)))
+           (_ (when expand
+                (if (< n 0) (meow--direction-backward)
+                  (meow--direction-forward))))
+           (new-type (if expand (cons 'expand type) (cons 'select type)))
+           (m (point))
+           (p (save-mark-and-excursion
+                (if (and (eq thing 'word) (eq system-type 'darwin))
+                    (progn
+                      (emt-ensure) ;; Ensure EMT is loaded
+                      (if (> n 0)
+                          (emt-forward-word n)
+                        (emt-backward-word (- n))))
+                  (forward-thing thing n))
+                (unless (= (point) m)
+                  (point)))))
+      (when p
+        (thread-first
+          (meow--make-selection
+           new-type
+           (meow--fix-thing-selection-mark thing p m include-syntax)
+           p
+           expand)
+          (meow--select))
+        (meow--maybe-highlight-num-positions
+         (cons (apply-partially #'meow--backward-thing-1 thing)
+               (apply-partially #'meow--forward-thing-1 thing))))))
+
+  (defun meow--forward-thing-1 (thing)
+    (let ((pos (point)))
+      (if (and (fboundp 'emt--move-by-word) (looking-at-p "\\cc"))
+          (emt--move-by-word 'forward)
+        (forward-thing thing 1))
+      (when (not (= pos (point)))
+        (meow--hack-cursor-pos (point)))))
+
+  (defun meow--backward-thing-1 (thing)
+    (let ((pos (point)))
+      (if (and (fboundp 'emt--move-by-word) (looking-at-p "\\cc"))
+          (emt--move-by-word 'backward)
+        (forward-thing thing -1))
+      (when (not (= pos (point)))
+        (point))))
   (setq-default meow-replace-state-name-list '((normal . "N")
                                                (motion . "M")
                                                (keypad . "K")
@@ -43,6 +139,11 @@
    '("?" . meow-cheatsheet))
 
   ;; [normal]
+  (if (and sys/macp (equal window-system 'ns))
+      (meow-normal-define-key
+       '(";" . sis-meow-reverse))
+    (meow-normal-define-key
+     '(";" . meow-reverse)))
   (meow-normal-define-key
    '("0" . meow-expand-0)
    '("9" . meow-expand-9)
@@ -55,13 +156,13 @@
    '("2" . meow-expand-2)
    '("1" . meow-expand-1)
    '("-" . negative-argument)
-   '(";" . sis-meow-reverse)
+   
    '("," . meow-inner-of-thing)
    '("." . meow-bounds-of-thing)
    '("[" . (lambda ()
-	       (interactive)
-	       (if mark-active (command-execute #'electric-pair)
-		   (command-execute #'meow-beginning-of-thing))))
+	     (interactive)
+	     (if mark-active (command-execute #'electric-pair)
+	       (command-execute #'meow-beginning-of-thing))))
    '("]" . meow-end-of-thing)
    '("a" . meow-append)
    '("A" . meow-open-below)
@@ -99,7 +200,7 @@
    '("u" . meow-undo)
    '("U" . meow-undo-in-selection)
    '("v" . meow-visit)
-   '("w" . meow-mark-word)
+   '("w" . meow-mark-word-or-chinese)
    '("W" . meow-mark-symbol)
    '("x" . meow-line)
    '("X" . meow-goto-line)

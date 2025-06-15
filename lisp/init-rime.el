@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package rime
   :disabled
   :straight  (rime :type git
@@ -54,52 +55,53 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
 ;; )
 
 ;;; sis
-(use-package sis
-  :straight t
-  :hook ((meow-insert-exit . sis-set-english))
-  :init
-  (setq sis-english-source "com.apple.keylayout.ABC"
-        sis-inline-tighten-head-rule nil
-        ;; sis-default-cursor-color "#cf7fa7"
-        sis-other-cursor-color "orange"
-	)
-  (if sys/macp
-      (progn
-	(sis-ism-lazyman-config
-	 "com.apple.keylayout.ABC"
-	 "im.rime.inputmethod.Squirrel.Hans")
-	(setq sis--ism 'emp)
-	))
-  (add-to-list 'sis-context-hooks 'meow-insert-enter-hook)
-  (add-to-list 'sis-context-detectors
-               (lambda (&rest _)
-                 (when (and meow-insert-mode
+(if (and sys/macp (equal window-system 'ns))
+    (use-package sis
+      :straight t
+      :hook ((meow-insert-exit . sis-set-english))
+      :init
+      (setq sis-english-source "com.apple.keylayout.ABC"
+            sis-inline-tighten-head-rule nil
+            ;; sis-default-cursor-color "#cf7fa7"
+            sis-other-cursor-color "orange"
+	    )
+      (if (and sys/macp (equal window-system 'ns))
+          (progn
+	    (sis-ism-lazyman-config
+	     "com.apple.keylayout.ABC"
+	     "im.rime.inputmethod.Squirrel.Hans")
+	    (setq sis--ism 'emp)
+	    ))
+      (add-to-list 'sis-context-hooks 'meow-insert-enter-hook)
+      (add-to-list 'sis-context-detectors
+                   (lambda (&rest _)
+                     (when (and meow-insert-mode
                             (or (derived-mode-p 'org-mode
                                                 'gfm-mode
                                                 'telega-chat-mode)
                                 (string-match-p "*new toot*" (buffer-name))))
                    'other)))
-  
-  (defun +meow-focus-change-function ()
-    (if (frame-focus-state)
-        (sis-set-english)
-      (progn
-	(meow-insert-exit)
-	(sis-set-other))))
+      
+      (defun +meow-focus-change-function ()
+        (if (frame-focus-state)
+            (sis-set-english)
+          (progn
+	    (meow-insert-exit)
+	    (sis-set-other))))
 
-  (defun sis-meow-reverse ()
-    "Just exchange point and mark.
+      (defun sis-meow-reverse ()
+        "Just exchange point and mark.
      This command supports `meow-selection-command-fallback'."
-    (interactive)
-    (sis-global-respect-mode 0)
-    (meow-reverse)
-    (sis-global-respect-mode t))
+        (interactive)
+        (sis-global-respect-mode 0)
+        (meow-reverse)
+        (sis-global-respect-mode t))
 
-  (add-function :after after-focus-change-function '+meow-focus-change-function)
-  :config
-  (sis-global-cursor-color-mode t)
-  (sis-global-respect-mode t)
-  (sis-global-context-mode t)
-  (sis-global-inline-mode t))
+      (add-function :after after-focus-change-function '+meow-focus-change-function)
+      :config
+      (sis-global-cursor-color-mode t)
+      (sis-global-respect-mode t)
+      (sis-global-context-mode t)
+      (sis-global-inline-mode t)))
 
 (provide 'init-rime)

@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package dirvish
   :straight t
   :autoload (
@@ -36,13 +37,13 @@
   (setq insert-directory-program "gls")
   (setq dired-listing-switches
         "-l --almost-all --human-readable --time-style=long-iso --group-directories-first --no-group")
-  (dirvish-define-preview exa (file)
-    "Use `exa' to generate directory preview."
-    :require ("exa") ; tell Dirvish to check if we have the executable
-    (when (file-directory-p file) ; we only interest in directories here
-      `(shell . ("exa" "-al" "--color=always" "--icons"
-		 "--group-directories-first" ,file))))
-  (add-to-list 'dirvish-preview-dispatchers 'exa)
+  ;; (dirvish-define-preview exa (file)
+  ;;   "Use `exa' to generate directory preview."
+  ;;   :require ("exa") ; tell Dirvish to check if we have the executable
+  ;;   (when (file-directory-p file) ; we only interest in directories here
+  ;;     `(shell . ("exa" "-al" "--color=always" "--icons"
+  ;;       	 "--group-directories-first" ,file))))
+  ;; (add-to-list 'dirvish-preview-dispatchers 'exa)
 
   :bind ; Bind `dirvish|dirvish-side|dirvish-dwim' as you see fit
   (("C-c f f" . dirvish-fd)
@@ -78,6 +79,5 @@
   (setq tramp-verbose 0)
   (setq tramp-chunksize 2000)
   (setq tramp-use-ssh-controlmaster-options nil))
-
 
 (provide 'init-dirvish)

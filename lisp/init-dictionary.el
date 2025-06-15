@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package dict-line
   :straight (:host github :repo "ISouthRain/dict-line")
   :diminish

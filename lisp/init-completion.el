@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (setq read-process-output-max (* 1024 1024))
 
 ;;; xref
@@ -30,7 +31,7 @@
 
 ;;; eglot
 (use-package eglot
-  :disabled
+  ;; :disabled
   :straight t
   :after flymake
   :hook ((c-ts-mode
@@ -43,7 +44,7 @@
 	  ;; java-ts-mode
 	  typst-ts-mode
 	  typescript-ts-mode
-	  ;; vue-ts-mode
+	  vue-ts-mode
 	  nix-ts-mode
 	  web-mode
 	  ) . eglot-ensure)
@@ -75,13 +76,6 @@
                                               :documentColor t))
 		    :vue (:hybridMode :json-false)
 		    )))
-  (defun java-eglot-init-options ()
-    `(:bundles ["/Users/takaobsid/.jdks/java-debug/share/vscode/extensions/vscjava.vscode-java-debug/server/com.microsoft.java.debug.plugin-0.50.0.jar"
-                "/Users/takaobsid/.jdks/java-test/share/vscode/extensions/vscjava.vscode-java-test/server/com.microsoft.java.test.plugin-0.40.1.jar"]
-               :settings (:format (:settings (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
-                                             :insertSpaces t
-                                             :enabled t)
-                                  :inlayhints (:parameterNames (:enabled "all")))))
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs '(typst-ts-mode . ("tinymist")))
     ;;delance 現在已經發佈到 npm 了哦，npm i -g @delance/runtime 就可以直接用 delance-langserver --stdio
@@ -89,20 +83,7 @@
     (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nil")))
     
     (add-to-list 'eglot-server-programs
-		 `((vue-mode vue-ts-mode typescript-ts-mode typescript-mode) . ("nix-shell" "-p" "nodejs-18_x" "--run" "vue-language-server --stdio" :initializationOptions ,(vue-eglot-init-options))))
-    ;; (add-to-list 'eglot-server-programs
-    ;;              `((java-mode java-ts-mode) . ("/Users/takaobsid/.jdks/jdtls/bin/jdtls" "java"
-    ;;                                            "--jvm-arg=-javaagent:/Users/takaobsid/.jdks/lombok/share/java/lombok.jar"
-    ;;                                            "-configuration" "/Users/takaobsid/.emacs.d/eglot-java-eclipse-jdt/config"
-    ;;                                            "-data" "/Users/takaobsid/.emacs.d/eglot-java-eclipse-jdt/workspace"
-    ;;                                            ;; "-configuration" "/Users/takaobsid/.jdks/jdtls/share/java/jdtls/config_mac/"
-    ;;                                            "-Xmx1G"
-    ;;                                            "--add-modules=ALL-SYSTEM"
-    ;;                                            "--add-opens" "java.base/java.util=ALL-UNNAMED"
-    ;;                                            "--add-opens" "java.base/java.lang=ALL-UNNAMED"
-    ;;                                            "--add-opens" "java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED"
-    ;;                                            "--add-opens" "java.base/com.sun.crypto.provider=ALL-UNNAMED" :initializationOptions ,(java-eglot-init-options))))
-    )
+		 `((vue-mode vue-ts-mode typescript-ts-mode typescript-mode) . ("vue-language-server" "--stdio" :initializationOptions ,(vue-eglot-init-options)))))
 
   :config
   (require 'clangd-inactive-regions)
@@ -130,7 +111,7 @@
 
 ;;; eglot-java
 (use-package eglot-java
-  :disabled t
+  ;; :disabled t
   :straight (:host github :repo "yveszoundi/eglot-java")
   :hook		       
   ((java-mode java-ts-mode) . eglot-java-mode)
@@ -138,7 +119,8 @@
   :config
   (custom-set-variables '(eglot-java-server-install-dir "~/.jdks/jdtls")
 			'(eglot-java-eclipse-jdt-cache-directory "~/.emacs.d/eglot-java-eclipse-jdt/cache")
-			'(eglot-java-eclipse-jdt-config-directory "~/.emacs.d/eglot-java-eclipse-jdt/config"))
+			'(eglot-java-eclipse-jdt-config-directory "~/.emacs.d/eglot-java-eclipse-jdt/config")
+                        '(eglot-java-java-home "~/.jdks/17.0.12/zulu-17.jdk/Contents/Home"))
   (defcustom java-lombok-path (expand-file-name "~/.jdks/lombok/share/java/lombok.jar")
     "The path to the lombok library."
     :group 'eglot-java
@@ -168,12 +150,16 @@
     `(:bundles [,dape-jdtls-java-debug-plugin-jar ,dape-jdtls-java-test-plugin-jar]
 	       :settings
 	       (:java
-		(:format (:settings
-			  (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
-			  :enabled t
-			  :insertSpaces t
-			  :tabSize 4)
-			 :inlayHints (:parameterNames (:enabled "all")))))))
+		(:configuration (:runtimes [(:name "JavaSE-17"
+                                                   :path "~/.jdks/17.0.12/zulu-17.jdk/Contents/Home"
+					           :default t)])
+                                :saveActions (:organizeImports t)
+                                :format (:settings
+			                      (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
+			                      :enabled t
+			                      :insertSpaces t
+			                      :tabSize 4)
+			        :inlayHints (:parameterNames (:enabled "all")))))))
 
 ;; (use-package dape-jdtls
 ;;   :after dape
@@ -299,7 +285,7 @@
   :config
   ;; (add-to-list 'company-frontends #'company-preview-frontend)
   (setq company-minimum-prefix-length 2
-	company-idle-delay 0
+	company-idle-delay 0.3
 	company-tooltip-idle-delay 0)
   )
 
@@ -332,7 +318,7 @@
 
 ;;; lsp-proxy
 (use-package lsp-proxy
-  ;; :disabled
+  :disabled
   :straight (:host github :repo "jadestrong/lsp-proxy"
 		   :files ("lsp-proxy.el" "lsp-proxy")
                    :pre-build (("cargo" "build" "--release") ("cp" "./target/release/lsp-proxy" "./")))

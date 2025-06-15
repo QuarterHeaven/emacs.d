@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package emacs-immersive-translate
   :straight (:type git :host github :repo "Elilif/emacs-immersive-translate")
   :hook

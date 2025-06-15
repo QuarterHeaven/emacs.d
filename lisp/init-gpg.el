@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 ;; Don't bring up key recipient dialogue.
 ;; Gpg settings
 (use-package epa-file

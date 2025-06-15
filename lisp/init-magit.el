@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package magit
   :straight (:repo "magit/magit"
 		   :files ("lisp/magit*.el" "lisp/git-rebase.el" "lisp/git-commit.el"
@@ -9,7 +10,8 @@
   :config
   (setq auth-sources '("~/.authinfo.gpg"))
   (magit-auto-revert-mode t)
-  (setq auto-revert-use-notify nil)
+  (setq auto-revert-use-notify nil
+        magit-branch-read-upstream-first 'fallback)
   (defun magit-submodule-remove+ ()
     (interactive)
     (magit-submodule-remove (list (magit-read-module-path "Remove module")) "--force" nil)))

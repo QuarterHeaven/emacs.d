@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package auto-compile
   :straight t
   :init

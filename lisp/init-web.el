@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package search-web
   :straight t
   :defer t

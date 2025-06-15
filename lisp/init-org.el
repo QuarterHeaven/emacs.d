@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package visual-fill-column
   :straight t
   :hook

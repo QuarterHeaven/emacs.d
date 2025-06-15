@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (require 'treesit)
 
 (setq treesit-font-lock-level 2)
@@ -6,6 +7,7 @@
         (c . ("https://github.com/tree-sitter/tree-sitter-c"))
         (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))
         (css . ("https://github.com/tree-sitter/tree-sitter-css"))
+        (clojure . ("https://github.com/sogaiu/tree-sitter-clojure"))
         (cmake . ("https://github.com/uyha/tree-sitter-cmake"))
         (csharp     . ("https://github.com/tree-sitter/tree-sitter-c-sharp.git"))
         (dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile"))
@@ -53,6 +55,14 @@
   :straight (:host github :repo "8uff3r/vue-ts-mode")
   :mode "\\.vue\\'")
 
+(use-package lua-mode
+  :straight t
+  :mode "\\.lua\\'")
+
+(use-package clojure-ts-mode
+  :straight t
+  :mode "\\.clj\\'")
+
 (setq major-mode-remap-alist
       '((c-mode          . c-ts-mode)
         (c++-mode        . c++-ts-mode)
@@ -62,7 +72,7 @@
 	(java-mode       . java-ts-mode)
         (js-mode         . js-ts-mode)
         (js-json-mode    . json-ts-mode)
-	(lua-mode        . lua-ts-mode)
+	;; (lua-mode        . lua-ts-mode)
         (python-mode     . python-ts-mode)
         (sh-mode         . bash-ts-mode)
         (typescript-mode . typescript-ts-mode)))
@@ -74,7 +84,7 @@
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-mode))
 (add-to-list 'auto-mode-alist '("\\.toml\\'" . toml-ts-mode))
 
 
@@ -91,19 +101,6 @@
 ;;   :straight t
 ;;   :config
 ;;   (global-treesit-auto-mode))
-
-
-;; treesitter-context-mode
-(use-package posframe-plus
-  :straight (posframe-plus :host github :repo "zbelial/posframe-plus"))
-
-(use-package treesitter-context
-  :after (posframe-plus)
-  :straight (treesitter-context :host github :repo "zbelial/treesitter-context.el")
-  :hook (rust-ts-mode . #'treesitter-context-mode)
-  (c++-ts-mode . #'treesitter-context-mode)
-  (c-ts-mode . #'treesitter-context-mode)
-  (go-ts-mode . #'treesitter-context-mode))
 
 (provide 'init-treesitter)
 

@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (when sys/macp
   (use-package emt
     :straight (:host github :repo "roife/emt")

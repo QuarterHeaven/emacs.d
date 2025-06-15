@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 ;;; ace-window to jump to other window
 (use-package ace-window
   :disabled

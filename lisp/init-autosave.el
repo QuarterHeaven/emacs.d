@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package auto-save
   :disabled
   :straight (auto-save :host github :repo "manateelazycat/auto-save")

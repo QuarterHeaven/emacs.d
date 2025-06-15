@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package ibuffer
   :straight t
   :bind ("C-x C-b" . ibuffer)

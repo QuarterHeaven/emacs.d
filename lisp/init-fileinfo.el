@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package file-info
   :straight (:host github :repo "artawower/file-info.el")
   :commands file-info-show

@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 ;; Enable vertico
 (use-package vertico
   :straight (:files (:defaults "extensions/*.el"))
@@ -44,7 +45,8 @@
 (use-package hotfuzz
   :straight t
   :init
-  (setq completion-styles '(hotfuzz)))
+  (setq completion-styles '(hotfuzz)
+        completion-ignore-case 't))
 
 
 ;; Enable rich annotations using the Marginalia package

@@ -580,5 +580,16 @@
   :config
   (setq rainbow-delimiters-max-face-count 5))
 
+;;; nyan-mode
+(use-package nyan-mode
+  :straight (:repo "zakudriver/nyan-mode")
+  :hook
+  (doom-modeline-mode . nyan-mode)
+  :custom
+  (nyan-bar-length       40)
+  (nyan-animate-nyancat  t)
+  (nyan-wavy-trail       t)
+  (nyan-animation-frames 1))
+
 (provide 'init-themes)
 ;;;init-themes.el ends here

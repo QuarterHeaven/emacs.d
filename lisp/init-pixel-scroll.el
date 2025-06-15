@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package pixel-scroll
   :disabled t
   :config

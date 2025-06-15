@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 ;; (toggle-debug-on-error)
@@ -50,14 +52,16 @@
   (require 'init-image)
   (require 'init-meow)
   (require 'init-dogears)
-  (require 'init-vundo)
+  (require 'init-undo)
   (require 'init-ibuffer)
   (require 'init-dashboard)
   (require 'init-yasnippet)
   (require 'init-completion)
   (require 'init-lspmode)
+  (require 'init-context)
   (require 'init-magit)
   (require 'init-vertico)
+  (require 'init-bufferlo)
   (require 'init-blink)
   (require 'init-dirvish)
   (require 'init-treesitter)
@@ -94,4 +98,5 @@
 
   (require 'init-secrets)
   (require 'init-keybinding)
+  (require 'init-uniline)
   )

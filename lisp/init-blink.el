@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package blink-search
   :straight (blink-search :type git :repo "manateelazycat/blink-search" :files (:defaults "backend/*.el"))
   :bind

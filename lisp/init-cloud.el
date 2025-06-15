@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (use-package dropbox
   :straight (emacs-dropbox :host github :repo "lorniu/emacs-dropbox")
   )

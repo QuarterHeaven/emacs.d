@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 ;; 关闭自动保存
 (setq make-backup-files nil)
 (setq auto-save-default nil)
