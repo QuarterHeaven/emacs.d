@@ -695,6 +695,7 @@ With a prefix ARG, remove start location."
 
 ;;; org-supertag
 (use-package org-supertag
+  :disabled
   :straight (:host github :repo "yibie/org-supertag")
   :after org
   :init

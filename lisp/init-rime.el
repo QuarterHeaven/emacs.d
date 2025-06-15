@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 (use-package rime
-  :disabled
+  :if sys/WSL
   :straight  (rime :type git
                    :host github
                    :repo "DogLooksGood/emacs-rime"
