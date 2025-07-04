@@ -161,7 +161,9 @@ otherwise this function don't work and don't know the reason
   "Setup fonts."
   (when (display-graphic-p)
     ;; Set default font
-    (cl-loop for font in '("TriplicateT4c Nerd Font" "BlexMono Nerd Font Mono" "Jetbrains Mono"
+    (set-fontset-font t nil (font-spec :name "Symbola"))
+    (set-fontset-font t '(#xe000 . #xf8ff) "TriplicateT4c Nerd Font Propo" nil 'prepend) ;; for prettify symbols
+    (cl-loop for font in '("TriplicateT4c Nerd Font Propo" "BlexMono Nerd Font Mono" "Jetbrains Mono"
                            "SF Mono" "SF Pro Display"
                            "Monaco" "DejaVu Sans Mono" "Consolas")
              when (font-installed-p font)
@@ -173,7 +175,7 @@ otherwise this function don't work and don't know the reason
                                                       (t 110))))
 
     ;; Set mode-line font
-    (cl-loop for font in '("TriplicateT4c Nerd Font" "BlexMono Nerd Font Mono" "Unifont Upper" "Noto Color Emoji" "SF Pro Display" "Helvetica")
+    (cl-loop for font in '("TriplicateT4c Nerd Font Propo" "BlexMono Nerd Font Mono" "Unifont Upper" "Noto Color Emoji" "SF Pro Display" "Helvetica")
              when (font-installed-p font)
              return (progn
                       (set-face-attribute 'mode-line nil :family font :height (cond (sys/macp 140)
@@ -212,12 +214,12 @@ otherwise this function don't work and don't know the reason
              return (cond
                      ((< emacs-major-version 27)
                       (set-fontset-font "fontset-default" 'unicode font nil 'prepend))
-                     ((< emacs-major-version 28)
-                      (set-fontset-font t 'symbol (font-spec :family font
-							      :height (cond (sys/macp 140)
-									    (sys/win32p 110)
-									    (sys/WSL 200)
-									    (t 110))) nil 'prepend))
+                     ;; ((< emacs-major-version 28)
+                     ;;  (set-fontset-font t 'symbol (font-spec :family font
+		     ;;    				      :height (cond (sys/macp 140)
+		     ;;    						    (sys/win32p 110)
+		     ;;    						    (sys/WSL 200)
+		     ;;    						    (t 110))) nil 'prepend))
                      (t
                       (set-fontset-font t 'emoji (font-spec :family font
 							    :height (cond (sys/macp 140)

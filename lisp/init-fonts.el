@@ -32,4 +32,8 @@
   :init
   (setq unicad-mode 1))
 
+(use-package nerd-icons
+  :config
+  (setq nerd-icons-font-family "TriplicateT4c Nerd Font Propo"))
+
 (provide 'init-fonts)

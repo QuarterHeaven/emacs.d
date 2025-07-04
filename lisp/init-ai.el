@@ -9,14 +9,14 @@
   :config
   ;; (setq gptel-proxy "127.0.0.1:1081")
 
-  (setq-default gptel-model 'deepseek-v3	 ;Pick your default model
+  (setq-default gptel-model 'claude-3-7-sonnet	 ;Pick your default model
         	gptel-backend
                 (gptel-make-openai "gptapi.us"
                   :protocol "https"
                   :host "www.gptapi.us"
                   :stream t
                   :key #'gptel-api-key-gptapi
-                  :models '(deepseek-v3 deepseek-r1 claude-3-5-sonnet claude-3-5-haiku claude-3-7-sonnet))
+                  :models '(claude-3-7-sonnet deepseek-v3 deepseek-r1 claude-3-5-sonnet claude-3-5-haiku o4-mini gpt-4.5-preview deepseek-v3.1))
                 gptel-default-mode 'org-mode)
 
   (gptel-make-openai "indrin"

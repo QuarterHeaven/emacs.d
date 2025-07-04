@@ -30,13 +30,14 @@
           ("Updated" 10 t nil updated nil))))
 
 (use-package diff-hl
+  ;; :disabled
   :straight t
   :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
 	 (magit-post-refresh . diff-hl-magit-post-refresh)
 	 (after-init . global-diff-hl-mode))
   :config
-  (setq diff-hl-update-async t))
-
+  ;; makes my emacs freeze
+  (setq diff-hl-update-async nil))
 (use-package blamer
   :straight (:host github :repo "artawower/blamer.el" :branch "feature/margin-overlays")
   :bind (("s-i" . blamer-show-commit-info)
@@ -48,8 +49,8 @@
   :custom-face
   (blamer-face ((t :family "TriplicateT4c Nerd Font"
 		   :foreground "#7a88cf"
-                   :background nil
-                   :height 120
+                   ;; :background nil
+                   :height 110
                    :italic t)))
   :init
   (global-blamer-mode 1)
@@ -58,6 +59,24 @@
   )
 
 ;;; gptel auto commit message
+;; (defconst gptel-commit-prompt
+;;       "You are an expert at writing Git commits. Your job is to write a short clear commit message that summarizes the changes.
+
+;; If you can accurately express the change in just the subject line, don't include anything in the message body. Only use the body when it is providing *useful* information.
+
+;; Don't repeat information from the subject line in the message body.
+
+;; Only return the commit message in your response. Do not include any additional meta-commentary about the task. Do not include the raw diff output in the commit message.
+
+;; Follow good Git style:
+
+;; - Separate the subject from the body with a blank line
+;; - Try to limit the subject line to 50 characters
+;; - Capitalize the subject line
+;; - Do not end the subject line with any punctuation
+;; - Use the imperative mood in the subject line
+;; - Wrap the body at 72 characters
+;; - Keep the body short and concise (omit it entirely if not useful)")
 (defconst gptel-commit-prompt
   "The user provides the result of running `git diff --cached`. You suggest a conventional commit message. Don't add anything else to the response. The following describes conventional commits.
 
@@ -103,7 +122,7 @@ A scope may be provided to a commit's type, to provide additional contextual inf
 (use-package magit
   :after gptel
   :commands (gptel-commit)
-  :config
+  :init
   (defun gptel-commit()
     "Generate commit message with gptel and insert it into the buffer."
     (interactive)

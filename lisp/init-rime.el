@@ -62,16 +62,12 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
       :init
       (setq sis-english-source "com.apple.keylayout.ABC"
             sis-inline-tighten-head-rule nil
-            ;; sis-default-cursor-color "#cf7fa7"
-            sis-other-cursor-color "orange"
-	    )
-      (if (and sys/macp (equal window-system 'ns))
-          (progn
-	    (sis-ism-lazyman-config
+            sis-other-cursor-color "orange")
+      (sis-ism-lazyman-config
 	     "com.apple.keylayout.ABC"
-	     "im.rime.inputmethod.Squirrel.Hans")
-	    (setq sis--ism 'emp)
-	    ))
+	     "im.rime.inputmethod.Squirrel.Hans"
+             'emp)
+   
       (add-to-list 'sis-context-hooks 'meow-insert-enter-hook)
       (add-to-list 'sis-context-detectors
                    (lambda (&rest _)
@@ -97,7 +93,7 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
         (meow-reverse)
         (sis-global-respect-mode t))
 
-      (add-function :after after-focus-change-function '+meow-focus-change-function)
+      ;; (add-function :after after-focus-change-function '+meow-focus-change-function)
       :config
       (sis-global-cursor-color-mode t)
       (sis-global-respect-mode t)

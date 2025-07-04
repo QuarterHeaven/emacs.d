@@ -8,8 +8,10 @@
   (dict-line-dict-directory "~/.emacs.d/submodules/vscode_english_chinese_dictionary/src/词典数据/")
   (dict-line-more-icon " ⚔️ ")
   (dict-line-idle-delay 1)
+  (dict-line-display #'dict-line--posframe)
+  (dict-line-posframe-location #'posframe-poshandler-window-bottom-right-corner)
   :config
-  (global-dict-line-mode))
+  (dict-line-mode t))
 
 
 (provide 'init-dictionary)

@@ -16,7 +16,7 @@
   (add-hook 'telega-load-hook
 	    #'(lambda ()
 		(set-face-attribute 'telega-msg-heading nil
-				    :background nil
+				    ;; :background nil
                                     :underline 't
                                     :height 1.2
                                     )

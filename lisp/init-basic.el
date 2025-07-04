@@ -55,7 +55,7 @@
 (set-language-info
  "UTF-8"
  'coding-priority
- '(utf-8 gb18030 gbk gb2312 iso-2022-cn chinese-big5 chinese-iso-8bit iso-8859-prefer))
+ '(utf-8 gb18030 gbk gb2312 iso-2022-cn chinese-big5 chinese-iso-8bit))
     (prefer-coding-system 'cp950)
     (prefer-coding-system 'gb2312)
     (prefer-coding-system 'cp936)

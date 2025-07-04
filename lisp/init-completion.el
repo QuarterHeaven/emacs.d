@@ -26,7 +26,7 @@
 	`((error "" compilation-error)
 	  (warning "" compilation-warning)
 	  (note "" compilation-info))
-        flymake-show-diagnostics-at-end-of-line t)
+        flymake-show-diagnostics-at-end-of-line nil)
   )
 
 ;;; eglot
@@ -53,8 +53,8 @@
   :bind
   (:map eglot-mode-map
 	("M-RET" . eglot-code-actions))
-  :init
   
+  :init
   (defun vue-eglot-init-options ()
     (let ((tsdk-path (expand-file-name
                       "lib"
@@ -76,6 +76,13 @@
                                               :documentColor t))
 		    :vue (:hybridMode :json-false)
 		    )))
+  
+  (defun my/nix-clangd-cmd (&rest _args)
+    "Use `nix-shell -p llvmPackages_15.clangd` to run clangd."
+    (list "nix" "shell"
+          "nixpkgs#llvmPackages_latest.clang-tools"
+          "--command" "clangd" "-j=4" "--clang-tidy"))
+  
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs '(typst-ts-mode . ("tinymist")))
     ;;delance 現在已經發佈到 npm 了哦，npm i -g @delance/runtime 就可以直接用 delance-langserver --stdio
@@ -83,7 +90,9 @@
     (add-to-list 'eglot-server-programs '(nix-ts-mode . ("nil")))
     
     (add-to-list 'eglot-server-programs
-		 `((vue-mode vue-ts-mode typescript-ts-mode typescript-mode) . ("vue-language-server" "--stdio" :initializationOptions ,(vue-eglot-init-options)))))
+		 `((vue-mode vue-ts-mode typescript-ts-mode typescript-mode) . ("vue-language-server" "--stdio" :initializationOptions ,(vue-eglot-init-options))))
+    (add-to-list 'eglot-server-programs '((c-ts-mode c++-ts-mode) . my/nix-clangd-cmd))
+    )
 
   :config
   (require 'clangd-inactive-regions)
@@ -91,7 +100,9 @@
 	eglot-events-buffer-config '(:size 0 :format full)
         eglot-autoshutdown t
         ;; use global completion styles
-        completion-category-defaults nil)
+        completion-category-defaults nil
+        eglot-code-action-indications '(eldoc-hint margin)
+        eglot-code-action-indicator "󱧡")
 
   ;; solve flymake issue
   (cl-defmethod eglot-handle-notification :after
@@ -155,10 +166,10 @@
 					           :default t)])
                                 :saveActions (:organizeImports t)
                                 :format (:settings
-			                      (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
-			                      :enabled t
-			                      :insertSpaces t
-			                      :tabSize 4)
+			                 (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
+			                 :enabled t
+			                 :insertSpaces t
+			                 :tabSize 4)
 			        :inlayHints (:parameterNames (:enabled "all")))))))
 
 ;; (use-package dape-jdtls
@@ -305,7 +316,7 @@
       (alist-get kind-num company-box-icons--lsp-alist)))
 
   (setq company-box-icons-functions
-	   (cons #'company-box-icons--lsp-copilot company-box-icons-functions))
+	(cons #'company-box-icons--lsp-copilot company-box-icons-functions))
   )
 
 (use-package kind-icon

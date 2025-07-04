@@ -28,25 +28,33 @@
 ;;         (setq exec-path (split-string path-from-shell
 ;; 				      path-separator))))
 
+(use-package exec-path-from-shell
+  :ensure t
+  :when (memq window-system '(mac ns x))
+  :hook (after-init . #'exec-path-from-shell-initialize)
+  :config
+  (dolist (var '("PATH" "LIBRARY_PATH" "CPATH" "CPLUS_INCLUDE_PATH"))
+    (add-to-list 'exec-path-from-shell-variables var)))
+
 ;; sh -c 'printf "%s" "$PATH"' > ~/.path
 (if sys/macp
     (condition-case err
-	(let ((path (with-temp-buffer
+        (let ((path (with-temp-buffer
                       (insert-file-contents-literally "~/.path")
                       (buffer-string))))
-	  (setenv "PATH" path)
-	  (setq exec-path (append (parse-colon-path path) (list exec-directory))))
-      (error (warn "%s" (error-message-string err))))
-
-  (use-package exec-path-from-shell
-    :disabled
-    :straight t
-    :commands exec-path-from-shell-initialize
-    :if (not (memq system-type '(cygwin windows-nt)))
-    :custom
-    (exec-path-from-shell-arguments '("-l"))
-    :config
-    (exec-path-from-shell-initialize)))
+          (setenv "PATH" path)
+          (setq exec-path (append (parse-colon-path path) (list exec-directory))))
+      (error (warn "%s" (error-message-string err)))))
+  
+;;   (use-package exec-path-from-shell
+;;     :disabled
+;;     :straight t
+;;     :commands exec-path-from-shell-initialize
+;;     :if (not (memq system-type '(cygwin windows-nt)))
+;;     :custom
+;;     (exec-path-from-shell-arguments '("-l"))
+;;     :config
+;;     (exec-path-from-shell-initialize)))
 
 (add-to-list 'exec-path "/home/takaobsid/bin/")
 

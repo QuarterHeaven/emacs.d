@@ -198,7 +198,7 @@
 	find-file-visit-truename t
 	doom-modeline-github t
 	doom-modeline-github-interval (* 30 60))
-  (set-face-attribute 'doom-modeline nil :inherit 'mode-line)
+  ;; (set-face-attribute 'doom-modeline nil :inherit 'mode-line)
   (doom-modeline-def-segment image-info
     "Display the current image's info on the modeline"
     (concat
