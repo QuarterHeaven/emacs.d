@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 (use-package dashboard
-  ;; :disabled t
+  :disabled t
   :straight t
   :after (page-break-lines)
   :init
@@ -50,7 +50,7 @@
   (dashboard-set-random-banner))
 
 (use-package welcome-dashboard
-  :disabled t
+  ;; :disabled t
   :straight (
              :host github
              :repo "QuarterHeaven/welcome-dashboard"

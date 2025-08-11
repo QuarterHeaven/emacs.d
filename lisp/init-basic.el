@@ -93,4 +93,6 @@
 
 (setq-default indent-tabs-mode nil)
 
+(setq scroll-preserve-screen-position 'always)
+
 (provide 'init-basic)

@@ -19,7 +19,10 @@
 ;; [elec-pair]
 (use-package elec-pair
   ;; :disabled
-  :hook ((prog-mode conf-mode yaml-mode org-mode markdown-mode) . electric-pair-mode)
+  ;; :hook ((prog-mode conf-mode yaml-mode org-mode markdown-mode) . electric-pair-mode)
+  :init
+  (electric-pair-mode +1)
+
   :config
   (setq electric-pair-inhibit-predicate 'electric-pair-default-inhibit))
 

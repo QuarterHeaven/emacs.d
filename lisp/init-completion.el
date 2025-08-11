@@ -18,7 +18,7 @@
 (use-package flymake
   :straight t
   :config
-  (setq flymake-start-on-flymake-mode nil
+  (setq flymake-start-on-flymake-mode t
         flymake-no-changes-timeout nil
         flymake-start-on-save-buffer t
 	flymake-indicator-type 'margins
@@ -27,6 +27,50 @@
 	  (warning "" compilation-warning)
 	  (note "" compilation-info))
         flymake-show-diagnostics-at-end-of-line nil)
+  )
+
+;;; flyover
+(use-package flyover
+  :straight (:host github :repo "konrad1977/flyover")
+  :after (flymake)
+  :hook
+  ((flymake-mode . flyover-mode)
+   (flycheck-mode . flyover-mode))
+  :config
+  (setq flyover-levels '(error warning info))
+  ;; Use theme colors for error/warning/info faces
+  (setq flyover-use-theme-colors t)
+
+  ;; Adjust background lightness (lower values = darker)
+  (setq flyover-background-lightness 45)
+
+  ;; Make icon background darker than foreground
+  (setq flyover-percent-darker 40)
+
+  ;; "Percentage to lighten or darken the text when tinting is enabled."
+  (setq flyover-text-tint 'lighter) ;; or 'darker or nil
+  (setq flyover-text-tint-percent 70)
+  
+  (setq flyover-checkers '(flycheck flymake))
+  (setq flyover-debounce-interval 0.2)
+  ;; Enable wrapping of long error messages across multiple lines
+  (setq flyover-wrap-messages t)
+
+  ;; Maximum length of each line when wrapping messages
+  (setq flyover-max-line-length 80)
+  (setq flyover-virtual-line-type 'curved-dotted-arrow)
+  ;; (setq flyover-virtual-line-icon "╰──") ;;; default its nil
+  ;;; Hide checker name for a cleaner UI
+  (setq flyover-hide-checker-name t) 
+
+  ;;; show at end of the line instead.
+  (setq flyover-show-at-eol nil) 
+
+  ;;; Hide overlay when cursor is at same line, good for show-at-eol.
+  (setq flyover-hide-when-cursor-is-on-same-line t) 
+
+  ;;; Show an arrow (or icon of your choice) before the error to highlight the error a bit more.
+  (setq flyover-show-virtual-line t)
   )
 
 ;;; eglot
@@ -53,7 +97,9 @@
   :bind
   (:map eglot-mode-map
 	("M-RET" . eglot-code-actions))
-  
+  :custom
+  (eglot-ignored-server-capabilities
+   '(:documentOnTypeFormattingProvider))
   :init
   (defun vue-eglot-init-options ()
     (let ((tsdk-path (expand-file-name
@@ -211,12 +257,12 @@
 
 ;;; [corfu] compleletion frontend 
 (use-package corfu
-  :disabled
+  ;; :disabled
   :straight (:files (:defaults "extensions/*.el"))
   :hook (;; ((prog-mode conf-mode yaml-mode shell-mode eshell-mode) . corfu-mode)
-	 (after-init . global-corfu-mode)
+	 ;; (after-init . global-corfu-mode)
 	 (after-init . corfu-popupinfo-mode)
-         ((eshell-mode shell-mode) . (lambda () (setq-local corfu-auto nil)))
+         ;; ((eshell-mode shell-mode) . (lambda () (setq-local corfu-auto nil)))
          (minibuffer-setup . corfu-enable-in-minibuffer))
   :bind (:map corfu-map
               ("s-m" . corfu-move-to-minibuffer)
@@ -285,7 +331,7 @@
 (use-package company
   ;; :disabled
   :straight t
-  :hook ((after-init . global-company-mode))
+  :hook ((prog-mode . company-mode))
   :bind (:map company-active-map
 	      ("TAB" . company-indent-or-complete-common)
 	      )
@@ -297,13 +343,12 @@
   ;; (add-to-list 'company-frontends #'company-preview-frontend)
   (setq company-minimum-prefix-length 2
 	company-idle-delay 0.3
-	company-tooltip-idle-delay 0)
-  )
+	company-tooltip-idle-delay 0))
 
 (use-package company-quickhelp
   :straight t
   :after (company)
-  :hook ((global-company-mode . company-quickhelp-mode)))
+  :hook ((company-mode . company-quickhelp-mode)))
 
 (use-package company-box
   :straight t
@@ -390,5 +435,27 @@
   ;; 将 Java 文件与模板关联
   (define-auto-insert '("\\.java\\'" . "Java class")
     'taka/java-auto-insert))
+
+;;; `completion-preview-mode'
+(add-hook
+   'org-mode-hook
+   (defun yy/set-completion-preview ()
+     (completion-preview-mode)
+     (let ((kmap (make-sparse-keymap)))
+       (keymap-set kmap "C-i" #'completion-preview-insert)
+       (keymap-set kmap "M-i" #'completion-preview-complete)
+       (keymap-set kmap "C-n" #'completion-preview-next-candidate)
+       (keymap-set kmap "C-p" #'completion-preview-prev-candidate)
+       (keymap-set kmap "C-f" #'completion-preview-insert-word)
+       (setq-local completion-preview-active-mode-map kmap))
+     (setq-local completion-preview-commands
+                 '(;; self-insert-command
+                   org-self-insert-command
+                   insert-char
+                   ;; delete-backward-char
+                   org-delete-backward-char
+                   backward-delete-char-untabify
+                   analyze-text-conversion
+                   completion-preview-complete))))
 
 (provide 'init-completion)
