@@ -21,9 +21,9 @@
 (use-package indent-bars
   :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
   :hook (prog-mode . indent-bars-mode)
-  :config
-  (custom-set-faces
-      '(indent-bars-face ((t (:height 120)))))
+  ;; :config
+  ;; (custom-set-faces
+  ;;     '(indent-bars-face ((t (:height 120)))))
   :custom
   (indent-bars-treesit-support t)
   (indent-bars-no-descend-string t)
@@ -34,10 +34,10 @@
   (indent-bars-highlight-current-depth '(:blend 0.5))
   (indent-bars-zigzag nil)
   ;; (indent-bars-highlight-current-depth nil) 
-  (indent-bars-pattern "|")
-  (indent-bars-no-stipple-char ?\⎸)
-  (indent-bars-prefer-character t)
-  (indent-bars-display-on-blank-lines t))
+  ;; (indent-bars-pattern "|")
+  ;; (indent-bars-no-stipple-char ?\⎸)
+  (indent-bars-prefer-character nil)
+  (indent-bars-display-on-blank-lines nil))
 
 ;;; catppuccin
 (use-package catppuccin-theme
@@ -73,8 +73,9 @@
   ;; (setq current-load-theme 'doom-bluloco-light)
   ;; (setq current-load-theme 'doom-one)
   ;; (setq current-load-theme 'doom-ayu-light)
-  (setq current-load-theme 'doom-tomorrow-day)
+  ;; (setq current-load-theme 'doom-tomorrow-day)
   ;; (setq current-load-theme 'rose-pine-dawn)
+  (setq current-load-theme 'doom-gruvbox)
   (load-theme current-load-theme t)
   :hook
   (highlight-indent-guides-mode . (lambda () (load-theme current-load-theme t)))
@@ -402,6 +403,14 @@
            (padding (- (/ tag-width txt-char-width) (length string))))
       padding))
 
+  (defun svg-pad (p)
+    "Normalize PADDING for svg-lib: number or cons."
+    (cond
+     ((numberp p) (max 0 p))
+     ((and (consp p) (numberp (car p)) (numberp (cdr p)))
+    (cons (max 0 (car p)) (max 0 (cdr p))))
+     (t 2)))  ;; 默认 2px
+
   (defun eli/tab-bar-tab-name-with-svg (tab i)
     (let* ((current-p (eq (car tab) 'current-tab))
            (name (concat (if tab-bar-tab-hints (format "%d " i) "")
@@ -411,6 +420,8 @@
                                            (if current-p 'non-selected 'selected)))
                                   tab-bar-close-button)
                              "")))
+           (name (replace-regexp-in-string "\\]" "］"
+                                           (replace-regexp-in-string "\\[" "［" name)))
            (padding (plist-get svg-lib-style-default :padding))
            (width))
       (when tab-bar-auto-width
@@ -431,7 +442,7 @@
        (svg-tag-make
 	name
 	:face (if (eq (car tab) 'current-tab) 'tab-bar-svg-active 'tab-bar-svg-inactive)
-	:inverse t :margin 1 :radius 6 :padding padding))))
+	:inverse t :margin 1 :radius 6 :padding (svg-pad padding)))))
 
   (setq tab-bar-tab-name-format-function #'eli/tab-bar-tab-name-with-svg)
   )

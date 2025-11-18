@@ -59,7 +59,7 @@
 	telega-chat-input-markups '("org")
 	telega-chat-prompt-format "> "
 	telega-completing-read-function completing-read-function
-	telega-proxies (list '(:server "127.0.0.1" :port 1081 :enable nil :type (:@type "proxyTypeSocks5")))
+	telega-proxies (list '(:server "127.0.0.1" :port 7890 :enable nil :type (:@type "proxyTypeSocks5")))
 	telega-avatar-workaround-gaps-for '(return t)
 	)
 

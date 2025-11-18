@@ -26,11 +26,6 @@
   :hook
   (visual-fill-column-mode . adaptive-wrap-prefix-mode))
 
-(use-package ob-rust
-  :straight t
-  :after (org)
-  )
-
 ;;; org latex
 (use-package org
   :defer t
@@ -502,6 +497,7 @@
 
 ;;; org-visual-outline
 (use-package org-visual-indent
+  :disabled
   :straight (org-visual-outline :type git :host github :repo "legalnonsense/org-visual-outline")
   :after (org color)
   :hook (org-mode . org-visual-indent-mode)
@@ -746,5 +742,20 @@ With a prefix ARG, remove start location."
 			      (list 'invisible nil))))
 
   (advice-add 'org-raise-scripts :after #'my/org-raise-scripts-no-braces))
+
+(use-package ob-rust
+  :straight t
+  :after (org)
+  )
+
+(use-package ob-scheme
+  :straight (:type built-in)
+  :config
+  (add-to-list 'org-babel-load-languages '(scheme . t))
+  (defun org-babel-get-header (params key &optional others)
+    (delq nil
+          (mapcar
+           (lambda (p) (when (funcall (if others #'not #'identity) (eq (car p) key)) p))
+           params))))
 
 (provide 'init-org)

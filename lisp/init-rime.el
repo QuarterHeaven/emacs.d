@@ -64,19 +64,28 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
             sis-inline-tighten-head-rule nil
             sis-other-cursor-color "orange")
       (sis-ism-lazyman-config
-	     "com.apple.keylayout.ABC"
-	     "im.rime.inputmethod.Squirrel.Hans"
-             'emp)
-   
+       "com.apple.keylayout.ABC"
+       "im.rime.inputmethod.Squirrel.Hans"
+       'emp)
+      
       (add-to-list 'sis-context-hooks 'meow-insert-enter-hook)
-      (add-to-list 'sis-context-detectors
-                   (lambda (&rest _)
-                     (when (and meow-insert-mode
-                            (or (derived-mode-p 'org-mode
-                                                'gfm-mode
-                                                'telega-chat-mode)
-                                (string-match-p "*new toot*" (buffer-name))))
-                   'other)))
+      ;; (add-to-list 'sis-context-detectors
+      ;;              (lambda (&rest _)
+      ;;                (when (and meow-insert-mode
+      ;;                           (or (derived-mode-p 'org-mode
+      ;;                                               'gfm-mode
+      ;;                                               'telega-chat-mode)
+      ;;                               (string-match-p "*new toot*" (buffer-name))))
+      ;;                  'other)))
+      (defun +context-detector-function (&rest _)
+        "Detect context for input method switching."
+        (and meow-insert-mode
+             (or (derived-mode-p 'gfm-mode 'org-mode 'telega-chat-mode)
+                 (string-match-p "\\*new toot\\*" (buffer-name)))
+             (not (or (looking-back "[a-zA-Z]\\|\\cc" 1)
+                      (looking-at "[a-zA-Z]\\|\\cc")))
+             'other))
+      (add-to-list 'sis-context-detectors #'+context-detector-function)
       
       (defun +meow-focus-change-function ()
         (if (frame-focus-state)
@@ -94,6 +103,24 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
         (sis-global-respect-mode t))
 
       ;; (add-function :after after-focus-change-function '+meow-focus-change-function)
+      (defvar +idle-command-for-sis-timer nil)
+      (defun +idle-command-for-sis ()
+        (when (and meow-insert-mode
+                   (not (or (overlayp sis--inline-overlay)
+                            (eq sis--prefix-handle-stage 'sequence)
+                            (memq real-last-command
+                                  '(sis-inline-mode-force
+                                    sis--inline-ret-check-to-deactivate))
+                            (equal last-input-event '(ns-put-working-text)))))
+          (sis-context)))
+      (defun +setup-idle-command-for-sis ()
+        "Setup idle timer for sis context switching."
+        (when +idle-command-for-sis-timer
+          (cancel-timer +idle-command-for-sis-timer))
+        (setq +idle-command-for-sis-timer
+              (run-with-idle-timer 0.2 t #'+idle-command-for-sis)))
+      (+setup-idle-command-for-sis)
+
       :config
       (sis-global-cursor-color-mode t)
       (sis-global-respect-mode t)

@@ -6,3 +6,6 @@
   (setenv "NIX_PATH" "nixpkgs=/Users/takaobsid/.nix-defexpr/channels/nixpkgs"))
 
 (if (eq system-type 'darwin) (set-darwin-env))
+
+;; (setq debug-on-error t
+;;       stack-trace-on-error t)

@@ -2,7 +2,7 @@
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
-;; (toggle-debug-on-error)
+(toggle-debug-on-error)
 
 (let (
       ;; 加载的时候临时增大`gc-cons-threshold'以加速启动速度。
@@ -56,6 +56,15 @@
   (require 'init-ibuffer)
   (require 'init-dashboard)
   (require 'init-yasnippet)
+  (require 'init-notify)
+
+  (require 'init-languages)
+  (require 'init-clojure)
+  (require 'init-ejc-sql)
+  (require 'init-web)
+  (require 'init-wolfram)
+  (require 'init-typst)
+
   (require 'init-completion)
   (require 'init-lspmode)
   (require 'init-context)
@@ -79,13 +88,6 @@
   (require 'init-autocompile)
   (require 'init-gpg)
   (require 'init-telega)
-
-  (require 'init-languages)
-  (require 'init-clojure)
-  (require 'init-ejc-sql)
-  (require 'init-web)
-  (require 'init-wolfram)
-  (require 'init-typst)
 
   (require 'init-cloud)
   (require 'init-esup)

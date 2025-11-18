@@ -6,7 +6,7 @@
 ;; Keywords: lisp
 
 (use-package vundo
-  :ensure t)
+  :straight t)
 
 (use-package undo-fu
   :straight t

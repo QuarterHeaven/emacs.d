@@ -28,7 +28,7 @@
   (require 'eaf-netease-cloud-music)
   (setq eaf-webengine-default-zoom (if (> (frame-pixel-width) 3000) 2 1))
   (setq eaf-browser-aria2-proxy-host "127.0.0.1")
-  (setq eaf-browser-aria2-proxy-port "1081")
+  (setq eaf-browser-aria2-proxy-port "7890")
   (setq eaf-browser-enable-adblocker t)
   (setq eaf-browser-enable-autofill t)
   (setq eaf-terminal-font-size 18)

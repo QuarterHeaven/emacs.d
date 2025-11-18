@@ -80,7 +80,9 @@
   :after flymake
   :hook ((c-ts-mode
 	  c++-ts-mode
+          objc-mode
 	  clojure-ts-mode
+          go-ts-mode
 	  haskell-ts-mode
 	  python-ts-mode
 	  rust-ts-mode
@@ -141,7 +143,7 @@
     )
 
   :config
-  (require 'clangd-inactive-regions)
+  (require 'eglot-inactive-regions)
   (setq eglot-connect-timeout 10
 	eglot-events-buffer-config '(:size 0 :format full)
         eglot-autoshutdown t
@@ -372,6 +374,18 @@
   ;; (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
   )
 
+(use-package company-tng
+  :after (company)
+  :config
+  (company-tng-configure-default)
+  (keymap-unset company-active-map "C-n")
+  (keymap-unset company-active-map "C-p")
+  (keymap-set company-mode-map "M-n" #'company-complete-common)
+  (keymap-set company-active-map "M-p" #'company-select-previous)
+  (keymap-set company-active-map "M-n" #'company-select-next)
+  (comp)
+)
+
 ;;; lsp-proxy
 (use-package lsp-proxy
   :disabled
@@ -385,6 +399,7 @@
   ((c-ts-mode
     c++-ts-mode
     clojure-ts-mode
+    go-ts-mode
     haskell-ts-mode
     python-ts-mode
     rust-ts-mode

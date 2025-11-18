@@ -275,22 +275,15 @@
   (setq enable-recursive-minibuffers t))
 
 
-(use-package nano-vertico
-  :disabled
-  :straight (:type git :host github :repo "rougier/nano-vertico")
-  :init
-  (nano-vertico-mode 1))
-
-
 (use-package vertico-posframe
   :disabled
   :straight (:type git :host github :repo "tumashu/vertico-posframe")
+  :functions posframe-poshandler-frame-center-near-bottom
+  :hook (vertico-mode . vertico-posframe-mode)
   :init
-  (vertico-posframe-mode 1)
-  :config
-  (setq vertico-posframe-parameters
-      '((left-fringe . 8)
-        (right-fringe . 8))))
+  (setq vertico-posframe-parameters '((left-fringe . 8)
+                                      (right-fringe . 8))))
+        ;; vertico-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom))
 
 ;;; deadgrep
 (use-package deadgrep

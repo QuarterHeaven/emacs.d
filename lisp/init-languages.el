@@ -59,15 +59,16 @@
   :straight t
   :bind ("C-h D" . devdocs-lookup))
 
-(unless (package-installed-p 'clangd-inactive-regions)
-  (package-vc-install "https://github.com/fargiolas/clangd-inactive-regions.el"))
+;; (unless (package-installed-p 'clangd-inactive-regions)
+;;   (package-vc-install "https://github.com/fargiolas/clangd-inactive-regions.el"))
 
-(use-package clangd-inactive-regions
+(use-package eglot-inactive-regions
+  :straight (:host github :repo "fargiolas/eglot-inactive-regions")
   :init
-  (add-hook 'eglot-managed-mode-hook #'clangd-inactive-regions-mode)
+  (add-hook 'eglot-managed-mode-hook #'eglot-inactive-regions-mode)
   :config
-  (clangd-inactive-regions-set-method "darken-foreground")
-  (clangd-inactive-regions-set-opacity 0.55))
+  (setq eglot-inactive-regions-style "darken-foreground")
+  (setq eglot-inactive-regions-opacity 0.55))
 
 ;; (use-package clangd-inactive-regions
 ;;   :straight (:type git :host github :repo "fargiolas/clangd-inactive-regions.el")
@@ -153,9 +154,17 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.json\\'" . json-mode)))
 
-(use-package geiser-mit
+(use-package geiser
   :straight t
-  )
+  :init (setq geiser-mit-binary "/opt/homebrew/bin/scheme"
+              geiser-guile-binary "/opt/homebrew/bin/guile"
+              geiser-active-implementations '(guile mit)
+              geiser-default-implementation 'guile)
+  :config
+  (use-package geiser-mit
+    :straight t)
+  (use-package geiser-guile
+    :straight t))
 
 (use-package web-mode
   :straight t
@@ -196,5 +205,7 @@
 ;; 	("str" . ?𝕊)
 ;; 	("String" . ?𝕊))
 ;;       "Alist of symbol prettifications used for `prettify-symbols-alist'.")
+(use-package sicp
+  :straight t)
 
 (provide 'init-languages)
