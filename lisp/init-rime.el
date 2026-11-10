@@ -80,6 +80,8 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
       (defun +context-detector-function (&rest _)
         "Detect context for input method switching."
         (and meow-insert-mode
+             (not (meow-normal-mode-p))  ; 确保不在 normal 模式
+             (not (meow-beacon-mode-p))  ; 确保不在 beacon 模式
              (or (derived-mode-p 'gfm-mode 'org-mode 'telega-chat-mode)
                  (string-match-p "\\*new toot\\*" (buffer-name)))
              (not (or (looking-back "[a-zA-Z]\\|\\cc" 1)
@@ -106,6 +108,9 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
       (defvar +idle-command-for-sis-timer nil)
       (defun +idle-command-for-sis ()
         (when (and meow-insert-mode
+                   (not (meow-normal-mode-p))  ; 明确排除 normal 模式
+                   (not (meow-beacon-mode-p))  ; 排除 beacon 模式
+                   (not (meow-keypad-mode-p))  ; 排除 keypad 模式
                    (not (or (overlayp sis--inline-overlay)
                             (eq sis--prefix-handle-stage 'sequence)
                             (memq real-last-command

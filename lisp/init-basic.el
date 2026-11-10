@@ -70,15 +70,11 @@
 (setq default-buffer-file-conding-system 'utf-8)
 
 ;; disable title-bar; emacs >= 29 only
-;; (cond (sys/macp
-;;        (add-to-list 'default-frame-alist '(undecorated-round . t))))
-;; (cond (sys/linuxp
 (add-to-list 'default-frame-alist '(undecorated . t))
-;; ))					
 
 (add-hook 'window-setup-hook (lambda ()
 			       (tool-bar-mode -1)
-                                 (menu-bar-mode 0)
+                               (menu-bar-mode 0)
 			       (setq inhibit-startup-message t)
 			       (toggle-frame-maximized)
 			       (scroll-bar-mode -1)
@@ -94,5 +90,9 @@
 (setq-default indent-tabs-mode nil)
 
 (setq scroll-preserve-screen-position 'always)
+(setq load-path-filter-function #'load-path-filter-cache-directory-files)
+
+(setq shell-file-name "/run/current-system/sw/bin/bash")
+(setenv "SHELL" "/run/current-system/sw/bin/bash")
 
 (provide 'init-basic)

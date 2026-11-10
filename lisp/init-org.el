@@ -54,7 +54,7 @@
                    "(provide 'org-version)\n")))
               :pin nil)
   :hook
-  ((org-mode . org-latex-preview-auto-mode)
+  (;; (org-mode . org-latex-preview-auto-mode)
    (org-mode . org-toggle-pretty-entities)
    (org-mode . org-cdlatex-mode)
    (org-mode . org-num-mode))

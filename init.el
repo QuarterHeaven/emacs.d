@@ -41,6 +41,7 @@
   (require 'init-outli)
   (require 'init-latex)
   (require 'init-org)
+;;  (require 'init-mouse)
 
   (require 'init-osx-keys)
   (require 'init-gui-frames)
@@ -73,6 +74,7 @@
   (require 'init-bufferlo)
   (require 'init-blink)
   (require 'init-dirvish)
+  (require 'init-yazi)
   (require 'init-treesitter)
   (require 'init-pdftools)
   ;; (require 'init-dynamic-agenda)
@@ -101,4 +103,5 @@
   (require 'init-secrets)
   (require 'init-keybinding)
   (require 'init-uniline)
+  (require 'init-appine)
   )

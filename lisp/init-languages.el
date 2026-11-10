@@ -208,4 +208,12 @@
 (use-package sicp
   :straight t)
 
+(setq elisp-fontify-semantically t)
+
+(use-package hideshow
+  :hook
+  (prog-mode . hs-minor-mode)
+  :config
+  (setq hs-show-indicators t))
+
 (provide 'init-languages)

@@ -94,7 +94,7 @@
 	  nix-ts-mode
 	  web-mode
 	  ) . eglot-ensure)
-  
+
   (eglot-managed-mode . eglot-inlay-hints-mode)
   :bind
   (:map eglot-mode-map
@@ -103,6 +103,21 @@
   (eglot-ignored-server-capabilities
    '(:documentOnTypeFormattingProvider))
   :init
+  ;; Fix for RelativePattern support (LSP 3.17) - Java LSP compatibility
+  (defun my-eglot--glob-parse-fix (pattern)
+    "Fix eglot--glob-parse to support RelativePattern format.
+    Java LSP server returns patterns like (:baseUri \"file://...\" :pattern \"foo\")
+    but eglot--glob-parse expects a string."
+    (if (listp pattern)
+        ;; If it's a plist (RelativePattern), extract the :pattern field
+        (plist-get pattern :pattern)
+      ;; Otherwise, return as-is (simple string pattern)
+      pattern))
+
+  (advice-add 'eglot--glob-parse :filter-args
+              (lambda (args)
+                (list (my-eglot--glob-parse-fix (car args)))))
+
   (defun vue-eglot-init-options ()
     (let ((tsdk-path (expand-file-name
                       "lib"

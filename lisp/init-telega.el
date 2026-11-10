@@ -9,10 +9,11 @@
   (setq ;; telega-chat-folders-insexp nil
    ;; telega-docker-volumes '("/run/current-system/sw/share/X11/xkb")
    telega-use-docker nil
-   telega-server-libs-prefix "~/.tdlib/"
    telega-debug t
    telega-chat-fill-column 120
    telega-chat-auto-fill-mode nil)
+  (if sys/macp
+      (setq telega-server-libs-prefix "/opt/homebrew/opt/tdlib"))
   (add-hook 'telega-load-hook
 	    #'(lambda ()
 		(set-face-attribute 'telega-msg-heading nil

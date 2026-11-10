@@ -75,14 +75,20 @@
   ;; (setq current-load-theme 'doom-ayu-light)
   ;; (setq current-load-theme 'doom-tomorrow-day)
   ;; (setq current-load-theme 'rose-pine-dawn)
-  (setq current-load-theme 'doom-gruvbox)
+  ;; (setq current-load-theme 'doom-gruvbox)
+  ;; (setq current-load-theme 'doom-ayu-mirage)
+  (setq current-load-theme 'modus-operandi-tinted)
   (load-theme current-load-theme t)
-  :hook
-  (highlight-indent-guides-mode . (lambda () (load-theme current-load-theme t)))
+  ;; :hook
+  ;; (highlight-indent-guides-mode . (lambda () (load-theme current-load-theme t)))
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
+
+  ;; fix cycle inheritance in emacs 31
+  (setcdr (assoc 'gnus-group-news-low-empty doom-themes-base-faces)
+          '(:inherit 'gnus-group-mail-1-empty :weight 'normal))
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -126,6 +132,12 @@
   :straight t
   :init
   (load-theme 'sanityinc-tomorrow-night t))
+
+;;; ayu theme
+(use-package ayu-theme
+  :disabled
+  :straight (:host github :repo "vutran1710/Ayu-Theme-Emacs")
+  :init (load-theme 'ayu-grey t))
 
 ;;; icons
 (defconst sys/win32p
@@ -180,6 +192,7 @@
 
 ;;; Mode line
 (use-package doom-modeline
+  :disabled
   :straight t
   :hook (after-init . doom-modeline-mode)
   :init
@@ -198,6 +211,7 @@
 	doom-modeline-env-version t
 	find-file-visit-truename t
 	doom-modeline-github t
+        doom-modeline-gnus nil
 	doom-modeline-github-interval (* 30 60))
   ;; (set-face-attribute 'doom-modeline nil :inherit 'mode-line)
   (doom-modeline-def-segment image-info
@@ -208,8 +222,140 @@
        ;; Needs imagemagick installed.
        (process-lines "identify" "-format" "[%m %wx%h %b]" (buffer-file-name))))))
 
-(use-package doom-modeline
-     :straight t)
+;;; Moody - tabs and ribbons for mode-line
+(use-package moody
+  :straight t
+  :demand t
+  :config
+  (setq x-underline-at-descent-line t
+        find-file-visit-truename t)
+
+  ;; 移除主题的 :box 属性，避免与 moody 冲突；缩小字体
+  (defun my/face-attr (face attr)
+    "获取 FACE 的 ATTR，如果是 unspecified 则返回 nil。"
+    (let ((val (face-attribute face attr nil t)))
+      (unless (eq val 'unspecified) val)))
+
+  (defun my/color-low-contrast-p (c1 c2)
+    "判断两个颜色对比度是否过低。"
+    (and (stringp c1) (stringp c2)
+         (let* ((rgb1 (color-name-to-rgb c1))
+                (rgb2 (color-name-to-rgb c2))
+                (lum1 (+ (* 0.299 (nth 0 rgb1)) (* 0.587 (nth 1 rgb1)) (* 0.114 (nth 2 rgb1))))
+                (lum2 (+ (* 0.299 (nth 0 rgb2)) (* 0.587 (nth 1 rgb2)) (* 0.114 (nth 2 rgb2)))))
+           (< (abs (- lum1 lum2)) 0.1))))
+
+  (defun my/moody-setup-faces ()
+    "设置 moody 所需的 face 属性，在主题加载后调用。"
+    (let* ((bg (my/face-attr 'mode-line :background))
+           (line (my/face-attr 'mode-line :underline)))
+      ;; underline 可能是 plist，提取 :color
+      (when (listp line)
+        (setq line (plist-get line :color)))
+      ;; fallback: box color -> border foreground -> mode-line foreground
+      (unless (stringp line)
+        (let ((box (my/face-attr 'mode-line :box)))
+          (setq line (or (and (listp box) (plist-get box :color))
+                         (my/face-attr 'vertical-border :foreground)
+                         (my/face-attr 'mode-line :foreground)
+                         "grey50"))))
+      ;; 如果颜色和背景对比度不足，用 foreground 兜底
+      (when (my/color-low-contrast-p line bg)
+        (setq line (or (my/face-attr 'mode-line :foreground) "grey50")))
+      (set-face-attribute 'mode-line          nil
+                          :overline nil
+                          :underline `(:color ,line :position t)
+                          :box nil)
+      (set-face-attribute 'mode-line-inactive nil
+                          :overline nil
+                          :underline `(:color ,line :position t)
+                          :box nil)))
+  (defun my/moody-setup ()
+    "设置 moody faces 并重新应用 moody 替换，切换主题后调用。"
+    (my/moody-setup-faces)
+    ;; 重新设置 mode-line-format（主题可能重置了它）
+    ;; (moody-replace-mode-line-front-space)
+    (moody-replace-mode-line-buffer-identification)
+    (moody-replace-vc-mode))
+
+  ;; Emacs 29+ 切换主题后自动重新设置
+  (add-hook 'enable-theme-functions (lambda (_theme) (my/moody-setup)))
+
+  (defun my/mode-line-project-name ()
+    "显示当前项目名称。"
+    (when-let* ((project (project-current))
+                (name (project-name project)))
+      (format " [%s]" name)))
+
+  (defun my/mode-line-total-lines ()
+    "显示总行数。"
+    (format "/%d" (line-number-at-pos (point-max))))
+
+  (defun my/mode-line-image-info ()
+    "在 image-mode 下显示图片信息。"
+    (when (eq major-mode 'image-mode)
+      (ignore-errors
+        (car (process-lines "identify" "-format" " [%m %wx%h %b]" (buffer-file-name))))))
+
+  (defun my/mode-line-encoding ()
+    "显示文件编码（仅非 UTF-8 时）。"
+    (when buffer-file-coding-system
+      (let ((name (symbol-name buffer-file-coding-system)))
+        (unless (string-match-p "utf-8" name)
+          (format " %s" (upcase name))))))
+
+  ;; GitHub 通知
+  (defvar my/github-notification-count 0)
+
+  (defun my/github-fetch-notifications ()
+    "异步获取 GitHub 未读通知数量。"
+    (when (require 'ghub nil t)
+      (ignore-errors
+        (ghub-get "/notifications"
+                  '((per_page . 100))
+                  :callback (lambda (value _headers _status _req)
+                              (setq my/github-notification-count (length value))
+                              (force-mode-line-update t))
+                  :errorback (lambda (&rest _)
+                               (setq my/github-notification-count 0))))))
+
+  (defun my/mode-line-github ()
+    "显示 GitHub 未读通知数。"
+    (when (> my/github-notification-count 0)
+      (format " GH:%s"
+              (if (> my/github-notification-count 99) "99+"
+                (number-to-string my/github-notification-count)))))
+
+  (run-with-idle-timer 30 nil #'my/github-fetch-notifications)
+  (run-with-timer (* 30 60) (* 30 60) #'my/github-fetch-notifications)
+
+  ;; 先设置 mode-line-format，再调用 moody 替换函数
+  (setq-default mode-line-format
+                '("%e"
+                  mode-line-front-space
+                  mode-line-mule-info
+                  mode-line-client
+                  mode-line-modified
+                  mode-line-remote
+                  " "
+                  mode-line-buffer-identification
+                  "  "
+                  mode-line-position
+                  (:eval (my/mode-line-total-lines))
+                  "  "
+                  (vc-mode vc-mode)
+                  (:eval (my/mode-line-project-name))
+                  (:eval (my/mode-line-image-info))
+                  "  "
+                  mode-line-modes
+                  (:eval (my/mode-line-encoding))
+                  (:eval (my/mode-line-github))
+                  mode-line-misc-info
+                  mode-line-end-spaces))
+
+  ;; 必须在 setq-default mode-line-format 之后调用
+  (my/moody-setup)
+  (moody-replace-eldoc-minibuffer-message-function))
 
 (use-package hide-mode-line
   :straight t
@@ -225,7 +371,7 @@
 
 (use-package minions
   :straight t
-  :hook (doom-modeline-mode . minions-mode))
+  :hook (after-init . minions-mode))
 
 ;;; punch line
 ;; 替换 doom-modeline
@@ -316,43 +462,50 @@
   ;;                                 " ")
   ;;                         'face `(:inherit ,(if online-p 'success 'warning) :inverse-video t))))))
   (defun +tab-bar-telega-icon-update (&rest rest)
-    (when (buffer-live-p telega-server--buffer)
-      (let* ((me-user (telega-user-me 'locally))
-             (online-p (and me-user (telega-user-online-p me-user)))
-             ;; reactions
-             (reactions-chats (telega-filter-chats telega--ordered-chats '(and is-known unread-reactions)))
-             (reactions-count (apply '+ (mapcar (telega--tl-prop :unread_reaction_count) reactions-chats)))
-             ;; mentioned
-             (mentioned-chats (telega-filter-chats telega--ordered-chats '(mention)))
-             (mentioned-count (apply '+ (mapcar (telega--tl-prop :unread_mention_count) mentioned-chats)))
-             ;; unread
-             (unmuted-count (or (plist-get telega--unread-chat-count :unread_unmuted_count) 0))
-             (mentioned-unmuted-chats (telega-filter-chats telega--ordered-chats '(and mention unmuted)))
-             (true-unmuted-count (- unmuted-count (length mentioned-unmuted-chats)))
-             (text (propertize (concat " " telega-symbol-telegram " "
-                                       (when (> true-unmuted-count 0)
-                                         (propertize (concat "●" (number-to-string true-unmuted-count) " ")
-						     'face 'telega-unmuted-count))
-                                       (when (> mentioned-count 0)
-                                         (propertize (concat "@" (number-to-string mentioned-count) " ")
-						     'face 'telega-mention-count))
-                                       (when (> reactions-count 0)
-                                         (propertize (concat "❤" (number-to-string reactions-count) " ")
-						     'face 'telega-mention-count)))
-                               ;; 'face `(:inherit font-lock-keyword-face :inverse-video ,online-p
-			       ;; 			:foreground ,(face-background 'default))))
-			       ))
-             (first-name (plist-get me-user :first_name))
-             (last-name (plist-get me-user :last_name))
-             (help-echo (concat "Current User: " first-name " " last-name "\n"
-                                "Status: " (if online-p "online" "offline"))))
-        (setq +tab-bar-telega-indicator-cache
-              `((tab-bar-persp menu-item
-                               ,text
-                               ignore
-                               :help ,help-echo))))
-      (force-mode-line-update t)
-      +tab-bar-telega-indicator-cache))
+  "Update the Telega icon in the tab bar with notification counts.
+Displays counts for:
+- Unread unmuted messages (excluding mentions)
+- Mentions
+- Unread reactions
+Uses nerd-icons for the Telegram icon and applies appropriate faces."
+  (setq +tab-bar-telega-indicator-cache
+        (when (and (fboundp 'telega-server-live-p)
+                   (telega-server-live-p)
+                   (buffer-live-p telega-server--buffer))
+          (let* ((me-user (telega-user-me 'locally))
+                 (online-p (and me-user (telega-user-online-p me-user)))
+                 ;; reactions
+                 (reactions-chats (telega-filter-chats (telega-chats-list) 
+                                                       '(and is-known unread-reactions)))
+                 (reactions-count (apply '+ (mapcar (telega--tl-prop :unread_reaction_count) 
+                                                    reactions-chats)))
+                 ;; mentioned
+                 (mentioned-chats (telega-filter-chats (telega-chats-list) '(mention)))
+                 (mentioned-count (apply '+ (mapcar (telega--tl-prop :unread_mention_count) 
+                                                    mentioned-chats)))
+                 ;; unread
+                 (unmuted-count (or (plist-get telega--unread-chat-count :unread_unmuted_count) 0))
+                 (mentioned-unmuted-chats (telega-filter-chats (telega-chats-list) 
+                                                               '(and mention unmuted)))
+                 (true-unmuted-count (- unmuted-count (length mentioned-unmuted-chats)))
+                 (text (propertize (concat " " telega-symbol-telegram " "
+                                           (when (> true-unmuted-count 0)
+                                             (propertize (concat "●" (number-to-string true-unmuted-count) " ")
+                                                         'face 'telega-unmuted-count))
+                                           (when (> mentioned-count 0)
+                                             (propertize (concat "@" (number-to-string mentioned-count) " ")
+                                                         'face 'telega-mention-count))
+                                           (when (> reactions-count 0)
+                                             (propertize (concat "❤" (number-to-string reactions-count) " ")
+                                                         'face 'telega-mention-count)))))
+                 (first-name (plist-get me-user :first_name))
+                 (last-name (plist-get me-user :last_name))
+                 (help-echo (concat "Current User: " first-name " " last-name "\n"
+                                    "Status: " (if online-p "online" "offline"))))
+            `((tab-bar-persp menu-item
+                             ,text
+                             ignore
+                             :help ,help-echo))))))
 
   ;; (defun +tab-bar-telega-icon ()
   ;;   (or +tab-bar-telega-indicator-cache
@@ -470,7 +623,7 @@
   :init
   (setq transwin-delta-alpha 15)
   (setq transwin-parameter-alpha 'alpha-background)
-  (transwin-ask 65)
+  (transwin-ask 100)
   :bind
   ("C-c C-=" . transwin-inc)
   ("C-c C--" . transwin-dec)
@@ -593,9 +746,10 @@
 
 ;;; nyan-mode
 (use-package nyan-mode
+  :disabled
   :straight (:repo "zakudriver/nyan-mode")
   :hook
-  (doom-modeline-mode . nyan-mode)
+  (after-init . nyan-mode)
   :custom
   (nyan-bar-length       40)
   (nyan-animate-nyancat  t)

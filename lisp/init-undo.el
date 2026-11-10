@@ -1,4 +1,4 @@
-;;; init-vundo.el ---                                -*- lexical-binding: t; -*-
+;;; init-undo.el ---                                -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2025  TakaObsid
 
@@ -6,10 +6,9 @@
 ;; Keywords: lisp
 
 (use-package vundo
-  :straight t)
-
-(use-package undo-fu
   :straight t
+  :bind
+  ("C-c u" . vundo)
   :config
   (setq undo-limit 67108864) ; 64mb.
   (setq undo-strong-limit 100663296) ; 96mb.
@@ -21,7 +20,7 @@
   :init
   (undo-fu-session-global-mode)
   :config
-  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
-)
+  (setq undo-fu-session-directory "~/OneDrive - MSFT/Sync/undo-fu-session"
+        undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
 
 (provide 'init-undo)

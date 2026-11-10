@@ -160,97 +160,56 @@ otherwise this function don't work and don't know the reason
 (defun centaur-setup-fonts ()
   "Setup fonts."
   (when (display-graphic-p)
-    ;; Set default font
-    (set-fontset-font t nil (font-spec :name "Symbola"))
-    (set-fontset-font t '(#xe000 . #xf8ff) "TriplicateT4c Nerd Font Propo" nil 'prepend) ;; for prettify symbols
-    (cl-loop for font in '("TriplicateT4c Nerd Font Propo" "BlexMono Nerd Font Mono" "Jetbrains Mono"
-                           "SF Mono" "SF Pro Display"
-                           "Monaco" "DejaVu Sans Mono" "Consolas")
-             when (font-installed-p font)
-             return (set-face-attribute 'default nil
-                                        :family font
-                                        :height (cond (sys/macp 140)
-                                                      (sys/win32p 110)
-						      (sys/WSL 200)
-                                                      (t 110))))
+    (let* ((height (cond (sys/macp 180) (sys/win32p 110) (sys/WSL 200) (t 110)))
+           (mk-spec (lambda (family) (font-spec :family family :height height)))
+           (first-of (lambda (fonts) (cl-find-if #'font-installed-p fonts))))
 
-    ;; Set mode-line font
-    (cl-loop for font in '("TriplicateT4c Nerd Font Propo" "BlexMono Nerd Font Mono" "Unifont Upper" "Noto Color Emoji" "SF Pro Display" "Helvetica")
-             when (font-installed-p font)
-             return (progn
-                      (set-face-attribute 'mode-line nil :family font :height (cond (sys/macp 140)
-										    (sys/win32p 110)
-										    (sys/WSL 200)
-										    (t 110)))
-                      (when (facep 'mode-line-active)
-                        (set-face-attribute 'mode-line-active nil :family font :height (cond (sys/macp 140)
-											     (sys/win32p 110)
-											     (sys/WSL 200)
-											     (t 110))))
-                      (set-face-attribute 'mode-line-inactive nil :family font :height (cond (sys/macp 140)
-											     (sys/win32p 110)
-											     (sys/WSL 200)
-											     (t 110)))))
+      ;; Fallback 与 Nerd Font 私有区
+      (set-fontset-font t nil (font-spec :name "Symbola"))
+      (set-fontset-font t '(#xe000 . #xf8ff)
+                        "TriplicateT4c Nerd Font Propo" nil 'prepend)
 
-    ;; Specify font for all unicode characters
-    (cl-loop for font in '("Segoe UI Symbol" "Symbola" "Unifont Upper" "Segoe UI Symbol")
-             when (font-installed-p font)
-             return (if (< emacs-major-version 27)
-                        (set-fontset-font "fontset-default" 'unicode font nil 'prepend)
+      ;; Default face
+      (when-let ((font (funcall first-of
+                                '("TriplicateT4c Nerd Font Propo" "BlexMono Nerd Font Mono"
+                                  "Jetbrains Mono" "SF Mono" "SF Pro Display"
+                                  "Monaco" "DejaVu Sans Mono" "Consolas"))))
+        (set-face-attribute 'default nil :family font :height height))
 
-		      (set-fontset-font t 'symbol (font-spec :family font
-							      :height (cond (sys/macp 140)
-									    (sys/win32p 110)
-									    (sys/WSL 200)
-									    (t 110))))))
-		      ;; (set-fontset-font t 'unicode (font-spec :family font
-		      ;; 					      :height (cond (sys/macp 130)
-    ;; 							    (sys/win32p 110)
-		      ;; 							    (t 100))) nil 'prepend)))
+      ;; Mode-line faces（合并三个 face 的设置）
+      (when-let ((font (funcall first-of
+                                '("TriplicateT4c Nerd Font Propo" "BlexMono Nerd Font Mono"
+                                  "Unifont Upper" "Noto Color Emoji" "SF Pro Display" "Helvetica"))))
+        (dolist (face `(mode-line
+                        ,@(when (facep 'mode-line-active) '(mode-line-active))
+                        mode-line-inactive))
+          (set-face-attribute face nil :family font :height height)))
 
-    ;; Emoji
-    (cl-loop for font in '("Noto Color Emoji" "Apple Color Emoji" "Segoe UI Emoji")
-             when (font-installed-p font)
-             return (cond
-                     ((< emacs-major-version 27)
-                      (set-fontset-font "fontset-default" 'unicode font nil 'prepend))
-                     ;; ((< emacs-major-version 28)
-                     ;;  (set-fontset-font t 'symbol (font-spec :family font
-		     ;;    				      :height (cond (sys/macp 140)
-		     ;;    						    (sys/win32p 110)
-		     ;;    						    (sys/WSL 200)
-		     ;;    						    (t 110))) nil 'prepend))
-                     (t
-                      (set-fontset-font t 'emoji (font-spec :family font
-							    :height (cond (sys/macp 140)
-									  (sys/win32p 110)
-									  (sys/WSL 200)
-									  (t 110)))))))
+      ;; Symbol / Unicode
+      (when-let ((font (funcall first-of '("Segoe UI Symbol" "Symbola" "Unifont Upper"))))
+        (if (< emacs-major-version 27)
+            (set-fontset-font "fontset-default" 'unicode font nil 'prepend)
+          (set-fontset-font t 'symbol (funcall mk-spec font))))
 
-    ;; Specify font for Chinese characters
-    (cl-loop for font in '("FZLiuGongQuanKaiShuS" "TsangerJinKai02" "LXGW WenKai Mono" "WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei" "STFangsong")
-             when (font-installed-p font)
-             return (progn
-                      (setq face-font-rescale-alist `((,font . 1.0)))
-                      (set-fontset-font t '(#x4e00 . #x9fa5) (font-spec :family font
-									:height (cond (sys/macp 140)
-										      (sys/win32p 110)
-										      (sys/WSL 200)
-										      (t 110))))
-		      (set-fontset-font t '(#xff00 . #xffef) (font-spec :family font
-									:height (cond (sys/macp 140)
-										      (sys/win32p 110)
-										      (sys/WSL 200)
-										      (t 110))))
-		      (set-fontset-font t '(#x3000 . #x303f) (font-spec :family font
-									:height (cond (sys/macp 140)
-										      (sys/win32p 110)
-										      (sys/WSL 200)
-										      (t 110))))))
-    (set-fontset-font t '(880 . 1023) (font-spec :family "azukifontL"))
-    (setq-default face-font-rescale-alist '(("FZLiuGongQuanKaiShuS" . 1.2)))
-    (setq-default face-font-rescale-alist '(("Victor Mono" . 1.0)))
-    ))
+      ;; Emoji
+      (when-let ((font (funcall first-of '("Noto Color Emoji" "Apple Color Emoji" "Segoe UI Emoji"))))
+        (if (< emacs-major-version 27)
+            (set-fontset-font "fontset-default" 'unicode font nil 'prepend)
+          (set-fontset-font t 'emoji (funcall mk-spec font))))
+
+      ;; CJK（合并三个 Unicode 区块的设置）
+      (when-let ((font (funcall first-of
+                                '("FZLiuGongQuanKaiShuS" "TsangerJinKai02" "LXGW WenKai Mono"
+                                  "WenQuanYi Micro Hei" "PingFang SC" "Microsoft Yahei" "STFangsong"))))
+        (dolist (range '((#x4e00 . #x9fa5) (#xff00 . #xffef) (#x3000 . #x303f)))
+          (set-fontset-font t range (funcall mk-spec font))))
+
+      ;; 希腊字母区
+      (set-fontset-font t '(880 . 1023) (font-spec :family "azukifontL"))
+
+      (setq-default face-font-rescale-alist
+                    '(("FZLiuGongQuanKaiShuS" . 1.2)
+                      ("Victor Mono"          . 1.0))))))
 
 ;;; lsp-bridge set path
 (defun lsp-bridge-set-project-path ()

@@ -21,8 +21,16 @@
          ("C-c w r" . search-web-region)))
 
 (use-package grip-mode
+  :disabled
   :straight t
-  :hook (markdown-mode . grip-mode))
+  :hook (markdown-mode . grip-mode)
+  :config
+  (setq grip-preview-use-webkit nil)
+  (defun my/grip-browse-url-with-appine (url)
+    "Use appine to open grip preview in a split window."
+    (save-selected-window
+      (appine-open-web-split url)))
+  (advice-add 'grip--browse-url :override #'my/grip-browse-url-with-appine))
 
 (use-package browse-url)
 

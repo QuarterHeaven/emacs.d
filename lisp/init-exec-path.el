@@ -34,7 +34,7 @@
   ;; :hook (after-init . #'exec-path-from-shell-initialize)
 
   :config
-  (dolist (var '("PATH" "LIBRARY_PATH" "CPATH" "CPLUS_INCLUDE_PATH"))
+  (dolist (var '("PATH" "LIBRARY_PATH" "CPATH" "CPLUS_INCLUDE_PATH" "http_proxy" "https_proxy" "all_proxy" "HTTP_PROXY" "HTTPS_PROXY" "ALL_PROXY"))
     (add-to-list 'exec-path-from-shell-variables var))
   (exec-path-from-shell-initialize))
 

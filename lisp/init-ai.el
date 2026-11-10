@@ -260,4 +260,9 @@ Use the following guidelines:
 
   (claude-code-mode))
 
+;;; emacs-codex-ide
+(use-package codex-ide
+  :straight (:type git :host github :repo "dgillis/emacs-codex-ide")
+  :bind ("C-c C-;" . codex-ide-menu))
+
 (provide 'init-ai)

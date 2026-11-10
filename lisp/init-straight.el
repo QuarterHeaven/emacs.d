@@ -6,7 +6,8 @@
       comp-deferred-compilation-deny-list ()                 ; config native comp
       warning-suppress-log-types '((comp))                   ; Don't display comp warnings
       straight-disable-native-compile (not (and (fboundp 'native-comp-available-p)
-                                                (native-comp-available-p))))
+                                                (native-comp-available-p)))
+      straight-repository-branch "master")
 
 ;; Installation
 (defvar bootstrap-version)

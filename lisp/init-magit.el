@@ -37,7 +37,10 @@
 	 (after-init . global-diff-hl-mode))
   :config
   ;; makes my emacs freeze
-  (setq diff-hl-update-async nil))
+  (setq diff-hl-update-async nil
+        diff-hl-side 'left))
+
+;;; blame
 (use-package blamer
   :straight (:host github :repo "artawower/blamer.el" :branch "feature/margin-overlays")
   :bind (("s-i" . blamer-show-commit-info)
@@ -57,6 +60,19 @@
   :config
   (setq blamer-type 'margin-overlay)
   )
+
+(use-package blame-reveal
+  :straight (:host github :repo "LuciusChen/blame-reveal")
+  :commands blame-reveal-mode
+  :bind
+  ("C-c b" . blame-reveal-mode)
+  :config
+  (setq blame-reveal-style 'left-fringe
+        blame-reveal-display-layout 'full
+        blame-reveal-display-style 'background
+        blame-reveal-show-uncommitted-fringe t)
+  (require 'blame-reveal-recursive))
+
 
 ;;; gptel auto commit message
 ;; (defconst gptel-commit-prompt
